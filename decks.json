@@ -5,5 +5,6 @@
   {"slug": "lakehouse", "title": "From source to dashboard", "summary": "A data team's path on stardelt: load, model in layers, query, schedule and share.", "date": "2026-11"},
   {"slug": "develop", "title": "Develop on stardelt", "summary": "Write, publish, schedule, watch — and ship through Git from dev to prod.", "date": "2026-11"},
   {"slug": "kit", "title": "Slide kit", "summary": "Every layout a stardelt deck may use, to copy from.", "date": "2026-11"},
-  {"slug": "how-it-works", "title": "How stardelt works", "summary": "The architecture in one picture: one front door, open engines, plugs instead of a monolith.", "date": "2026-11"}
+  {"slug": "how-it-works", "title": "How stardelt works", "summary": "The architecture in one picture: one front door, open engines, plugs instead of a monolith.", "date": "2026-11"},
+  {"slug": "lineage", "title": "Where does this table come from?", "summary": "Table lineage in Nova: who makes a table, what it is made from, and who uses it.", "date": "2026-11"}
 ]
