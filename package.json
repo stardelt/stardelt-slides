@@ -1,11 +1,15 @@
 {
   "name": "stardelt-slides",
+  "description": "stardelt presentations — Slidev decks for talks, demos and community events",
   "type": "module",
   "private": true,
   "scripts": {
-    "build": "slidev build",
-    "dev": "slidev --open",
-    "export": "slidev export"
+    "dev": "slidev slides/stardelt.md",
+    "build": "slidev build slides/stardelt.md --out dist",
+    "export": "slidev export slides/stardelt.md"
+  },
+  "engines": {
+    "node": ">=20"
   },
   "dependencies": {
     "@slidev/cli": "^52.16.0",
