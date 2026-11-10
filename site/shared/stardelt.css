@@ -9,6 +9,7 @@ html, body { background: #18191b; }
 .reveal a { color: #7a8aff; }
 .reveal table { border-collapse: collapse; width: 100%; }
 .reveal th, .reveal td { padding: 14px 0; border-bottom: 1px solid #3e4147; text-align: left; }
+.reveal th + th, .reveal td + td { padding-left: 48px; }
 .reveal th { color: #8e949e; font-weight: 600; }
 .reveal .controls, .reveal .progress { color: #7a8aff; }
 .reveal section[data-markdown], .reveal .sd-two { padding: 112px 128px; background: #18191b; }
