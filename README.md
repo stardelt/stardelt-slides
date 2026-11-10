@@ -18,7 +18,7 @@ npm install
 npm run dev          # http://localhost:3030
 ```
 
-`npm run build` writes a static site to `dist/`; `npm run export` writes a PDF
+`npm run build` writes a static site to `dist/` at the repository root; `npm run export` writes a PDF
 (needs a Chromium download the first time).
 
 ## Add a deck

@@ -24,8 +24,9 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
-      # Project pages live under /<repo>/; a custom domain (slides.stardelt.io) needs --base /
-      - run: npm run build -- --base "/${GITHUB_REPOSITORY#*/}/"
+      # The site is published on the custom domain slides.stardelt.io, so it is served at the
+      # root. (Without the domain, a project page would need --base "/<repo>/".)
+      - run: npm run build -- --base "/"
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
