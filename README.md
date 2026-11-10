@@ -31,6 +31,12 @@ which is what CI does on every pull request.
 2. Add an entry to `decks.json` (`slug`, `title`, `summary`, `date`).
 3. Run `npm run check`.
 
+## Layouts
+
+Start every new deck by copying slides from `site/kit/index.html`. Use the `sd-*` classes; add
+`style=` only for a one-off position. A layout that two decks need goes into `shared/stardelt.css`
+and the kit first.
+
 ## Publish
 
 Every push to `main` builds `_site/` and deploys it to GitHub Pages

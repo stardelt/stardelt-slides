@@ -25,3 +25,33 @@ html, body { background: #18191b; }
 .reveal pre code { background: none; padding: 0; }
 .reveal .sd-two { display: grid !important; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
 .reveal .sd-shot { width: 100%; border-radius: 16px; border: 1px solid #3e4147; box-shadow: 0 30px 80px rgba(0, 0, 0, .45); }
+
+/* Layouts (kit). Every layout is a <section class="sd ..."> */
+.reveal .sd { padding: 112px 128px; background: #18191b; flex-direction: column; gap: 48px; }
+.reveal .sd h1, .reveal .sd h2, .reveal .sd h3 { font-family: 'Space Grotesk', Arial, sans-serif; color: #f3f4f6; font-weight: 700; }
+.reveal .sd h1 { font-size: 112px; line-height: 1.05; }
+.reveal .sd h2 { font-size: 68px; line-height: 1.1; }
+.reveal .sd h3 { font-size: 40px; }
+.reveal .sd p, .reveal .sd li { font-size: 34px; line-height: 1.45; color: #b0b5bd; }
+.reveal .sd .sd-kicker { font-size: 26px; letter-spacing: 4px; text-transform: uppercase; color: #7a8aff; font-weight: 600; }
+.reveal .sd .sd-lead { font-size: 40px; color: #b0b5bd; max-width: 1400px; }
+.reveal .sd.sd-cover { justify-content: center; background: radial-gradient(ellipse at 80% 20%, #2a2f6b, #18191b 60%); }
+.reveal .sd.sd-section { justify-content: center; }
+.reveal .sd.sd-section .sd-num { font-family: 'Space Grotesk', Arial, sans-serif; font-size: 160px; color: #7a8aff; line-height: 1; }
+.reveal .sd .sd-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); gap: 32px; }
+.reveal .sd .sd-card { background: #1f2124; border: 1px solid #3e4147; border-radius: 20px; padding: 44px; display: flex; flex-direction: column; gap: 16px; }
+.reveal .sd .sd-card p { font-size: 28px; }
+.reveal .sd.sd-stat { justify-content: center; }
+.reveal .sd .sd-big { font-family: 'Space Grotesk', Arial, sans-serif; font-size: 220px; line-height: 1; color: #f3f4f6; font-weight: 700; }
+.reveal .sd .sd-steps { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 24px; counter-reset: step; }
+.reveal .sd .sd-steps > div { border-top: 4px solid #7a8aff; padding-top: 28px; display: flex; flex-direction: column; gap: 12px; counter-increment: step; }
+.reveal .sd .sd-steps > div::before { content: counter(step); font-family: 'Space Grotesk', Arial, sans-serif; font-size: 56px; color: #7a8aff; }
+.reveal .sd .sd-steps p { font-size: 28px; }
+.reveal .sd.sd-quote { justify-content: center; }
+.reveal .sd.sd-quote blockquote { margin: 0; border-left: 6px solid #7a8aff; padding-left: 48px; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 64px; line-height: 1.2; color: #f3f4f6; width: auto; box-shadow: none; }
+.reveal .sd .sd-split { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; flex: 1; }
+.reveal .sd .sd-figure { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 20px; align-items: center; justify-content: center; }
+.reveal .sd .sd-figure img { max-width: 100%; max-height: 720px; object-fit: contain; }
+.reveal .sd .sd-caption { font-size: 24px; color: #8e949e; }
+.reveal .sd .sd-foot { margin-top: auto; font-size: 22px; color: #8e949e; }
+
