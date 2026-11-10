@@ -1,41 +1,37 @@
 # stardelt slides
 
-Presentations for stardelt — conference talks, demos and community events.
+stardelt decks, published at **https://slides.stardelt.io**.
 
-Built with [Slidev](https://sli.dev): markdown in, a web deck out.
-
-## The deck
-
-- `slides/stardelt.md` — **stardelt: your own data platform**, the main talk
-  (problem, what it is, architecture, lakehouse core, the interface, streaming,
-  the platform as resources, openness, status, getting started)
-- `slides/img/` — the screenshots and diagrams the deck uses
-
-## Run it
+Plain [reveal.js](https://revealjs.com) HTML: no build tool, no npm dependency at run time. reveal.js
+and the fonts are vendored, so a page never calls a third party.
 
 ```bash
-npm install
-npm run dev          # http://localhost:3030
+npm run build && npm run serve      # http://localhost:3000/
 ```
 
-`npm run build` writes a static site to `dist/` at the repository root; `npm run export` writes a PDF
-(needs a Chromium download the first time).
+`npm run build` checks the deck pattern and writes `_site/`. `npm run check` runs the checker alone,
+which is what CI does on every pull request.
+
+## The deck pattern
+
+- One deck is one folder `site/<slug>/` with `index.html` and an optional `img/` folder, plus one
+  entry in `decks.json`.
+- A slide is a `<section>` on a 1920×1080 canvas. Write it either as HTML with inline styles
+  (preferred) or as `<section data-markdown class="sd-center|sd-cover|sd-default">`.
+- Every slide has speaker notes: `<aside class="notes">`, or `Note:` in a markdown slide.
+- A deck loads only `../vendor/reveal/*`, `../shared/*` and its own `img/`. It loads nothing over
+  `http(s)://`, and has no `<script>` of its own.
+- Graphite colours: `#18191b` bg, `#1f2124` surface, `#3e4147` border, `#e8eaed` text, `#b0b5bd` dim,
+  `#8e949e` mute, `#7a8aff` accent. Fonts: Space Grotesk for headings, Inter for text. The logo is
+  unchanged.
 
 ## Add a deck
 
-Copy the frontmatter of `slides/stardelt.md` into `slides/<talk>.md`, add images
-next to it in `slides/img/`, and run `npm run dev -- slides/<talk>.md`.
+1. Copy `site/sovereignty/index.html` to `site/<slug>/index.html` and replace the slides.
+2. Add an entry to `decks.json` (`slug`, `title`, `summary`, `date`).
+3. Run `npm run check`.
 
 ## Publish
 
-Every push to `main` builds and deploys to GitHub Pages
-(`.github/workflows/deploy.yml`). The project URL is
-`https://stardelt.github.io/stardelt-slides/`; for `slides.stardelt.io`, add the
-custom domain in the repository settings and set the DNS record — no workflow
-change is needed beyond the base path in that file.
-
-## Rules
-
-- Public-facing: no internal notes, issue numbers, customer names or prices.
-- Claims match the product: the site (`stardelt.io`) is the source for what works
-  today; a slide that says "working today" must be true on `main`.
+Every push to `main` builds `_site/` and deploys it to GitHub Pages
+(`.github/workflows/pages.yml`); the custom domain is `slides.stardelt.io`.

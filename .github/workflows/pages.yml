@@ -21,15 +21,11 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
-          cache: npm
-      - run: npm ci
-      # The site is published on the custom domain slides.stardelt.io, so it is served at the
-      # root. (Without the domain, a project page would need --base "/<repo>/".)
-      - run: npm run build -- --base "/"
+          node-version: 22
+      - run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: _site
 
   deploy:
     needs: build
