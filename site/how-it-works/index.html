@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How stardelt works</title>
+<meta name="description" content="How stardelt works — the architecture tour for engineers: one front door, open engines, plugs instead of a monolith. Content Apache 2.0.">
+<link rel="stylesheet" href="../vendor/reveal/reveal.css">
+<link rel="stylesheet" href="../shared/stardelt.css">
+</head>
+<body>
+<div class="reveal"><div class="slides">
+<section class="sd sd-cover">
+<p class="sd-kicker">architecture</p>
+<h1>How stardelt works</h1>
+<p class="sd-lead">One front door, open engines, plugs instead of a monolith.</p>
+<aside class="notes">One picture of the whole platform: who talks to what, and why. Dashed boxes are optional or switch on per install.</aside>
+</section>
+<section class="sd">
+<h2>The whole platform in one picture</h2>
+<div class="sd-figure">
+<img src="img/how-stardelt-works.svg" alt="How stardelt works: people, scripts, notebooks and AI assistants sign in once and talk to one front door, stardelt Nova, which asks the SQL engine, the catalog and Airflow for them; table files live in SeaweedFS; the operator, Postgres, ingress and cert-manager run on Kubernetes underneath">
+<p class="sd-caption">Read it from the top: people and tools, Nova, engines, catalog, storage, control plane.</p>
+</div>
+<aside class="notes">Read the picture from the top. People and tools sign in once and talk to one front door, stardelt Nova. Nova asks the engines and the catalog on their behalf, table files live in storage, and the control plane runs on the Kubernetes cluster you bring.</aside>
+</section>
+<section class="sd sd-section">
+<div class="sd-num">01</div>
+<h2>From the top</h2>
+<aside class="notes">Six boxes from the top of the picture, two slides of three. Each box is one layer of the platform and names its parts.</aside>
+</section>
+<section class="sd">
+<div class="sd-cards">
+<div class="sd-card">
+<p class="sd-kicker">1</p>
+<h3>You and your tools</h3>
+<p>A person works in the browser (the Nova interface), a script or a CI job uses the <code>stardelt</code> command line or the Python package, an AI assistant uses the local MCP server, a notebook runs in JupyterHub. All of them sign in once.</p>
+</div>
+<div class="sd-card">
+<p class="sd-kicker">2</p>
+<h3>One front door: Nova</h3>
+<p>The interface and the public API are the same thing: the command line, the Python package and the MCP tools are generated from the one OpenAPI contract Nova publishes (<code>/api/openapi.json</code>, described in the API reference).</p>
+</div>
+<div class="sd-card">
+<p class="sd-kicker">3</p>
+<h3>Engines and apps</h3>
+<p>Trino answers SQL. Airflow runs scheduled pipelines and sends their SQL to Trino. Superset draws dashboards from Trino. Spark Connect takes the heavy jobs.</p>
+</div>
+</div>
+<aside class="notes">The top of the picture: people and their tools, the one front door, and the engines behind it. A feature that exists in the interface exists in the API. Nova asks the engines for you; notebooks talk to them directly with your token.</aside>
+</section>
+<section class="sd">
+<div class="sd-cards">
+<div class="sd-card">
+<p class="sd-kicker">4</p>
+<h3>Catalog and access</h3>
+<p>Lakekeeper is the Iceberg catalog: it knows which tables exist and which files belong to them, and every engine asks it first. OpenFGA, when it is on, decides who may see which table.</p>
+</div>
+<div class="sd-card">
+<p class="sd-kicker">5</p>
+<h3>Storage</h3>
+<p>Tables are open Iceberg files (Parquet) in SeaweedFS, or in your own S3. Nothing is locked into a stardelt format.</p>
+</div>
+<div class="sd-card">
+<p class="sd-kicker">6</p>
+<h3>Control plane</h3>
+<p>The stardelt Operator reads small resources (<code>PlatformInstance</code>, <code>Lakehouse</code>, <code>Connection</code>, <code>ServicePrincipal</code> and <code>StreamApp</code>) and installs and wires the services above.</p>
+</div>
+</div>
+<aside class="notes">The bottom of the picture: the catalog every engine asks first, the storage the tables live in, and the control plane that installs and wires the rest. CloudNativePG keeps the Postgres databases; ingress-nginx and cert-manager give every service its HTTPS name. All of it runs on a Kubernetes cluster you bring.</aside>
+</section>
+<section class="sd sd-section">
+<div class="sd-num">02</div>
+<h2>Five things to remember</h2>
+<aside class="notes">Five sentences to take away from the picture. They are the claims the next two slides unpack.</aside>
+</section>
+<section class="sd">
+<div class="sd-cards">
+<div class="sd-card">
+<h3>One sign-in</h3>
+<p>The OIDC provider you already run holds users and groups; small installs can start with the bundled Keycloak.</p>
+</div>
+<div class="sd-card">
+<h3>One API</h3>
+<p>Whatever you can click, you can call.</p>
+</div>
+<div class="sd-card">
+<h3>Nova acts as you</h3>
+<p>With sign-in on, your token goes on to the engines, so what you may read is decided by the engine and the catalog for you, not by Nova's own power.</p>
+</div>
+</div>
+<aside class="notes">One sign-in: the browser uses the sign-in page, the command line uses the device code flow, and the same token reaches the engines. One API: whatever you can click, you can call. Nova acts as you, so permissions are enforced by the engine and the catalog.</aside>
+</section>
+<section class="sd">
+<div class="sd-cards">
+<div class="sd-card">
+<h3>Plugs, not a monolith</h3>
+<p>The engine, the catalog, the identity provider and the object store are replaceable behind open contracts (SQL, the Iceberg REST catalog, OIDC, S3).</p>
+</div>
+<div class="sd-card">
+<h3>Known limits</h3>
+<p>Results Nova keeps in memory are capped (100 000 rows or about 64 MiB per statement); storage credentials are one platform key today, not yet one short-lived key per person.</p>
+</div>
+</div>
+<aside class="notes">Plugs, not a monolith: the engine, the catalog, the identity provider and the object store are replaceable behind open contracts. The known limits are the in-memory result cap and one platform storage key. Say both plainly; the audience will ask about the second.</aside>
+</section>
+<section class="sd sd-section">
+<div class="sd-num">03</div>
+<h2>Where each task is done</h2>
+<aside class="notes">The picture answers where things run; this part answers where work is done. Four places, and what each is never for.</aside>
+</section>
+<section class="sd">
+<h2>Where each task is done</h2>
+<table>
+<thead>
+<tr><th>Where</th><th>What it is for</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Nova</strong></td><td>finding and exploring data, writing SQL and notebooks, running, stopping and retrying, watching what happened</td></tr>
+<tr><td><strong>API, command line, agents</strong></td><td>everything Nova does, and automation</td></tr>
+<tr><td><strong>Kubernetes resources</strong></td><td>lasting settings an administrator or your GitOps tool owns: <code>PlatformInstance</code>, <code>Lakehouse</code>, <code>Catalog</code>, <code>Connection</code>, <code>ServicePrincipal</code>, <code>Pipeline</code>, <code>StreamApp</code></td></tr>
+<tr><td><strong>Git</strong></td><td>the only way a team's work moves from dev to prod: pipelines, notebooks, SQL, stream apps</td></tr>
+</tbody>
+</table>
+<aside class="notes">Four places to look for anything: Nova, the API, Kubernetes resources, and Git. Nova is never for anything you could not also do through the API. Kubernetes resources and Git carry lasting settings and a team's work, never runs, results or secret values.</aside>
+</section>
+<section class="sd">
+<h2>Build once, deploy many</h2>
+<div class="sd-figure">
+<img src="img/stages.svg" alt="Stages: Git carries the team's work from dev to prod; data, runs and secrets stay in each stage">
+<p class="sd-caption">Build once, deploy many: a stage never copies objects to another stage; Git carries them.</p>
+</div>
+<aside class="notes">Build once, deploy many: a stage never copies objects to another stage; Git carries them. The platform's own settings move through the GitOps tool you already run.</aside>
+</section>
+<section class="sd sd-cover">
+<p class="sd-kicker">read more</p>
+<h1>stardelt.io/architecture</h1>
+<p class="sd-lead">Identity, security model, licenses and sovereignty: each has its own page.</p>
+<aside class="notes">Point at the architecture pages: identity, security model, licenses and sovereignty. Each one goes deeper than the tour can.</aside>
+</section>
+</div></div>
+<script src="../vendor/reveal/reveal.js"></script>
+<script src="../vendor/reveal/plugin/notes/notes.js"></script>
+<script src="../shared/init.js"></script>
+</body>
+</html>
