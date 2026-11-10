@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Where does this table come from?</title>
+<meta name="description" content="Table lineage in Nova: who makes a table, what it is made from and who uses it. Follows the table lineage guide. Content Apache 2.0.">
+<link rel="stylesheet" href="../vendor/reveal/reveal.css">
+<link rel="stylesheet" href="../shared/stardelt.css">
+</head>
+<body>
+<div class="reveal"><div class="slides">
+<section class="sd sd-cover">
+<p class="sd-kicker">lineage</p>
+<h1>Where does this table come from?</h1>
+<p class="sd-lead">Nova answers it on every table: who makes it, what it is made from, and who uses it.</p>
+<aside class="notes">Every table page in Nova has a Lineage tab. It answers three questions at a glance, from the queries and the lineage events the platform recorded.</aside>
+</section>
+<section class="sd">
+<h2>Three questions, one tab</h2>
+<div class="sd-cards">
+<div class="sd-card">
+<h3>Made by</h3>
+<p>The pipeline that writes it, its runs, and when it last ran.</p>
+</div>
+<div class="sd-card">
+<h3>Made from</h3>
+<p>The tables it is built from, grouped by distance.</p>
+</div>
+<div class="sd-card">
+<h3>Used by</h3>
+<p>The people, the tools and the number of queries.</p>
+</div>
+</div>
+<aside class="notes">Open the table and choose Lineage. Made by names the pipeline and counts its runs; Made from lists the tables it is built from, grouped by distance; Used by counts the people, names the tools and counts the queries.</aside>
+</section>
+<section class="sd">
+<h2>The graph</h2>
+<div class="sd-figure">
+<img src="img/lineage.png" alt="Nova's lineage graph: the tables that feed this one on the left, this table in the middle, and everything built from it on the right">
+<p class="sd-caption">Open graph draws the same data left to right: the tables that feed this one on the left, this table in the middle column and everything built from it on the right, one line per pair of tables.</p>
+</div>
+<aside class="notes">Open graph draws the same data left to right. The job that moved the data appears on the lines of a hovered or selected table and nowhere else.</aside>
+</section>
+<section class="sd">
+<h2>Explore it</h2>
+<div class="sd-cards">
+<div class="sd-card">
+<h3>Click a table</h3>
+<p>A panel with Open table and Center here.</p>
+</div>
+<div class="sd-card">
+<h3>Steps and window</h3>
+<p>1–3 steps and 7, 30 or 90 days, both in the URL.</p>
+</div>
+<div class="sd-card">
+<h3>On a phone</h3>
+<p>Two lists instead of the drawing.</p>
+</div>
+</div>
+<aside class="notes">A panel shows what made the table and who reads it; Escape closes it. Fit brings the whole drawing back into view, and the steps and the window are URL parameters. On a phone the two lists answer instead of the graph, because the drawing needs a wider screen.</aside>
+</section>
+<section class="sd sd-section">
+<div class="sd-num">02</div>
+<h2>Where the edges come from</h2>
+<aside class="notes">The second part: where the edges come from. Queries, lineage events, and what Nova keeps.</aside>
+</section>
+<section class="sd">
+<h2>Two kinds of evidence</h2>
+<div class="sd-cards">
+<div class="sd-card">
+<h3>Queries</h3>
+<p>A query that writes draws an edge; a query that only reads is counted as a reader.</p>
+</div>
+<div class="sd-card">
+<h3>OpenLineage</h3>
+<p><code>POST /api/v1/lineage</code> on Nova's in-cluster port, with no Ingress.</p>
+</div>
+<div class="sd-card">
+<h3>Kept at home</h3>
+<p>Edges 365 days, raw events 90 days, nothing sent to an external service.</p>
+</div>
+</div>
+<aside class="notes">A finished query contributes one input edge per table it read and one output edge per table it wrote. Nova answers POST /api/v1/lineage on its in-cluster Service port, which is the path the official OpenLineage clients append to the base URL. Edges are kept for 365 days and the raw events for 90 days by default.</aside>
+</section>
+<section class="sd sd-quote">
+<h2>Honest limits</h2>
+<p class="sd-lead">The graph is table-level here, column-level sources are on the Columns tab, and it only knows what was recorded since it was turned on.</p>
+<aside class="notes">It lists only datasets in catalogs you can see; anything else is drawn unnamed. A query that failed produces no edges.</aside>
+</section>
+<section class="sd sd-cover">
+<p class="sd-kicker">try it</p>
+<h1>Open any table. Choose Lineage.</h1>
+<p class="sd-lead">stardelt.io/docs/guides/lineage</p>
+<aside class="notes">Open any table and choose Lineage: Made by, Made from and Used by answer where the table comes from. The guide has the details on the graph, the parameters and the retention.</aside>
+</section>
+</div></div>
+<script src="../vendor/reveal/reveal.js"></script>
+<script src="../vendor/reveal/plugin/notes/notes.js"></script>
+<script src="../shared/init.js"></script>
+</body>
+</html>
