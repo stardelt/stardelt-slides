@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "slidev slides/stardelt.md",
-    "build": "slidev build slides/stardelt.md --out dist",
+    "build": "slidev build slides/stardelt.md --out ../dist",
     "export": "slidev export slides/stardelt.md"
   },
   "engines": {
