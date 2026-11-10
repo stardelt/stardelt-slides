@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>From source to dashboard</title>
+<meta name="description" content="A data team's path on stardelt: load, model in layers, query, schedule and share. Follows the guide From source to dashboard. Content Apache 2.0.">
+<link rel="stylesheet" href="../vendor/reveal/reveal.css">
+<link rel="stylesheet" href="../shared/stardelt.css">
+</head>
+<body>
+<div class="reveal"><div class="slides">
+<section class="sd sd-cover">
+<p class="sd-kicker">for data teams</p>
+<h1>From source to dashboard</h1>
+<p class="sd-lead">One platform for the whole path: load, model, query, schedule, share.</p>
+<aside class="notes">A data team's path on stardelt, in five steps: load, model, query, schedule, share. Each slide follows one section of the guide From source to dashboard. That guide needs a platform with sign-in, Airflow and Superset.</aside>
+</section>
+<section class="sd">
+<h2>The path</h2>
+<div class="sd-figure">
+<img src="img/workflow-overview.svg" width="1600" height="392" alt="From source to dashboard: sources, ingest, bronze, silver, gold, serve, with compute, orchestration and secrets underneath">
+</div>
+<aside class="notes">The picture is the whole path: sources, ingest, the bronze, silver and gold layers, and serving. Compute, orchestration and secrets sit underneath. The guide walks the five steps in order.</aside>
+</section>
+<section class="sd sd-section">
+<div class="sd-num">01</div>
+<h2>Get data in</h2>
+<p class="sd-lead">A file, another database or an API — everything lands in the bronze schema of your domain catalog.</p>
+<aside class="notes">A CSV or JSON file goes in through Load &amp; transfer, with the file, the schema and the table. Data already in the platform comes in with CREATE TABLE AS SELECT or INSERT INTO … SELECT. Raw data goes into the bronze schema of your domain catalog and is never changed in place.</aside>
+</section>
+<section class="sd">
+<h2>Connect a source system</h2>
+<div class="sd-split">
+<ul>
+<li>Keep credentials out of the notebook: ask for them at run time.</li>
+<li><code>stardelt.write_df</code> writes as you, so your table permissions apply.</li>
+<li>A connection keeps the secret in the platform's secret store, not in Git.</li>
+</ul>
+<img class="sd-shot" src="img/catalog.png" alt="Nova's catalog explorer with catalogs, schemas and tables">
+</div>
+<aside class="notes">Keep credentials out of the notebook file; the simplest way is to ask for them at run time. stardelt.write_df writes the table as you, so your table permissions apply, and above 200,000 rows it refuses. A connection keeps its settings visible while the password is written once and never shown again.</aside>
+</section>
+<section class="sd sd-section">
+<div class="sd-num">02</div>
+<h2>Model in layers</h2>
+<p class="sd-lead">Build each layer from the one before, in SQL.</p>
+<aside class="notes">The three layers are schemas inside your domain catalog, built one from the one before in SQL. Your group owns the catalog, so a colleague in another group cannot read or write it. The catalog page names the owning group and what each group may do there.</aside>
+</section>
+<section class="sd">
+<h2>Bronze, silver, gold</h2>
+<div class="sd-figure">
+<img src="img/medallion-layers.svg" width="1200" height="532" alt="Medallion layers as schemas: bronze, silver, gold">
+<p class="sd-caption">The three layers are schemas inside your domain catalog — there are no default bronze, silver or gold catalogs.</p>
+</div>
+<aside class="notes">Bronze, silver and gold are schemas inside your domain catalog, not three catalogs. Build silver from bronze with a CREATE TABLE AS SELECT, and gold from silver. Run both in the SQL editor or a notebook.</aside>
+</section>
+<section class="sd">
+<h2>Query where you work</h2>
+<div class="sd-split">
+<ul>
+<li><code>%sql</code> and <code>%%sql</code> run in a notebook cell; the connection is called <code>warehouse</code>.</li>
+<li>The token is read on every request, so an open kernel survives a rotation.</li>
+<li>The query runs as you, exactly like <code>stardelt.sql()</code>.</li>
+<li>The SQL editor runs the same statements.</li>
+</ul>
+<img class="sd-shot" src="img/sql.png" alt="Nova's SQL editor with a query and its results">
+</div>
+<aside class="notes">The notebook image already loads JupySQL, so there is no install cell, and the connection is called warehouse. The token is read again on every request, so a kernel that stays open keeps working after your access token rotates. The query runs as you, exactly like stardelt.sql().</aside>
+</section>
+<section class="sd sd-section">
+<div class="sd-num">03</div>
+<h2>Run it every day</h2>
+<p class="sd-lead">Publish the notebook or SQL as a pipeline, and Airflow runs the schedule.</p>
+<aside class="notes">Start with Trino, and use Spark when SQL no longer fits or one machine is not enough. Publish the notebook or SQL as a pipeline and the schedule runs in Airflow, with run, pause, resume and stop on the pipeline page. Maintenance runs on its own as a per-catalog CronJob staggered after 02:00.</aside>
+</section>
+<section class="sd">
+<h2>Schedule and watch</h2>
+<div class="sd-split">
+<ul>
+<li>Publish the notebook or SQL as a pipeline; the schedule runs in Airflow.</li>
+<li>Run now, Pause, Resume and Stop are on the pipeline page, checked against your group.</li>
+<li>Maintenance runs on its own: every catalog gets a CronJob that compacts, expires and removes.</li>
+</ul>
+<img class="sd-shot" src="img/pipeline.png" alt="Nova's pipeline page with schedules, runs and status">
+</div>
+<aside class="notes">Graph in Airflow opens the graph, the Gantt view and the task logs of the run. Run now, Pause, Resume and Stop on the pipeline page are checked against your group. Every catalog whose owner group has a pipeline principal gets one maint-&lt;catalog&gt; CronJob that compacts files, expires old snapshots and removes orphans.</aside>
+</section>
+<section class="sd">
+<h2>Show it</h2>
+<div class="sd-split">
+<ul>
+<li>Open Superset from Nova → Dashboards and sign in with your platform account.</li>
+<li>Each catalog gets its own Superset database; point dashboards at the gold schema.</li>
+<li>A published dashboard is visible only to the groups whose catalogs its charts use.</li>
+</ul>
+<img class="sd-shot" src="img/dashboards.png" alt="A published Superset dashboard on the platform">
+</div>
+<aside class="notes">Superset opens from Nova → Dashboards and signs in with your platform account. Each catalog gets its own Superset database, and dashboards point at the gold schema only. A dashboard that spans two catalogs is administrators-only until it is split.</aside>
+</section>
+<section class="sd">
+<h2>Not there yet</h2>
+<p class="sd-lead">Ingestion templates, SQL models with tests, and layer tags in the catalog are not available yet.</p>
+<aside class="notes">The guide lists exactly three gaps: ingestion templates, SQL models with tests, and layer tags in the catalog. It is worth naming them before someone finds them in the demo.</aside>
+</section>
+<section class="sd sd-cover">
+<p class="sd-kicker">try it</p>
+<h1>stardelt.io/guides</h1>
+<p class="sd-lead">Every step of this deck is a guide you can follow.</p>
+<aside class="notes">Every step of the deck has a guide page to follow. Start with From source to dashboard, then the pages it links, such as connections and the PEGELONLINE demo. The quickstart gets you a platform with sign-in, Airflow and Superset.</aside>
+</section>
+</div></div>
+<script src="../vendor/reveal/reveal.js"></script>
+<script src="../vendor/reveal/plugin/notes/notes.js"></script>
+<script src="../shared/init.js"></script>
+</body>
+</html>
