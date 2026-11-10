@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>stardelt in five minutes</title>
+<meta name="description" content="stardelt in five minutes — what stardelt is, why it exists, and how to join. The opener for any talk. Content Apache 2.0.">
+<link rel="stylesheet" href="../vendor/reveal/reveal.css">
+<link rel="stylesheet" href="../shared/stardelt.css">
+</head>
+<body>
+<div class="reveal"><div class="slides">
+<section class="sd sd-cover">
+<p class="sd-kicker">stardelt</p>
+<h1>Your own data platform.</h1>
+<p class="sd-lead">Open source, on your own Kubernetes cluster. One sign-in, one interface, one API.</p>
+<aside class="notes">stardelt is an open-source data platform. In five minutes: why it exists, what it is, and how you can take part.</aside>
+</section>
+<section class="sd">
+<h2>Data platforms are usually rented.</h2>
+<p class="sd-lead">Your tables, your code and your people live in someone else's product, under someone else's terms and prices. Leaving becomes a project of its own.</p>
+<aside class="notes">The problem we start from. It is not about cloud or not cloud; it is about who controls the platform your data work depends on.</aside>
+</section>
+<section class="sd">
+<h2>What stardelt is</h2>
+<div class="sd-split">
+<ul>
+<li>Proven open-source parts, installed and connected for you</li>
+<li>Query, load, schedule and show data in one place</li>
+<li>Runs on the Kubernetes cluster you already have</li>
+</ul>
+<img class="sd-shot" src="img/overview.png" alt="Nova, the stardelt interface, showing a team's overview">
+</div>
+<aside class="notes">Nova is the one interface: catalogs, recent loads and queries, and the services. Under it are Trino, Iceberg, Airflow, Superset and JupyterHub, as they are upstream.</aside>
+</section>
+<section class="sd">
+<h2>Why it is different</h2>
+<div class="sd-cards">
+<div class="sd-card">
+<p class="sd-kicker">sovereign</p>
+<h3>Your data stays with you</h3>
+<p>Everything runs in your cluster. No required outbound calls, no license server.</p>
+</div>
+<div class="sd-card">
+<p class="sd-kicker">open</p>
+<h3>You can leave</h3>
+<p>Tables are open Iceberg and Parquet files on storage you choose.</p>
+</div>
+<div class="sd-card">
+<p class="sd-kicker">permissive</p>
+<h3>No license surprises</h3>
+<p>Permissive licenses throughout, with one documented exception.</p>
+</div>
+</div>
+<aside class="notes">These three are the promise. Each one is documented on the website under Architecture.</aside>
+</section>
+<section class="sd">
+<h2>A team's day</h2>
+<div class="sd-steps">
+<div>
+<h3>Load</h3>
+<p>Files, APIs and databases into tables</p>
+</div>
+<div>
+<h3>Query</h3>
+<p>SQL in the browser, a notebook or a script</p>
+</div>
+<div>
+<h3>Schedule</h3>
+<p>SQL and notebooks, pipelines from Git</p>
+</div>
+<div>
+<h3>Show</h3>
+<p>Dashboards, and who sees what by group</p>
+</div>
+</div>
+<aside class="notes">This is the path the product is built around. If there is time, show it live in Nova.</aside>
+</section>
+<section class="sd">
+<h2>Today: pre-alpha, built in the open.</h2>
+<p class="sd-lead">No tagged releases yet. A running development platform, public documentation, and a roadmap you can still shape.</p>
+<aside class="notes">Be honest about the state: try it, do not run your business on it yet. Feedback now changes the product.</aside>
+</section>
+<section class="sd sd-cover">
+<p class="sd-kicker">join in</p>
+<h1>stardelt.io</h1>
+<p class="sd-lead">Docs and roadmap at stardelt.io · code at github.com/stardelt · these slides at slides.stardelt.io</p>
+<aside class="notes">Close with the three addresses. Ask: which part would your team try first?</aside>
+</section>
+</div></div>
+<script src="../vendor/reveal/reveal.js"></script>
+<script src="../vendor/reveal/plugin/notes/notes.js"></script>
+<script src="../shared/init.js"></script>
+</body>
+</html>
