@@ -7,237 +7,230 @@
 <meta name="description" content="stardelt — EU data sovereignty, open source and real portability. Content Apache 2.0.">
 <link rel="stylesheet" href="../vendor/reveal/reveal.css">
 <link rel="stylesheet" href="../shared/stardelt.css">
-<style>
-@keyframes sd-twinkle { 0%,100% { opacity: 1; } 50% { opacity: .45; } }
-.reveal .sd-star { animation: sd-twinkle 3.2s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
-</style>
 </head>
 <body>
 <div class="reveal"><div class="slides">
-<section id="cover" data-transition="fade" style="background:radial-gradient(ellipse at 80% 20%, #2a2f6b, #18191b 60%);color:#e8eaed;font-family:Inter, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:center;gap:40px">
-<p style="font-size:28px;color:#7a8aff;letter-spacing:4px;text-transform:uppercase;font-weight:600">stardelt</p>
-<h1 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:120px;font-weight:700;line-height:1.05;color:#f3f4f6;width:1400px">Sovereign data, on your terms.</h1>
-<p style="font-size:40px;color:#b0b5bd;width:1300px;line-height:1.35">Why Europe’s data platforms belong inside Europe’s own perimeter, and how open source makes leaving anyone possible.</p>
+<section id="cover" data-transition="fade" class="sd sd-cover">
+<p class="sd-kicker">stardelt</p>
+<h1>Sovereign data, on your terms.</h1>
+<p class="sd-lead">Why Europe’s data platforms belong inside Europe’s own perimeter, and how open source makes leaving anyone possible.</p>
 <aside class="notes">Opening: this talk is about control. Not about cloud versus on-premises, but about who decides what happens to your data, under which law, and whether you can leave.</aside>
 </section>
-<section id="europe" data-transition="zoom" style="background:radial-gradient(ellipse at 75% 45%, #1f4fd1, #003399 45%, #001a5c);color:#e8eaed;font-family:Inter, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:center">
-<div style="display:flex;align-items:center;gap:80px">
-<div style="display:flex;flex-direction:column;gap:36px;flex:1">
-<p style="font-size:28px;color:#ffcc00;letter-spacing:4px;text-transform:uppercase;font-weight:600">Europe, independent</p>
-<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:112px;font-weight:700;line-height:1.02;color:#ffffff">Europe can build its own.</h2>
-<p class="fragment fade-up" style="font-size:40px;line-height:1.4;color:#dfe6ff">450 million people. 27 countries. Our data should answer to our laws, our values and our choices.</p>
+<section id="europe" data-transition="zoom" class="sd sd-europe">
+<div class="sd-row">
+<div>
+<p class="sd-kicker">Europe, independent</p>
+<h2>Europe can build its own.</h2>
+<p class="fragment fade-up sd-lead">450 million people. 27 countries. Our data should answer to our laws, our values and our choices.</p>
 </div>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" aria-hidden="true" style="width:560px;height:560px;flex:none"><polygon class="sd-star" style="animation-delay:0.0s" points="300.0,66.0 307.6,89.5 332.3,89.5 312.4,104.0 320.0,127.5 300.0,113.0 280.0,127.5 287.6,104.0 267.7,89.5 292.4,89.5" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:0.3s" points="400.0,92.8 407.6,116.3 432.3,116.3 412.4,130.8 420.0,154.3 400.0,139.8 380.0,154.3 387.6,130.8 367.7,116.3 392.4,116.3" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:0.5s" points="473.2,166.0 480.8,189.5 505.5,189.5 485.6,204.0 493.2,227.5 473.2,213.0 453.2,227.5 460.9,204.0 440.9,189.5 465.6,189.5" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:0.8s" points="500.0,266.0 507.6,289.5 532.3,289.5 512.4,304.0 520.0,327.5 500.0,313.0 480.0,327.5 487.6,304.0 467.7,289.5 492.4,289.5" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:1.1s" points="473.2,366.0 480.8,389.5 505.5,389.5 485.6,404.0 493.2,427.5 473.2,413.0 453.2,427.5 460.9,404.0 440.9,389.5 465.6,389.5" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:1.4s" points="400.0,439.2 407.6,462.7 432.3,462.7 412.4,477.2 420.0,500.7 400.0,486.2 380.0,500.7 387.6,477.2 367.7,462.7 392.4,462.7" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:1.6s" points="300.0,466.0 307.6,489.5 332.3,489.5 312.4,504.0 320.0,527.5 300.0,513.0 280.0,527.5 287.6,504.0 267.7,489.5 292.4,489.5" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:1.9s" points="200.0,439.2 207.6,462.7 232.3,462.7 212.4,477.2 220.0,500.7 200.0,486.2 180.0,500.7 187.6,477.2 167.7,462.7 192.4,462.7" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:2.2s" points="126.8,366.0 134.4,389.5 159.1,389.5 139.1,404.0 146.8,427.5 126.8,413.0 106.8,427.5 114.4,404.0 94.5,389.5 119.2,389.5" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:2.4s" points="100.0,266.0 107.6,289.5 132.3,289.5 112.4,304.0 120.0,327.5 100.0,313.0 80.0,327.5 87.6,304.0 67.7,289.5 92.4,289.5" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:2.7s" points="126.8,166.0 134.4,189.5 159.1,189.5 139.1,204.0 146.8,227.5 126.8,213.0 106.8,227.5 114.4,204.0 94.5,189.5 119.2,189.5" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:3.0s" points="200.0,92.8 207.6,116.3 232.3,116.3 212.4,130.8 220.0,154.3 200.0,139.8 180.0,154.3 187.6,130.8 167.7,116.3 192.4,116.3" fill="#ffcc00"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" aria-hidden="true" class="sd-stars"><polygon class="sd-star" style="animation-delay:0.0s" points="300.0,66.0 307.6,89.5 332.3,89.5 312.4,104.0 320.0,127.5 300.0,113.0 280.0,127.5 287.6,104.0 267.7,89.5 292.4,89.5" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:0.3s" points="400.0,92.8 407.6,116.3 432.3,116.3 412.4,130.8 420.0,154.3 400.0,139.8 380.0,154.3 387.6,130.8 367.7,116.3 392.4,116.3" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:0.5s" points="473.2,166.0 480.8,189.5 505.5,189.5 485.6,204.0 493.2,227.5 473.2,213.0 453.2,227.5 460.9,204.0 440.9,189.5 465.6,189.5" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:0.8s" points="500.0,266.0 507.6,289.5 532.3,289.5 512.4,304.0 520.0,327.5 500.0,313.0 480.0,327.5 487.6,304.0 467.7,289.5 492.4,289.5" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:1.1s" points="473.2,366.0 480.8,389.5 505.5,389.5 485.6,404.0 493.2,427.5 473.2,413.0 453.2,427.5 460.9,404.0 440.9,389.5 465.6,389.5" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:1.4s" points="400.0,439.2 407.6,462.7 432.3,462.7 412.4,477.2 420.0,500.7 400.0,486.2 380.0,500.7 387.6,477.2 367.7,462.7 392.4,462.7" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:1.6s" points="300.0,466.0 307.6,489.5 332.3,489.5 312.4,504.0 320.0,527.5 300.0,513.0 280.0,527.5 287.6,504.0 267.7,489.5 292.4,489.5" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:1.9s" points="200.0,439.2 207.6,462.7 232.3,462.7 212.4,477.2 220.0,500.7 200.0,486.2 180.0,500.7 187.6,477.2 167.7,462.7 192.4,462.7" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:2.2s" points="126.8,366.0 134.4,389.5 159.1,389.5 139.1,404.0 146.8,427.5 126.8,413.0 106.8,427.5 114.4,404.0 94.5,389.5 119.2,389.5" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:2.4s" points="100.0,266.0 107.6,289.5 132.3,289.5 112.4,304.0 120.0,327.5 100.0,313.0 80.0,327.5 87.6,304.0 67.7,289.5 92.4,289.5" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:2.7s" points="126.8,166.0 134.4,189.5 159.1,189.5 139.1,204.0 146.8,227.5 126.8,213.0 106.8,227.5 114.4,204.0 94.5,189.5 119.2,189.5" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:3.0s" points="200.0,92.8 207.6,116.3 232.3,116.3 212.4,130.8 220.0,154.3 200.0,139.8 180.0,154.3 187.6,130.8 167.7,116.3 192.4,116.3" fill="#ffcc00"/></svg>
 </div>
 <aside class="notes">The emotional core of the talk. Europe is not too small or too late: it is the largest single market in the world's democracies. The question is not whether we can, but whether we decide to.</aside>
 </section>
-<section id="law" data-transition="fade" style="background:#18191b;color:#e8eaed;font-family:Inter, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
-<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;color:#f3f4f6">Location is not jurisdiction.</h2>
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px">
-<div style="background:#1f2124;border:1px solid #3e4147;border-radius:20px;padding:44px;display:flex;flex-direction:column;gap:20px">
-<p style="font-size:28px;color:#7a8aff;font-weight:600">2018</p>
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:700">US CLOUD Act</h3>
-<p style="font-size:28px;color:#b0b5bd;line-height:1.45">US authorities can compel US providers to hand over data they control, wherever it is stored, including in an EU region.</p>
+<section id="law" data-transition="fade" class="sd">
+<h2>Location is not jurisdiction.</h2>
+<div class="sd-cards">
+<div class="sd-card">
+<p class="sd-kicker">2018</p>
+<h3>US CLOUD Act</h3>
+<p>US authorities can compel US providers to hand over data they control, wherever it is stored, including in an EU region.</p>
 </div>
-<div style="background:#1f2124;border:1px solid #3e4147;border-radius:20px;padding:44px;display:flex;flex-direction:column;gap:20px">
-<p style="font-size:28px;color:#7a8aff;font-weight:600">renewed 2024</p>
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:700">FISA Section 702</h3>
-<p style="font-size:28px;color:#b0b5bd;line-height:1.45">Allows surveillance of non-US persons’ communications held by US providers.</p>
+<div class="sd-card">
+<p class="sd-kicker">renewed 2024</p>
+<h3>FISA Section 702</h3>
+<p>Allows surveillance of non-US persons’ communications held by US providers.</p>
 </div>
-<div style="background:#1f2124;border:1px solid #3e4147;border-radius:20px;padding:44px;display:flex;flex-direction:column;gap:20px">
-<p style="font-size:28px;color:#7a8aff;font-weight:600">2020 → 2023</p>
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:700">Schrems II, then DPF</h3>
-<p style="font-size:28px;color:#b0b5bd;line-height:1.45">The EU’s top court struck down Privacy Shield. Its successor, the 2023 Data Privacy Framework, is challenged again.</p>
+<div class="sd-card">
+<p class="sd-kicker">2020 → 2023</p>
+<h3>Schrems II, then DPF</h3>
+<p>The EU’s top court struck down Privacy Shield. Its successor, the 2023 Data Privacy Framework, is challenged again.</p>
 </div>
 </div>
-<p style="font-size:32px;color:#e8eaed">An EU region of a US provider keeps the bytes in Europe. It does not put them under European law alone.</p>
+<p class="sd-lead">An EU region of a US provider keeps the bytes in Europe. It does not put them under European law alone.</p>
 <aside class="notes">Facts only: the CLOUD Act was enacted in March 2018. FISA Section 702 was reauthorised by Congress in April 2024. The CJEU invalidated Privacy Shield in July 2020 (Schrems II); the EU-US Data Privacy Framework adequacy decision followed in July 2023 and is being challenged. The point is legal exposure, not bad intent.</aside>
 </section>
-<section id="trump" data-transition="fade" style="background:radial-gradient(ellipse at 15% 0%, #4a1d24, #18191b 55%);color:#e8eaed;font-family:Inter, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px;justify-content:center">
-<div style="display:flex;flex-direction:column;gap:20px">
-<p style="font-size:28px;color:#ef6b6b;letter-spacing:4px;text-transform:uppercase;font-weight:600">2025, in four months</p>
-<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:96px;font-weight:700;line-height:1.04;color:#f3f4f6">Make your data Trump-proof.</h2>
+<section id="trump" data-transition="fade" class="sd" style="background:radial-gradient(ellipse at 15% 0%, #4a1d24, #18191b 55%)">
+<p class="sd-kicker">2025, in four months</p>
+<h2>Make your data Trump-proof.</h2>
+<div class="sd-cards">
+<div class="sd-card fragment fade-up">
+<p class="sd-kicker">January</p>
+<h3>Oversight removed</h3>
+<p>The White House dismissed the Democratic members of the PCLOB, the US privacy board the EU–US data deal relies on.</p>
 </div>
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px">
-<div class="fragment fade-up" style="background:rgba(31,33,36,.85);border:1px solid #3e4147;border-top:4px solid #ffcc00;border-radius:20px;padding:40px;display:flex;flex-direction:column;gap:18px">
-<p style="font-size:26px;color:#ffcc00;font-weight:600;letter-spacing:2px;text-transform:uppercase">January</p>
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:42px;font-weight:700;color:#f3f4f6">Oversight removed</h3>
-<p style="font-size:27px;color:#b0b5bd;line-height:1.45">The White House dismissed the Democratic members of the PCLOB, the US privacy board the EU–US data deal relies on.</p>
+<div class="sd-card fragment fade-up">
+<p class="sd-kicker">February</p>
+<h3>Sanctions by order</h3>
+<p>An executive order sanctioned the International Criminal Court. Its chief prosecutor was later reported to have lost his US-hosted email.</p>
 </div>
-<div class="fragment fade-up" style="background:rgba(31,33,36,.85);border:1px solid #3e4147;border-top:4px solid #ffcc00;border-radius:20px;padding:40px;display:flex;flex-direction:column;gap:18px">
-<p style="font-size:26px;color:#ffcc00;font-weight:600;letter-spacing:2px;text-transform:uppercase">February</p>
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:42px;font-weight:700;color:#f3f4f6">Sanctions by order</h3>
-<p style="font-size:27px;color:#b0b5bd;line-height:1.45">An executive order sanctioned the International Criminal Court. Its chief prosecutor was later reported to have lost his US-hosted email.</p>
-</div>
-<div class="fragment fade-up" style="background:rgba(31,33,36,.85);border:1px solid #3e4147;border-top:4px solid #ffcc00;border-radius:20px;padding:40px;display:flex;flex-direction:column;gap:18px">
-<p style="font-size:26px;color:#ffcc00;font-weight:600;letter-spacing:2px;text-transform:uppercase">April</p>
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:42px;font-weight:700;color:#f3f4f6">Tariffs overnight</h3>
-<p style="font-size:27px;color:#b0b5bd;line-height:1.45">Sweeping tariffs on EU goods were announced in a single afternoon.</p>
+<div class="sd-card fragment fade-up">
+<p class="sd-kicker">April</p>
+<h3>Tariffs overnight</h3>
+<p>Sweeping tariffs on EU goods were announced in a single afternoon.</p>
 </div>
 </div>
-<p class="fragment" style="font-size:40px;color:#ffffff;font-family:'Space Grotesk', Arial, sans-serif;font-weight:700">It is not about one president. It is about who can switch you off.</p>
+<p class="fragment sd-lead">It is not about one president. It is about who can switch you off.</p>
 <aside class="notes">Facts, all checkable: PCLOB members dismissed 27 January 2025; Executive Order 14203 sanctioning the ICC, 6 February 2025; AP reported in May 2025 that prosecutor Karim Khan lost access to his email; the 2 April 2025 tariff announcement set 20 % on EU goods, then paused for 90 days. Keep it calm: any government can change rules by order. The lesson is dependency, not party politics.</aside>
 </section>
-<section id="lockin" data-transition="fade" style="background:#1f2124;color:#e8eaed;font-family:Inter, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
-<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;color:#f3f4f6">Lock-in is built in four layers.</h2>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px">
-<div style="background:#18191b;border:1px solid #3e4147;border-radius:20px;padding:40px;display:flex;flex-direction:column;gap:14px">
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:40px;font-weight:700">The control plane</h3>
-<p style="font-size:28px;color:#b0b5bd;line-height:1.4">The vendor runs the brain of your platform. If they stop, you stop.</p>
+<section id="lockin" data-transition="fade" class="sd">
+<h2>Lock-in is built in four layers.</h2>
+<div class="sd-cards">
+<div class="sd-card">
+<h3>The control plane</h3>
+<p>The vendor runs the brain of your platform. If they stop, you stop.</p>
 </div>
-<div style="background:#18191b;border:1px solid #3e4147;border-radius:20px;padding:40px;display:flex;flex-direction:column;gap:14px">
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:40px;font-weight:700">The format</h3>
-<p style="font-size:28px;color:#b0b5bd;line-height:1.4">Proprietary tables and metadata only one engine can read well.</p>
+<div class="sd-card">
+<h3>The format</h3>
+<p>Proprietary tables and metadata only one engine can read well.</p>
 </div>
-<div style="background:#18191b;border:1px solid #3e4147;border-radius:20px;padding:40px;display:flex;flex-direction:column;gap:14px">
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:40px;font-weight:700">The licence</h3>
-<p style="font-size:28px;color:#b0b5bd;line-height:1.4">“Open” projects relicensed to source-available after adoption.</p>
+<div class="sd-card">
+<h3>The licence</h3>
+<p>“Open” projects relicensed to source-available after adoption.</p>
 </div>
-<div style="background:#18191b;border:1px solid #3e4147;border-radius:20px;padding:40px;display:flex;flex-direction:column;gap:14px">
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:40px;font-weight:700">The exit cost</h3>
-<p style="font-size:28px;color:#b0b5bd;line-height:1.4">Egress fees and rewrites make leaving a multi-year project.</p>
+<div class="sd-card">
+<h3>The exit cost</h3>
+<p>Egress fees and rewrites make leaving a multi-year project.</p>
 </div>
 </div>
 <aside class="notes">Each layer alone is manageable. Together they decide your roadmap for you. The EU Data Act, applicable since September 2025, pushes against the last one: cloud switching charges must end by January 2027. It does nothing about the other three.</aside>
 </section>
-<section id="tests" data-transition="fade" style="background:#18191b;color:#e8eaed;font-family:Inter, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
-<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;color:#f3f4f6">Sovereignty is four tests you can check.</h2>
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:24px">
-<div style="border-top:4px solid #7a8aff;padding:32px 8px;display:flex;flex-direction:column;gap:16px">
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:700">Location</h3>
-<p style="font-size:28px;color:#b0b5bd;line-height:1.4">Data, catalog and engines run in your perimeter.</p>
+<section id="tests" data-transition="fade" class="sd">
+<h2>Sovereignty is four tests you can check.</h2>
+<div class="sd-cards">
+<div class="sd-card">
+<h3>Location</h3>
+<p>Data, catalog and engines run in your perimeter.</p>
 </div>
-<div style="border-top:4px solid #7a8aff;padding:32px 8px;display:flex;flex-direction:column;gap:16px">
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:700">Control</h3>
-<p style="font-size:28px;color:#b0b5bd;line-height:1.4">You operate it. No vendor control plane, no phone-home.</p>
+<div class="sd-card">
+<h3>Control</h3>
+<p>You operate it. No vendor control plane, no phone-home.</p>
 </div>
-<div style="border-top:4px solid #7a8aff;padding:32px 8px;display:flex;flex-direction:column;gap:16px">
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:700">Portability</h3>
-<p style="font-size:28px;color:#b0b5bd;line-height:1.4">Open formats. You can leave on any day.</p>
+<div class="sd-card">
+<h3>Portability</h3>
+<p>Open formats. You can leave on any day.</p>
 </div>
-<div style="border-top:4px solid #7a8aff;padding:32px 8px;display:flex;flex-direction:column;gap:16px">
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:700">Continuity</h3>
-<p style="font-size:28px;color:#b0b5bd;line-height:1.4">Permissive licences. If anyone walks away, you fork.</p>
+<div class="sd-card">
+<h3>Continuity</h3>
+<p>Permissive licences. If anyone walks away, you fork.</p>
 </div>
 </div>
-<p style="font-size:32px;color:#e8eaed">Ask every platform, including ours, to pass all four.</p>
+<p class="sd-lead">Ask every platform, including ours, to pass all four.</p>
 <aside class="notes">This is the frame for the rest of the talk. Each test is a yes or no question a buyer can verify without trusting marketing.</aside>
 </section>
-<section id="licence" data-transition="fade" style="background:#1f2124;color:#e8eaed;font-family:Inter, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
-<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;color:#f3f4f6">Open source is the exit door. Only if it opens.</h2>
-<table style="font-size:30px;color:#e8eaed;font-family:Inter, Arial, sans-serif">
-<tr><th style="width:34%;text-align:left">Question</th><th style="width:33%;text-align:left">Source-available</th><th style="width:33%;text-align:left">Permissive open source</th></tr>
-<tr><td>Can you run it in production freely?</td><td style="color:#b0b5bd">Often limited</td><td>Yes</td></tr>
-<tr><td>Can someone offer it as a service?</td><td style="color:#b0b5bd">Usually forbidden</td><td>Yes</td></tr>
-<tr><td>Can you fork it and keep going?</td><td style="color:#b0b5bd">Not really</td><td>Yes</td></tr>
-<tr><td>Can the owner change the rules later?</td><td style="color:#b0b5bd">For new versions</td><td>Not for what you have</td></tr>
+<section id="licence" data-transition="fade" class="sd">
+<h2>Open source is the exit door. Only if it opens.</h2>
+<table>
+<tr><th>Question</th><th>Source-available</th><th>Permissive open source</th></tr>
+<tr><td>Can you run it in production freely?</td><td>Often limited</td><td>Yes</td></tr>
+<tr><td>Can someone offer it as a service?</td><td>Usually forbidden</td><td>Yes</td></tr>
+<tr><td>Can you fork it and keep going?</td><td>Not really</td><td>Yes</td></tr>
+<tr><td>Can the owner change the rules later?</td><td>For new versions</td><td>Not for what you have</td></tr>
 </table>
-<p style="font-size:32px;color:#b0b5bd">stardelt and its stack: Apache 2.0, MIT or BSD, with one documented, optional MPL 2.0 exception.</p>
+<p class="sd-lead">stardelt and its stack: Apache 2.0, MIT or BSD, with one documented, optional MPL 2.0 exception.</p>
 <aside class="notes">Licences decide whether the fourth test, continuity, is real. A fork of a permissively licensed project is a working exit; a fork of a source-available one is a legal question.</aside>
 </section>
-<section id="portable" data-transition="fade" style="background:#4f5ff0;color:#f5f6ff;font-family:Inter, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:center;gap:40px">
-<p style="font-size:28px;letter-spacing:4px;text-transform:uppercase;font-weight:600;color:#dfe3ff">Real portability</p>
-<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:96px;font-weight:700;line-height:1.08;width:1500px;color:#ffffff">Uninstall stardelt. Your tables still open.</h2>
-<p style="font-size:40px;line-height:1.4;width:1400px;color:#e6e9ff">Every table is Apache Iceberg and Parquet on your own S3 storage. Any Iceberg engine reads it tomorrow, with no export and no conversion.</p>
+<section id="portable" data-transition="fade" class="sd sd-quote" style="background:#4f5ff0">
+<p class="sd-kicker sd-gold">Real portability</p>
+<h2>Uninstall stardelt. Your tables still open.</h2>
+<p class="sd-lead">Every table is Apache Iceberg and Parquet on your own S3 storage. Any Iceberg engine reads it tomorrow, with no export and no conversion.</p>
 <aside class="notes">This is the slide to remember. Portability is not an export button; it is a format nobody owns.</aside>
 </section>
-<section id="stack" data-transition="fade" style="background:#18191b;color:#e8eaed;font-family:Inter, Arial, sans-serif;padding:96px 128px;display:flex;flex-direction:column;gap:40px;align-items:center">
-<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:64px;font-weight:700;color:#f3f4f6;align-self:start">One interface. Open engines. Your infrastructure.</h2>
-<img src="img/stack-overview.svg" alt="Nova gives one interface and API over open engines (Trino, Spark, Kafka, Airflow, Jupyter), which share Apache Iceberg tables, on your Kubernetes, your OIDC provider and your S3 storage" style="width:1320px;height:726px;object-fit:contain">
+<section id="stack" data-transition="fade" class="sd">
+<h2>One interface. Open engines. Your infrastructure.</h2>
+<div class="sd-figure">
+<img src="img/stack-overview.svg" alt="Nova gives one interface and API over open engines (Trino, Spark, Kafka, Airflow, Jupyter), which share Apache Iceberg tables, on your Kubernetes, your OIDC provider and your S3 storage">
+</div>
 <aside class="notes">stardelt composes proven open engines around one open table format, and adds what they lack together: one interface, one API, one sign-in and permissions by team. Logos are trademarks of their owners.</aside>
 </section>
-<section id="nolegacy" data-transition="fade" style="background:#1f2124;color:#e8eaed;font-family:Inter, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
-<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;color:#f3f4f6">No legacy inside.</h2>
-<table style="font-size:30px;color:#e8eaed;font-family:Inter, Arial, sans-serif">
-<tr><th style="width:50%;text-align:left">stardelt uses</th><th style="width:50%;text-align:left">left behind</th></tr>
-<tr><td>S3 object storage, yours</td><td style="color:#8e949e;text-decoration:line-through">HDFS</td></tr>
-<tr><td>Iceberg REST catalog</td><td style="color:#8e949e;text-decoration:line-through">Hive Metastore</td></tr>
-<tr><td>Spark Connect</td><td style="color:#8e949e;text-decoration:line-through">spark-submit on YARN</td></tr>
-<tr><td>Kafka in KRaft mode</td><td style="color:#8e949e;text-decoration:line-through">ZooKeeper</td></tr>
-<tr><td>OIDC, your provider</td><td style="color:#8e949e;text-decoration:line-through">Kerberos</td></tr>
-<tr><td>Rust control plane on Kubernetes</td><td style="color:#8e949e;text-decoration:line-through">install scripts on VMs</td></tr>
+<section id="nolegacy" data-transition="fade" class="sd">
+<h2>No legacy inside.</h2>
+<table>
+<tr><th>stardelt uses</th><th>left behind</th></tr>
+<tr><td>S3 object storage, yours</td><td><s>HDFS</s></td></tr>
+<tr><td>Iceberg REST catalog</td><td><s>Hive Metastore</s></td></tr>
+<tr><td>Spark Connect</td><td><s>spark-submit on YARN</s></td></tr>
+<tr><td>Kafka in KRaft mode</td><td><s>ZooKeeper</s></td></tr>
+<tr><td>OIDC, your provider</td><td><s>Kerberos</s></td></tr>
+<tr><td>Rust control plane on Kubernetes</td><td><s>install scripts on VMs</s></td></tr>
 </table>
 <aside class="notes">Sovereignty is not a reason to accept a 2010s stack. Every component is current-generation, cloud-native open source; nothing is there for compatibility with the last decade.</aside>
 </section>
-<section id="anywhere" data-transition="fade" style="background:#18191b;color:#e8eaed;font-family:Inter, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
-<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;color:#f3f4f6">Plugs into what you already run.</h2>
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px">
-<div style="background:#1f2124;border:1px solid #3e4147;border-radius:20px;padding:44px;display:flex;flex-direction:column;gap:18px">
+<section id="anywhere" data-transition="fade" class="sd">
+<h2>Plugs into what you already run.</h2>
+<div class="sd-cards">
+<div class="sd-card">
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:#7a8aff;width:56px;height:56px"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:700">Any Kubernetes</h3>
-<p style="font-size:28px;color:#b0b5bd;line-height:1.45">A European cloud, your data centre, or one small node to try it.</p>
+<h3>Any Kubernetes</h3>
+<p>A European cloud, your data centre, or one small node to try it.</p>
 </div>
-<div style="background:#1f2124;border:1px solid #3e4147;border-radius:20px;padding:44px;display:flex;flex-direction:column;gap:18px">
+<div class="sd-card">
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:#7a8aff;width:56px;height:56px"><path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"/><circle cx="16.5" cy="7.5" r=".5" fill="currentColor"/></svg>
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:700">Your sign-in</h3>
-<p style="font-size:28px;color:#b0b5bd;line-height:1.45">Any OIDC provider you run today. stardelt keeps no passwords.</p>
+<h3>Your sign-in</h3>
+<p>Any OIDC provider you run today. stardelt keeps no passwords.</p>
 </div>
-<div style="background:#1f2124;border:1px solid #3e4147;border-radius:20px;padding:44px;display:flex;flex-direction:column;gap:18px">
+<div class="sd-card">
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:#7a8aff;width:56px;height:56px"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:700">Your storage</h3>
-<p style="font-size:28px;color:#b0b5bd;line-height:1.45">Any S3-compatible store, in the region you choose.</p>
+<h3>Your storage</h3>
+<p>Any S3-compatible store, in the region you choose.</p>
 </div>
 </div>
-<p style="font-size:32px;color:#e8eaed">Nothing new to trust: stardelt adds the lakehouse, not another identity or storage silo.</p>
+<p class="sd-lead">Nothing new to trust: stardelt adds the lakehouse, not another identity or storage silo.</p>
 <aside class="notes">Enterprise reality: identity, secrets, storage, BI and monitoring already exist. stardelt integrates with them instead of shipping copies. Keycloak, object storage and others are available as starters for small installs.</aside>
 </section>
-<section id="before" data-transition="fade" style="background:radial-gradient(ellipse at 90% 100%, #10286e, #18191b 60%);color:#e8eaed;font-family:Inter, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px;justify-content:center">
-<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:88px;font-weight:700;color:#f3f4f6">Europe has done this before.</h2>
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:40px">
-<div class="fragment fade-up" style="display:flex;flex-direction:column;gap:14px;border-left:4px solid #ffcc00;padding:8px 0 8px 32px">
-<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;color:#ffcc00;line-height:1">1954</p>
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:700;color:#f3f4f6">CERN</h3>
-<p style="font-size:28px;color:#b0b5bd;line-height:1.45">Twelve countries pooled their science. In 1989 the web was invented there.</p>
+<section id="before" data-transition="fade" class="sd" style="background:radial-gradient(ellipse at 90% 100%, #10286e, #18191b 60%)">
+<h2>Europe has done this before.</h2>
+<div class="sd-steps">
+<div class="fragment fade-up">
+<div class="sd-num sd-gold">1954</div>
+<h3>CERN</h3>
+<p>Twelve countries pooled their science. In 1989 the web was invented there.</p>
 </div>
-<div class="fragment fade-up" style="display:flex;flex-direction:column;gap:14px;border-left:4px solid #ffcc00;padding:8px 0 8px 32px">
-<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;color:#ffcc00;line-height:1">1970</p>
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:700;color:#f3f4f6">Airbus</h3>
-<p style="font-size:28px;color:#b0b5bd;line-height:1.45">Built against a giant. Today the world’s largest maker of airliners.</p>
+<div class="fragment fade-up">
+<div class="sd-num sd-gold">1970</div>
+<h3>Airbus</h3>
+<p>Built against a giant. Today the world’s largest maker of airliners.</p>
 </div>
-<div class="fragment fade-up" style="display:flex;flex-direction:column;gap:14px;border-left:4px solid #ffcc00;padding:8px 0 8px 32px">
-<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;color:#ffcc00;line-height:1">1991</p>
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:700;color:#f3f4f6">Linux</h3>
-<p style="font-size:28px;color:#b0b5bd;line-height:1.45">A student project in Helsinki. Today it runs most of the world’s servers.</p>
+<div class="fragment fade-up">
+<div class="sd-num sd-gold">1991</div>
+<h3>Linux</h3>
+<p>A student project in Helsinki. Today it runs most of the world’s servers.</p>
 </div>
-<div class="fragment fade-up" style="display:flex;flex-direction:column;gap:14px;border-left:4px solid #ffcc00;padding:8px 0 8px 32px">
-<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;color:#ffcc00;line-height:1">2016</p>
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:700;color:#f3f4f6">Galileo</h3>
-<p style="font-size:28px;color:#b0b5bd;line-height:1.45">Europe’s own satellite navigation, free for everyone to use.</p>
+<div class="fragment fade-up">
+<div class="sd-num sd-gold">2016</div>
+<h3>Galileo</h3>
+<p>Europe’s own satellite navigation, free for everyone to use.</p>
 </div>
 </div>
-<p class="fragment" style="font-size:40px;color:#ffffff;font-family:'Space Grotesk', Arial, sans-serif;font-weight:700">Data platforms are next.</p>
+<p class="fragment sd-lead">Data platforms are next.</p>
 <aside class="notes">Every one of these looked impossible at the start and became infrastructure the whole world uses. Open source data platforms are the same kind of project: shared, public, owned by nobody and usable by everybody.</aside>
 </section>
-<section id="path" data-transition="fade" style="background:#1f2124;color:#e8eaed;font-family:Inter, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
-<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;color:#f3f4f6">Start small. Leave nothing behind.</h2>
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px">
-<div style="display:flex;flex-direction:column;gap:16px">
-<p style="font-size:88px;font-family:'Space Grotesk', Arial, sans-serif;font-weight:700;color:#7a8aff">1</p>
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:700">Try</h3>
-<p style="font-size:28px;color:#b0b5bd;line-height:1.45">Install on one node in about 15 minutes. Load a file, query it.</p>
+<section id="path" data-transition="fade" class="sd">
+<h2>Start small. Leave nothing behind.</h2>
+<div class="sd-steps">
+<div>
+<h3>Try</h3>
+<p>Install on one node in about 15 minutes. Load a file, query it.</p>
 </div>
-<div style="display:flex;flex-direction:column;gap:16px">
-<p style="font-size:88px;font-family:'Space Grotesk', Arial, sans-serif;font-weight:700;color:#7a8aff">2</p>
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:700">Pilot</h3>
-<p style="font-size:28px;color:#b0b5bd;line-height:1.45">One team, its own catalogs, your sign-in and your storage.</p>
+<div>
+<h3>Pilot</h3>
+<p>One team, its own catalogs, your sign-in and your storage.</p>
 </div>
-<div style="display:flex;flex-direction:column;gap:16px">
-<p style="font-size:88px;font-family:'Space Grotesk', Arial, sans-serif;font-weight:700;color:#7a8aff">3</p>
-<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:700">Grow</h3>
-<p style="font-size:28px;color:#b0b5bd;line-height:1.45">More teams, dev and prod stages, everything moving through Git.</p>
+<div>
+<h3>Grow</h3>
+<p>More teams, dev and prod stages, everything moving through Git.</p>
 </div>
 </div>
-<p style="font-size:28px;color:#8e949e">Honest status: stardelt is pre-alpha and changing quickly. The roadmap says what works today.</p>
+<p class="sd-foot">Honest status: stardelt is pre-alpha and changing quickly. The roadmap says what works today.</p>
 <aside class="notes">Close the loop on the four tests: location, control, portability and continuity hold from step one, because they are properties of the design, not of a contract.</aside>
 </section>
-<section id="freedom" data-transition="zoom" style="background:#18191b;color:#e8eaed;font-family:Inter, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:48px">
-<p style="font-family:'Space Grotesk', Arial, sans-serif;font-size:120px;font-weight:700;line-height:1.05;color:#f3f4f6;width:1700px">Independence is not a wall.</p>
-<p class="fragment fade-up" style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.15;width:1500px;color:#ffcc00">It is the freedom to choose, and to leave.</p>
+<section id="freedom" data-transition="zoom" class="sd sd-quote">
+<blockquote>Independence is not a wall.</blockquote>
+<p class="fragment fade-up sd-lead sd-gold">It is the freedom to choose, and to leave.</p>
 <aside class="notes">Sovereignty is often heard as isolation. It is the opposite: open formats and open licences let you work with anyone, because you are never forced to stay.</aside>
 </section>
-<section id="close" data-transition="fade" style="background:radial-gradient(ellipse at 20% 80%, #2a2f6b, #18191b 60%);color:#e8eaed;font-family:Inter, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:center;gap:40px">
-<div style="display:flex;align-items:center;gap:64px"><h1 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:120px;font-weight:700;line-height:1.05;color:#f3f4f6;flex:1">Your data. Your law. Your platform.</h1><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" aria-hidden="true" style="width:380px;height:380px;flex:none"><polygon class="sd-star" style="animation-delay:0.0s" points="300.0,66.0 307.6,89.5 332.3,89.5 312.4,104.0 320.0,127.5 300.0,113.0 280.0,127.5 287.6,104.0 267.7,89.5 292.4,89.5" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:0.3s" points="400.0,92.8 407.6,116.3 432.3,116.3 412.4,130.8 420.0,154.3 400.0,139.8 380.0,154.3 387.6,130.8 367.7,116.3 392.4,116.3" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:0.5s" points="473.2,166.0 480.8,189.5 505.5,189.5 485.6,204.0 493.2,227.5 473.2,213.0 453.2,227.5 460.9,204.0 440.9,189.5 465.6,189.5" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:0.8s" points="500.0,266.0 507.6,289.5 532.3,289.5 512.4,304.0 520.0,327.5 500.0,313.0 480.0,327.5 487.6,304.0 467.7,289.5 492.4,289.5" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:1.1s" points="473.2,366.0 480.8,389.5 505.5,389.5 485.6,404.0 493.2,427.5 473.2,413.0 453.2,427.5 460.9,404.0 440.9,389.5 465.6,389.5" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:1.4s" points="400.0,439.2 407.6,462.7 432.3,462.7 412.4,477.2 420.0,500.7 400.0,486.2 380.0,500.7 387.6,477.2 367.7,462.7 392.4,462.7" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:1.6s" points="300.0,466.0 307.6,489.5 332.3,489.5 312.4,504.0 320.0,527.5 300.0,513.0 280.0,527.5 287.6,504.0 267.7,489.5 292.4,489.5" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:1.9s" points="200.0,439.2 207.6,462.7 232.3,462.7 212.4,477.2 220.0,500.7 200.0,486.2 180.0,500.7 187.6,477.2 167.7,462.7 192.4,462.7" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:2.2s" points="126.8,366.0 134.4,389.5 159.1,389.5 139.1,404.0 146.8,427.5 126.8,413.0 106.8,427.5 114.4,404.0 94.5,389.5 119.2,389.5" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:2.4s" points="100.0,266.0 107.6,289.5 132.3,289.5 112.4,304.0 120.0,327.5 100.0,313.0 80.0,327.5 87.6,304.0 67.7,289.5 92.4,289.5" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:2.7s" points="126.8,166.0 134.4,189.5 159.1,189.5 139.1,204.0 146.8,227.5 126.8,213.0 106.8,227.5 114.4,204.0 94.5,189.5 119.2,189.5" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:3.0s" points="200.0,92.8 207.6,116.3 232.3,116.3 212.4,130.8 220.0,154.3 200.0,139.8 180.0,154.3 187.6,130.8 167.7,116.3 192.4,116.3" fill="#ffcc00"/></svg></div>
-<p style="font-size:40px;color:#b0b5bd">stardelt.io · github.com/stardelt · Apache 2.0</p>
+<section id="close" data-transition="fade" class="sd sd-cover">
+<div class="sd-row"><h1>Your data. Your law. Your platform.</h1><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" aria-hidden="true" class="sd-stars"><polygon class="sd-star" style="animation-delay:0.0s" points="300.0,66.0 307.6,89.5 332.3,89.5 312.4,104.0 320.0,127.5 300.0,113.0 280.0,127.5 287.6,104.0 267.7,89.5 292.4,89.5" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:0.3s" points="400.0,92.8 407.6,116.3 432.3,116.3 412.4,130.8 420.0,154.3 400.0,139.8 380.0,154.3 387.6,130.8 367.7,116.3 392.4,116.3" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:0.5s" points="473.2,166.0 480.8,189.5 505.5,189.5 485.6,204.0 493.2,227.5 473.2,213.0 453.2,227.5 460.9,204.0 440.9,189.5 465.6,189.5" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:0.8s" points="500.0,266.0 507.6,289.5 532.3,289.5 512.4,304.0 520.0,327.5 500.0,313.0 480.0,327.5 487.6,304.0 467.7,289.5 492.4,289.5" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:1.1s" points="473.2,366.0 480.8,389.5 505.5,389.5 485.6,404.0 493.2,427.5 473.2,413.0 453.2,427.5 460.9,404.0 440.9,389.5 465.6,389.5" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:1.4s" points="400.0,439.2 407.6,462.7 432.3,462.7 412.4,477.2 420.0,500.7 400.0,486.2 380.0,500.7 387.6,477.2 367.7,462.7 392.4,462.7" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:1.6s" points="300.0,466.0 307.6,489.5 332.3,489.5 312.4,504.0 320.0,527.5 300.0,513.0 280.0,527.5 287.6,504.0 267.7,489.5 292.4,489.5" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:1.9s" points="200.0,439.2 207.6,462.7 232.3,462.7 212.4,477.2 220.0,500.7 200.0,486.2 180.0,500.7 187.6,477.2 167.7,462.7 192.4,462.7" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:2.2s" points="126.8,366.0 134.4,389.5 159.1,389.5 139.1,404.0 146.8,427.5 126.8,413.0 106.8,427.5 114.4,404.0 94.5,389.5 119.2,389.5" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:2.4s" points="100.0,266.0 107.6,289.5 132.3,289.5 112.4,304.0 120.0,327.5 100.0,313.0 80.0,327.5 87.6,304.0 67.7,289.5 92.4,289.5" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:2.7s" points="126.8,166.0 134.4,189.5 159.1,189.5 139.1,204.0 146.8,227.5 126.8,213.0 106.8,227.5 114.4,204.0 94.5,189.5 119.2,189.5" fill="#ffcc00"/><polygon class="sd-star" style="animation-delay:3.0s" points="200.0,92.8 207.6,116.3 232.3,116.3 212.4,130.8 220.0,154.3 200.0,139.8 180.0,154.3 187.6,130.8 167.7,116.3 192.4,116.3" fill="#ffcc00"/></svg></div>
+<p class="sd-lead">stardelt.io · github.com/stardelt · Apache 2.0</p>
 <aside class="notes">Invite people to try the quickstart and to open issues. The project decides in public, through the roadmap and pull requests.</aside>
 </section>
 </div></div>
