@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sovereign data, on your terms</title>
+<meta name="description" content="stardelt — EU data sovereignty, open source and real portability. Content Apache 2.0.">
+<link rel="stylesheet" href="../vendor/reveal/reveal.css">
+<link rel="stylesheet" href="../shared/stardelt.css">
+</head>
+<body>
+<div class="reveal"><div class="slides">
+<section id="cover" data-transition="fade" style="background:radial-gradient(ellipse at 80% 20%, #2a2f6b, #18191b 60%);color:#e8eaed;font-family:Inter, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:center;gap:40px">
+<p style="font-size:28px;color:#7a8aff;letter-spacing:4px;text-transform:uppercase;font-weight:600">stardelt</p>
+<h1 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:120px;font-weight:700;line-height:1.05;color:#f3f4f6;width:1400px">Sovereign data, on your terms.</h1>
+<p style="font-size:40px;color:#b0b5bd;width:1300px;line-height:1.35">Why Europe’s data platforms belong inside Europe’s own perimeter, and how open source makes leaving anyone possible.</p>
+<aside class="notes">Opening: this talk is about control. Not about cloud versus on-premises, but about who decides what happens to your data, under which law, and whether you can leave.</aside>
+</section>
+<section id="law" data-transition="fade" style="background:#18191b;color:#e8eaed;font-family:Inter, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;color:#f3f4f6">Location is not jurisdiction.</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px">
+<div style="background:#1f2124;border:1px solid #3e4147;border-radius:20px;padding:44px;display:flex;flex-direction:column;gap:20px">
+<p style="font-size:28px;color:#7a8aff;font-weight:600">2018</p>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:700">US CLOUD Act</h3>
+<p style="font-size:28px;color:#b0b5bd;line-height:1.45">US authorities can compel US providers to hand over data they control, wherever it is stored, including in an EU region.</p>
+</div>
+<div style="background:#1f2124;border:1px solid #3e4147;border-radius:20px;padding:44px;display:flex;flex-direction:column;gap:20px">
+<p style="font-size:28px;color:#7a8aff;font-weight:600">renewed 2024</p>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:700">FISA Section 702</h3>
+<p style="font-size:28px;color:#b0b5bd;line-height:1.45">Allows surveillance of non-US persons’ communications held by US providers.</p>
+</div>
+<div style="background:#1f2124;border:1px solid #3e4147;border-radius:20px;padding:44px;display:flex;flex-direction:column;gap:20px">
+<p style="font-size:28px;color:#7a8aff;font-weight:600">2020 → 2023</p>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:700">Schrems II, then DPF</h3>
+<p style="font-size:28px;color:#b0b5bd;line-height:1.45">The EU’s top court struck down Privacy Shield. Its successor, the 2023 Data Privacy Framework, is challenged again.</p>
+</div>
+</div>
+<p style="font-size:32px;color:#e8eaed">An EU region of a US provider keeps the bytes in Europe. It does not put them under European law alone.</p>
+<aside class="notes">Facts only: the CLOUD Act was enacted in March 2018. FISA Section 702 was reauthorised by Congress in April 2024. The CJEU invalidated Privacy Shield in July 2020 (Schrems II); the EU-US Data Privacy Framework adequacy decision followed in July 2023 and is being challenged. The point is legal exposure, not bad intent.</aside>
+</section>
+<section id="lockin" data-transition="fade" style="background:#1f2124;color:#e8eaed;font-family:Inter, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;color:#f3f4f6">Lock-in is built in four layers.</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px">
+<div style="background:#18191b;border:1px solid #3e4147;border-radius:20px;padding:40px;display:flex;flex-direction:column;gap:14px">
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:40px;font-weight:700">The control plane</h3>
+<p style="font-size:28px;color:#b0b5bd;line-height:1.4">The vendor runs the brain of your platform. If they stop, you stop.</p>
+</div>
+<div style="background:#18191b;border:1px solid #3e4147;border-radius:20px;padding:40px;display:flex;flex-direction:column;gap:14px">
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:40px;font-weight:700">The format</h3>
+<p style="font-size:28px;color:#b0b5bd;line-height:1.4">Proprietary tables and metadata only one engine can read well.</p>
+</div>
+<div style="background:#18191b;border:1px solid #3e4147;border-radius:20px;padding:40px;display:flex;flex-direction:column;gap:14px">
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:40px;font-weight:700">The licence</h3>
+<p style="font-size:28px;color:#b0b5bd;line-height:1.4">“Open” projects relicensed to source-available after adoption.</p>
+</div>
+<div style="background:#18191b;border:1px solid #3e4147;border-radius:20px;padding:40px;display:flex;flex-direction:column;gap:14px">
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:40px;font-weight:700">The exit cost</h3>
+<p style="font-size:28px;color:#b0b5bd;line-height:1.4">Egress fees and rewrites make leaving a multi-year project.</p>
+</div>
+</div>
+<aside class="notes">Each layer alone is manageable. Together they decide your roadmap for you. The EU Data Act, applicable since September 2025, pushes against the last one: cloud switching charges must end by January 2027. It does nothing about the other three.</aside>
+</section>
+<section id="tests" data-transition="fade" style="background:#18191b;color:#e8eaed;font-family:Inter, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;color:#f3f4f6">Sovereignty is four tests you can check.</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:24px">
+<div style="border-top:4px solid #7a8aff;padding:32px 8px;display:flex;flex-direction:column;gap:16px">
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:700">Location</h3>
+<p style="font-size:28px;color:#b0b5bd;line-height:1.4">Data, catalog and engines run in your perimeter.</p>
+</div>
+<div style="border-top:4px solid #7a8aff;padding:32px 8px;display:flex;flex-direction:column;gap:16px">
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:700">Control</h3>
+<p style="font-size:28px;color:#b0b5bd;line-height:1.4">You operate it. No vendor control plane, no phone-home.</p>
+</div>
+<div style="border-top:4px solid #7a8aff;padding:32px 8px;display:flex;flex-direction:column;gap:16px">
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:700">Portability</h3>
+<p style="font-size:28px;color:#b0b5bd;line-height:1.4">Open formats. You can leave on any day.</p>
+</div>
+<div style="border-top:4px solid #7a8aff;padding:32px 8px;display:flex;flex-direction:column;gap:16px">
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:700">Continuity</h3>
+<p style="font-size:28px;color:#b0b5bd;line-height:1.4">Permissive licences. If anyone walks away, you fork.</p>
+</div>
+</div>
+<p style="font-size:32px;color:#e8eaed">Ask every platform, including ours, to pass all four.</p>
+<aside class="notes">This is the frame for the rest of the talk. Each test is a yes or no question a buyer can verify without trusting marketing.</aside>
+</section>
+<section id="licence" data-transition="fade" style="background:#1f2124;color:#e8eaed;font-family:Inter, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;color:#f3f4f6">Open source is the exit door. Only if it opens.</h2>
+<table style="font-size:30px;color:#e8eaed;font-family:Inter, Arial, sans-serif">
+<tr><th style="width:34%;text-align:left">Question</th><th style="width:33%;text-align:left">Source-available</th><th style="width:33%;text-align:left">Permissive open source</th></tr>
+<tr><td>Can you run it in production freely?</td><td style="color:#b0b5bd">Often limited</td><td>Yes</td></tr>
+<tr><td>Can someone offer it as a service?</td><td style="color:#b0b5bd">Usually forbidden</td><td>Yes</td></tr>
+<tr><td>Can you fork it and keep going?</td><td style="color:#b0b5bd">Not really</td><td>Yes</td></tr>
+<tr><td>Can the owner change the rules later?</td><td style="color:#b0b5bd">For new versions</td><td>Not for what you have</td></tr>
+</table>
+<p style="font-size:32px;color:#b0b5bd">stardelt and its stack: Apache 2.0, MIT or BSD, with one documented, optional MPL 2.0 exception.</p>
+<aside class="notes">Licences decide whether the fourth test, continuity, is real. A fork of a permissively licensed project is a working exit; a fork of a source-available one is a legal question.</aside>
+</section>
+<section id="portable" data-transition="fade" style="background:#4f5ff0;color:#f5f6ff;font-family:Inter, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:center;gap:40px">
+<p style="font-size:28px;letter-spacing:4px;text-transform:uppercase;font-weight:600;color:#dfe3ff">Real portability</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:96px;font-weight:700;line-height:1.08;width:1500px;color:#ffffff">Uninstall stardelt. Your tables still open.</h2>
+<p style="font-size:40px;line-height:1.4;width:1400px;color:#e6e9ff">Every table is Apache Iceberg and Parquet on your own S3 storage. Any Iceberg engine reads it tomorrow, with no export and no conversion.</p>
+<aside class="notes">This is the slide to remember. Portability is not an export button; it is a format nobody owns.</aside>
+</section>
+<section id="stack" data-transition="fade" style="background:#18191b;color:#e8eaed;font-family:Inter, Arial, sans-serif;padding:96px 128px;display:flex;flex-direction:column;gap:40px;align-items:center">
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:64px;font-weight:700;color:#f3f4f6;align-self:start">One interface. Open engines. Your infrastructure.</h2>
+<img src="img/stack-overview.svg" alt="Nova gives one interface and API over open engines (Trino, Spark, Kafka, Airflow, Jupyter), which share Apache Iceberg tables, on your Kubernetes, your OIDC provider and your S3 storage" style="width:1320px;height:726px;object-fit:contain">
+<aside class="notes">stardelt composes proven open engines around one open table format, and adds what they lack together: one interface, one API, one sign-in and permissions by team. Logos are trademarks of their owners.</aside>
+</section>
+<section id="nolegacy" data-transition="fade" style="background:#1f2124;color:#e8eaed;font-family:Inter, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;color:#f3f4f6">No legacy inside.</h2>
+<table style="font-size:30px;color:#e8eaed;font-family:Inter, Arial, sans-serif">
+<tr><th style="width:50%;text-align:left">stardelt uses</th><th style="width:50%;text-align:left">left behind</th></tr>
+<tr><td>S3 object storage, yours</td><td style="color:#8e949e;text-decoration:line-through">HDFS</td></tr>
+<tr><td>Iceberg REST catalog</td><td style="color:#8e949e;text-decoration:line-through">Hive Metastore</td></tr>
+<tr><td>Spark Connect</td><td style="color:#8e949e;text-decoration:line-through">spark-submit on YARN</td></tr>
+<tr><td>Kafka in KRaft mode</td><td style="color:#8e949e;text-decoration:line-through">ZooKeeper</td></tr>
+<tr><td>OIDC, your provider</td><td style="color:#8e949e;text-decoration:line-through">Kerberos</td></tr>
+<tr><td>Rust control plane on Kubernetes</td><td style="color:#8e949e;text-decoration:line-through">install scripts on VMs</td></tr>
+</table>
+<aside class="notes">Sovereignty is not a reason to accept a 2010s stack. Every component is current-generation, cloud-native open source; nothing is there for compatibility with the last decade.</aside>
+</section>
+<section id="anywhere" data-transition="fade" style="background:#18191b;color:#e8eaed;font-family:Inter, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;color:#f3f4f6">Plugs into what you already run.</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px">
+<div style="background:#1f2124;border:1px solid #3e4147;border-radius:20px;padding:44px;display:flex;flex-direction:column;gap:18px">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:#7a8aff;width:56px;height:56px"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:700">Any Kubernetes</h3>
+<p style="font-size:28px;color:#b0b5bd;line-height:1.45">A European cloud, your data centre, or one small node to try it.</p>
+</div>
+<div style="background:#1f2124;border:1px solid #3e4147;border-radius:20px;padding:44px;display:flex;flex-direction:column;gap:18px">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:#7a8aff;width:56px;height:56px"><path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"/><circle cx="16.5" cy="7.5" r=".5" fill="currentColor"/></svg>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:700">Your sign-in</h3>
+<p style="font-size:28px;color:#b0b5bd;line-height:1.45">Any OIDC provider you run today. stardelt keeps no passwords.</p>
+</div>
+<div style="background:#1f2124;border:1px solid #3e4147;border-radius:20px;padding:44px;display:flex;flex-direction:column;gap:18px">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:#7a8aff;width:56px;height:56px"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:700">Your storage</h3>
+<p style="font-size:28px;color:#b0b5bd;line-height:1.45">Any S3-compatible store, in the region you choose.</p>
+</div>
+</div>
+<p style="font-size:32px;color:#e8eaed">Nothing new to trust: stardelt adds the lakehouse, not another identity or storage silo.</p>
+<aside class="notes">Enterprise reality: identity, secrets, storage, BI and monitoring already exist. stardelt integrates with them instead of shipping copies. Keycloak, object storage and others are available as starters for small installs.</aside>
+</section>
+<section id="path" data-transition="fade" style="background:#1f2124;color:#e8eaed;font-family:Inter, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:56px">
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;color:#f3f4f6">Start small. Leave nothing behind.</h2>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:88px;font-family:'Space Grotesk', Arial, sans-serif;font-weight:700;color:#7a8aff">1</p>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:700">Try</h3>
+<p style="font-size:28px;color:#b0b5bd;line-height:1.45">Install on one node in about 15 minutes. Load a file, query it.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:88px;font-family:'Space Grotesk', Arial, sans-serif;font-weight:700;color:#7a8aff">2</p>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:700">Pilot</h3>
+<p style="font-size:28px;color:#b0b5bd;line-height:1.45">One team, its own catalogs, your sign-in and your storage.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:88px;font-family:'Space Grotesk', Arial, sans-serif;font-weight:700;color:#7a8aff">3</p>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:700">Grow</h3>
+<p style="font-size:28px;color:#b0b5bd;line-height:1.45">More teams, dev and prod stages, everything moving through Git.</p>
+</div>
+</div>
+<p style="font-size:28px;color:#8e949e">Honest status: stardelt is pre-alpha and changing quickly. The roadmap says what works today.</p>
+<aside class="notes">Close the loop on the four tests: location, control, portability and continuity hold from step one, because they are properties of the design, not of a contract.</aside>
+</section>
+<section id="close" data-transition="fade" style="background:radial-gradient(ellipse at 20% 80%, #2a2f6b, #18191b 60%);color:#e8eaed;font-family:Inter, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:center;gap:40px">
+<h1 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:120px;font-weight:700;line-height:1.05;color:#f3f4f6">Your data. Your law. Your platform.</h1>
+<p style="font-size:40px;color:#b0b5bd">stardelt.io · github.com/stardelt · Apache 2.0</p>
+<aside class="notes">Invite people to try the quickstart and to open issues. The project decides in public, through the roadmap and pull requests.</aside>
+</section>
+</div></div>
+<script src="../vendor/reveal/reveal.js"></script>
+<script src="../vendor/reveal/plugin/notes/notes.js"></script>
+<script src="../shared/init.js"></script>
+</body>
+</html>

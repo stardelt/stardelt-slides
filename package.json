@@ -1,20 +1,10 @@
 {
   "name": "stardelt-slides",
-  "description": "stardelt presentations — Slidev decks for talks, demos and community events",
-  "type": "module",
   "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "slidev slides/stardelt.md",
-    "build": "slidev build slides/stardelt.md --out ../dist",
-    "export": "slidev export slides/stardelt.md"
-  },
-  "engines": {
-    "node": ">=20"
-  },
-  "dependencies": {
-    "@slidev/cli": "^52.16.0",
-    "@slidev/theme-default": "latest",
-    "@slidev/theme-seriph": "latest",
-    "vue": "^3.5.33"
+    "check": "node scripts/check.mjs",
+    "build": "node scripts/check.mjs && node scripts/build.mjs",
+    "serve": "npx --yes serve@14 _site"
   }
 }

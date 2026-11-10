@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>stardelt, your own data platform</title>
+<meta name="description" content="stardelt — your own data platform: Iceberg, SQL, pipelines, notebooks, streams and dashboards behind one sign-in, one interface and one API, inside your own Kubernetes. Content Apache 2.0.">
+<link rel="stylesheet" href="../vendor/reveal/reveal.css">
+<link rel="stylesheet" href="../shared/stardelt.css">
+</head>
+<body>
+<div class="reveal"><div class="slides">
+<section data-markdown class="sd-cover"><textarea data-template>
+# stardelt
+
+### Your own data platform
+
+One sign-in, one interface, one API — inside your own Kubernetes.
+
+Open source · Apache 2.0 components · Kubernetes-native
+
+Note: Title slide. Say what the talk is: a data platform you own, built from permissive open source, on your own Kubernetes.
+</textarea></section>
+<section data-markdown class="sd-center"><textarea data-template>
+# Data platforms are rented, not owned
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;text-align:left">
+
+<div>
+
+**Rented** — a managed control plane, a per-seat bill, a region you do not choose.
+
+**Fragmented** — one vendor for the catalog, another for SQL, a third for pipelines, a fourth for BI.
+
+</div>
+<div>
+
+**Locked in** — your tables live in a format only the vendor reads well.
+
+**Opaque** — you cannot see the query, the grant or the job without asking support.
+
+</div>
+</div>
+
+Note: Set up the problem in four words: rented, fragmented, locked in, opaque. Ask the audience which of them they recognise.
+</textarea></section>
+<section data-markdown class="sd-center"><textarea data-template>
+# What stardelt is
+
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px;text-align:left">
+
+<div style="background:#1f2124;border:1px solid #3e4147;border-radius:20px;padding:40px">
+
+### One sign-in
+
+Your identity provider, your groups, your policies. Keycloak included, or bring your own OIDC.
+
+</div>
+<div style="background:#1f2124;border:1px solid #3e4147;border-radius:20px;padding:40px">
+
+### One interface
+
+Catalog, SQL, pipelines, notebooks, streams and dashboards in one place — stardelt Nova.
+
+</div>
+<div style="background:#1f2124;border:1px solid #3e4147;border-radius:20px;padding:40px">
+
+### One API
+
+Every screen is a documented API call. Kubernetes resources describe the platform itself.
+
+</div>
+</div>
+
+Note: Three promises: one sign-in, one interface, one API. Each one answers a layer of lock-in from the previous slide.
+</textarea></section>
+<section data-markdown class="sd-default"><textarea data-template>
+# The shape of it
+
+<div style="display:flex;justify-content:center;padding-top:8px">
+
+<img src="img/architecture-layers.svg" alt="stardelt architecture: Nova and the operator on top, the always-installed core stack, optional services, and your Kubernetes underneath" style="max-height:380px;width:auto">
+
+</div>
+
+Control plane, data plane, applications and platform services. On your Kubernetes, nothing calls home.
+
+Note: Walk the four layers bottom-up: your Kubernetes, the core stack that is always installed, optional services, and the control plane with Nova and the operator.
+</textarea></section>
+<section data-markdown class="sd-center"><textarea data-template>
+# The lakehouse core
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;text-align:left">
+
+<div>
+
+**Apache Iceberg** — the table format every engine reads and writes. Not a service you install.
+
+**Lakekeeper** — the Iceberg REST catalog: metadata, warehouses, short-lived credentials.
+
+</div>
+<div>
+
+**Trino** — one SQL engine over every table you may read.
+
+**SeaweedFS** — S3-compatible storage by default. Bring your own bucket instead.
+
+</div>
+</div>
+
+Note: The core is deliberately small and standard: a table format, a REST catalog, a SQL engine and object storage — all replaceable.
+</textarea></section>
+<section class="sd-two">
+<div>
+<h1>One interface</h1>
+<ul>
+<li>Catalog explorer over every catalog you may see</li>
+<li>SQL editor with results, history and lineage</li>
+<li>Pipelines, notebooks and streams in the same place</li>
+<li>Dashboards from Superset, embedded with the same sign-in</li>
+<li>A platform health view that reports what is actually running</li>
+</ul>
+</div>
+<div><img class="sd-shot" src="img/nova-overview.png" alt="stardelt Nova overview: catalogs, recent activity and platform apps"></div>
+<aside class="notes">The interface is the product's opinion: Nova puts catalogs, SQL, pipelines, notebooks, streams and dashboards behind the same sign-in, so a team never juggles five tools.</aside>
+</section>
+<section class="sd-two">
+<div>
+<h1>Find the data</h1>
+<ul>
+<li>Catalogs, schemas, tables and views in one tree</li>
+<li>Columns, partitions, snapshots and table history</li>
+<li>Descriptions, tags and owners next to the data</li>
+<li>Lineage from the table you are looking at</li>
+</ul>
+</div>
+<div><img class="sd-shot" src="img/nova-catalog.png" alt="stardelt Nova catalog explorer with catalogs, schemas and tables"></div>
+<aside class="notes">Finding data is not a search box problem: it needs columns, partitions, snapshots, ownership and lineage in one place, next to the table you are looking at.</aside>
+</section>
+<section data-markdown class="sd-center"><textarea data-template>
+# Streaming that is a resource, not a project
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;text-align:left">
+
+<div>
+
+A `StreamApp` is a Kafka topic in and an Iceberg table out. The operator creates the application, the checkpoint on S3 and the status a reader can trust.
+
+</div>
+<div>
+
+```yaml
+apiVersion: stardelt.io/v1alpha1
+kind: StreamApp
+metadata: { name: pegelonline }
+spec:
+  source: { topic: pegelonline.measurements }
+  sink:
+    catalog: mobility
+    table: bronze.pegelonline_continuous
+    mode: merge
+    mergeKeys: [station_uuid, timeseries, measured_at]
+  ownerGroup: mobility-analytics
+```
+
+</div>
+</div>
+
+Note: Streaming is not a separate project with its own cluster and its own credentials: it is a Kubernetes resource the operator reconciles, topic in and Iceberg table out.
+</textarea></section>
+<section data-markdown class="sd-center"><textarea data-template>
+# The platform is a resource, too
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;text-align:left">
+
+<div>
+
+`PlatformInstance` describes an installation: the domain, the identity mode, the pillars that are on. `Catalog` and `SqlWarehouse` describe data domains and compute; `Connection` and `ServicePrincipal` describe how jobs reach the outside world.
+
+</div>
+<div>
+
+```yaml
+apiVersion: stardelt.io/v1alpha1
+kind: PlatformInstance
+metadata: { name: alpha }
+spec:
+  baseDomain: alpha.example.com
+  identity:
+    mode: platform        # or external: your IdP
+    adminGroup: platform-admins
+  pillars:
+    batch: true
+    notebooks: true
+    dashboards: true
+    streaming: true
+```
+
+</div>
+</div>
+
+Note: The installation itself is a resource. That makes the platform reproducible, reviewable in Git and free of hidden configuration in a vendor console.
+</textarea></section>
+<section data-markdown class="sd-center"><textarea data-template>
+# Open and sovereign
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;text-align:left">
+
+<div>
+
+**Permissive only.** Apache 2.0 and MIT: Trino, Iceberg, Airflow, Superset, JupyterHub, Keycloak, CloudNativePG, Strimzi, and the stardelt components themselves.
+
+</div>
+<div>
+
+**Yours at every layer.** Your Kubernetes, your object store, your identity provider, your network. No license server, no phone-home at runtime.
+
+</div>
+</div>
+
+Note: Permissive licences are a functional choice, not a slogan: they are what makes a fork a real exit. And nothing phones home at runtime.
+</textarea></section>
+<section data-markdown class="sd-center"><textarea data-template>
+# Today
+
+- **0.x, pre-alpha** — the platform is being built in the open, and it changes quickly
+- **Working today:** catalog, SQL, Iceberg tables, pipelines, notebooks, service principals, streams, dashboards, backups
+- **Next:** one-command installs on a fresh node, more pipelines and ingestion, the roadmap on the site
+
+Note: Be honest about status: pre-alpha, but the listed capabilities work on main today. Point at the roadmap for what comes next.
+</textarea></section>
+<section data-markdown class="sd-center"><textarea data-template>
+# Start it on your own cluster
+
+**Docs** — [stardelt.io/docs](https://stardelt.io/docs)
+**Quickstart** — [stardelt.io/docs/getting-started/quickstart](https://stardelt.io/docs/getting-started/quickstart)
+**Source** — [github.com/stardelt](https://github.com/stardelt)
+
+stardelt · your own data platform
+
+Note: Closing slide: give the three links, invite people to try the quickstart and to open issues.
+</textarea></section>
+</div></div>
+<script src="../vendor/reveal/reveal.js"></script>
+<script src="../vendor/reveal/plugin/notes/notes.js"></script>
+<script src="../vendor/reveal/plugin/markdown/markdown.js"></script>
+<script src="../shared/init.js"></script>
+</body>
+</html>
