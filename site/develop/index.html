@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Develop on stardelt</title>
+<meta name="description" content="Develop on stardelt — write, publish, schedule, watch, and ship through Git from dev to prod. Follows the developer guide and the published-notebook and pipeline guides. Content Apache 2.0.">
+<link rel="stylesheet" href="../vendor/reveal/reveal.css">
+<link rel="stylesheet" href="../shared/stardelt.css">
+</head>
+<body>
+<div class="reveal"><div class="slides">
+<section class="sd sd-cover">
+<p class="sd-kicker">for developers</p>
+<h1>Develop on stardelt</h1>
+<p class="sd-lead">Write, publish, schedule, watch. Ship through Git.</p>
+<aside class="notes">A deck for developers: where your code runs, how a notebook is published and scheduled, and how work moves from dev to prod through Git. Every slide follows one section of the developer guide and the two notebook guides. The last slide is the live demo, in five steps.</aside>
+</section>
+<section class="sd">
+<h2>Choose how you work</h2>
+<div class="sd-cards">
+<div class="sd-card">
+<h3>JupyterLab in the browser</h3>
+<p>Quick exploration, a chart, a first look at a table.</p>
+</div>
+<div class="sd-card">
+<h3>VS Code on your workspace</h3>
+<p>Your own editor, Spark and table writes, on the platform.</p>
+</div>
+<div class="sd-card">
+<h3>VS Code on your laptop</h3>
+<p>Light SQL, tests and editing offline, with queries on the platform.</p>
+</div>
+</div>
+<aside class="notes">Three ways to work, and all of them run as you: the kernel and every query use your platform identity. The browser is JupyterLab, started from Nova's Notebooks page. VS Code connects either to your workspace, which is the full platform with Spark and table writes, or to a local kernel after stardelt login, where only queries leave the laptop.</aside>
+</section>
+<section class="sd">
+<h2>A notebook from write to watch</h2>
+<div class="sd-figure">
+<img src="img/notebook-journey.svg" width="1500" height="450" alt="A notebook from write to watch: write in JupyterLab, publish with the toolbar button or the command line, schedule a pinned version in Nova, watch its runs in Nova">
+</div>
+<aside class="notes">Write the notebook in JupyterLab in your workspace, and publish it with the toolbar button or the command line. Then schedule the pinned version in Nova and watch its runs there. A failed run opens the executed notebook at the cell that failed.</aside>
+</section>
+<section class="sd">
+<h2>Publish</h2>
+<pre><code>import stardelt
+stardelt.publish("daily_trips.ipynb")
+
+stardelt notebook publish daily_trips.ipynb --group analytics</code></pre>
+<p class="sd-foot">Every publish stores a new immutable version.</p>
+<aside class="notes">The same publish from a cell in the file's directory, or from a laptop after stardelt login. The call sends the file to the notebook API and prints the name, the group, the version, its sha256 and the parameters it found. Publishing the same bytes again stores nothing and answers the existing version.</aside>
+</section>
+<section class="sd">
+<h2>Mark the parameters cell</h2>
+<p class="sd-lead">Tag one cell <code>parameters</code> and write one <code>name = literal</code> line per parameter. Nova reads the lines of the first cell carrying that tag, in order, at most 32.</p>
+<aside class="notes">In JupyterLab, right-click the cell and choose Mark as parameters cell; the same again removes the tag. Nova reads the lines of the first cell carrying the tag, at most 32, and the first occurrence of a name wins. Defaults stay text and are never evaluated, so a default cannot run code.</aside>
+</section>
+<section class="sd">
+<h2>Schedule a version</h2>
+<div class="sd-split">
+<ul>
+<li>Schedule the newest version from a row, or schedule this version from a version's row.</li>
+<li>The dialog asks for a name, a group, parameters and a clock.</li>
+<li>Runs as the group's principal, not as you.</li>
+</ul>
+<div class="sd-card">
+<p>The schedule pins the version it was created with.</p>
+</div>
+</div>
+<aside class="notes">Schedule the newest version from the notebook's row, or pin one version from its own row on the notebook page. Each edit can pin another version; in edit mode the list also offers the newest. The run uses the group's principal pipeline-&lt;group&gt;, so it reaches exactly what the group may reach, not what you personally may.</aside>
+</section>
+<section class="sd">
+<h2>Watch it run</h2>
+<p class="sd-lead">Open a run to see the executed notebook, opened at the cell that failed.</p>
+<aside class="notes">Build → Runs lists every run of the notebooks and pipelines your groups own, filterable by kind, state and group. Open a run to see its tasks, the task log and the executed notebook. A failed run opens at the cell that failed and names the exception above the notebook.</aside>
+</section>
+<section class="sd sd-section">
+<div class="sd-num">02</div>
+<h2>From dev to prod</h2>
+<aside class="notes">The second part: how a team's work moves from a development stage to production. Four steps, and Git carries the work between them.</aside>
+</section>
+<section class="sd">
+<h2>Ship through Git</h2>
+<div class="sd-steps">
+<div>
+<h3>Describe</h3>
+<p>A bundle in Git says what the team publishes, with one target per stage.</p>
+</div>
+<div>
+<h3>Try in dev</h3>
+<p>Deploy to your own development stage, where pipelines are named dev-&lt;you&gt;-&lt;name&gt; and nothing is scheduled.</p>
+</div>
+<div>
+<h3>Review in a pull request</h3>
+<p>Validate needs nothing from the cluster; plan asks Nova and writes nothing.</p>
+</div>
+<div>
+<h3>Publish to production</h3>
+<p>Deploy writes only when Nova accepts every pipeline, and stamps each with its commit.</p>
+</div>
+</div>
+<aside class="notes">A bundle is a directory in Git: the pipeline files, the SQL and notebooks they read, and one target per stage. validate checks what needs no cluster, plan asks Nova what a deploy would do and writes nothing, and deploy writes only when Nova accepts every pipeline. A production pipeline is stamped with the bundle, the target and the commit, so a deploy can be traced back to a change.</aside>
+</section>
+<section class="sd">
+<h2>Build once, deploy many</h2>
+<div class="sd-figure">
+<img src="img/stages.svg" width="1150" height="447" alt="Stages: Git carries the team's work from dev to prod; data, runs and secrets stay in each stage">
+</div>
+<aside class="notes">A stage never copies objects to another stage: Git carries them. Each pipeline is stamped with where it came from, the target and the Git commit. To go back to an earlier state, check out the earlier commit and deploy again.</aside>
+</section>
+<section class="sd">
+<h2>Keep notebooks thin</h2>
+<p class="sd-lead">Logic belongs in <code>.py</code> modules with <code>pytest</code> tests, where it is reviewable and testable without a kernel.</p>
+<aside class="notes">A module is reviewable and testable without a kernel, so the notebook only calls it and shows the result. A rerun is then cheap, and a failure names a line of code instead of a cell. The tests run in CI like any other test.</aside>
+</section>
+<section class="sd sd-cover">
+<p class="sd-kicker">live demo</p>
+<h1>Let's build one</h1>
+<p class="sd-lead">stardelt.io/developer/vscode</p>
+<aside class="notes">1. Open JupyterLab from Nova. 2. Tag a parameters cell. 3. Press Publish. 4. Schedule the new version in Nova. 5. Run it now and open the executed notebook.</aside>
+</section>
+</div></div>
+<script src="../vendor/reveal/reveal.js"></script>
+<script src="../vendor/reveal/plugin/notes/notes.js"></script>
+<script src="../shared/init.js"></script>
+</body>
+</html>
