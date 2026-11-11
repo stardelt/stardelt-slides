@@ -10,17 +10,13 @@
 </head>
 <body>
 <div class="reveal"><div class="slides">
-<section data-markdown class="sd-cover"><textarea data-template>
-# stardelt
-
-### Your own data platform
-
-One sign-in, one interface, one API — inside your own Kubernetes.
-
-Open source · Apache 2.0 components · Kubernetes-native
-
-Note: Title slide. Say what the talk is: a data platform you own, built from permissive open source, on your own Kubernetes.
-</textarea></section>
+<section class="sd sd-cover">
+<h1>stardelt</h1>
+<p class="sd-lead">Your own data platform</p>
+<p class="sd-lead">One sign-in, one interface, one API — inside your own Kubernetes.</p>
+<p class="sd-caption">Open source · Apache 2.0 components · Kubernetes-native</p>
+<aside class="notes">Title slide. Say what the talk is: a data platform you own, built from permissive open source, on your own Kubernetes.</aside>
+</section>
 <section id="own" data-transition="zoom" class="sd sd-statement" style="background:radial-gradient(ellipse at 50% 120%, #2a2f6b, #18191b 60%)">
 <p class="sd-kicker">why we build it</p>
 <p class="sd-display">Your data is your company’s memory.</p>
@@ -38,98 +34,79 @@ Note: Title slide. Say what the talk is: a data platform you own, built from per
 </div>
 <aside class="notes">The emotional core of the talk. Europe is not too small or too late: it is the largest single market in the world's democracies. The question is not whether we can, but whether we decide to.</aside>
 </section>
-<section data-markdown class="sd-center"><textarea data-template>
-# Data platforms are rented, not owned
-
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;text-align:left">
-
-<div>
-
-**Rented** — a managed control plane, a per-seat bill, a region you do not choose.
-
-**Fragmented** — one vendor for the catalog, another for SQL, a third for pipelines, a fourth for BI.
-
+<section class="sd">
+<h2>Data platforms are rented, not owned</h2>
+<div class="sd-cards">
+<div class="sd-card">
+<h3>Rented</h3>
+<p>a managed control plane, a per-seat bill, a region you do not choose.</p>
 </div>
-<div>
-
-**Locked in** — your tables live in a format only the vendor reads well.
-
-**Opaque** — you cannot see the query, the grant or the job without asking support.
-
+<div class="sd-card">
+<h3>Fragmented</h3>
+<p>one vendor for the catalog, another for SQL, a third for pipelines, a fourth for BI.</p>
 </div>
+<div class="sd-card">
+<h3>Locked in</h3>
+<p>your tables live in a format only the vendor reads well.</p>
 </div>
-
-Note: Set up the problem in four words: rented, fragmented, locked in, opaque. Ask the audience which of them they recognise.
-</textarea></section>
-<section data-markdown class="sd-center"><textarea data-template>
-# What stardelt is
-
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px;text-align:left">
-
-<div style="background:#1f2124;border:1px solid #3e4147;border-radius:20px;padding:40px">
-
-### One sign-in
-
-Your identity provider, your groups, your policies. Keycloak included, or bring your own OIDC.
-
-</div>
-<div style="background:#1f2124;border:1px solid #3e4147;border-radius:20px;padding:40px">
-
-### One interface
-
-Catalog, SQL, pipelines, notebooks, streams and dashboards in one place — stardelt Nova.
-
-</div>
-<div style="background:#1f2124;border:1px solid #3e4147;border-radius:20px;padding:40px">
-
-### One API
-
-Every screen is a documented API call. Kubernetes resources describe the platform itself.
-
+<div class="sd-card">
+<h3>Opaque</h3>
+<p>you cannot see the query, the grant or the job without asking support.</p>
 </div>
 </div>
-
-Note: Three promises: one sign-in, one interface, one API. Each one answers a layer of lock-in from the previous slide.
-</textarea></section>
-<section data-markdown class="sd-default"><textarea data-template>
-# The shape of it
-
-<div style="display:flex;justify-content:center;padding-top:8px">
-
-<img src="img/architecture-layers.svg" alt="stardelt architecture: Nova and the operator on top, the always-installed core stack, optional services, and your Kubernetes underneath" style="max-height:380px;width:auto">
-
+<aside class="notes">Set up the problem in four words: rented, fragmented, locked in, opaque. Ask the audience which of them they recognise.</aside>
+</section>
+<section class="sd">
+<h2>What stardelt is</h2>
+<div class="sd-cards">
+<div class="sd-card">
+<h3>One sign-in</h3>
+<p>Your identity provider, your groups, your policies. Keycloak included, or bring your own OIDC.</p>
 </div>
-
-Control plane, data plane, applications and platform services. On your Kubernetes, nothing calls home.
-
-Note: Walk the four layers bottom-up: your Kubernetes, the core stack that is always installed, optional services, and the control plane with Nova and the operator.
-</textarea></section>
-<section data-markdown class="sd-center"><textarea data-template>
-# The lakehouse core
-
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;text-align:left">
-
-<div>
-
-**Apache Iceberg** — the table format every engine reads and writes. Not a service you install.
-
-**Lakekeeper** — the Iceberg REST catalog: metadata, warehouses, short-lived credentials.
-
+<div class="sd-card">
+<h3>One interface</h3>
+<p>Catalog, SQL, pipelines, notebooks, streams and dashboards in one place — stardelt Nova.</p>
 </div>
-<div>
-
-**Trino** — one SQL engine over every table you may read.
-
-**SeaweedFS** — S3-compatible storage by default. Bring your own bucket instead.
-
+<div class="sd-card">
+<h3>One API</h3>
+<p>Every screen is a documented API call. Kubernetes resources describe the platform itself.</p>
 </div>
 </div>
-
-Note: The core is deliberately small and standard: a table format, a REST catalog, a SQL engine and object storage — all replaceable.
-</textarea></section>
-<section class="sd-two">
-<div>
-<h1>One interface</h1>
+<aside class="notes">Three promises: one sign-in, one interface, one API. Each one answers a layer of lock-in from the previous slide.</aside>
+</section>
+<section class="sd">
+<h2>The shape of it</h2>
+<div class="sd-figure">
+<img src="img/architecture-layers.svg" alt="stardelt architecture: Nova and the operator on top, the always-installed core stack, optional services, and your Kubernetes underneath">
+<p class="sd-caption">Control plane, data plane, applications and platform services. On your Kubernetes, nothing calls home.</p>
+</div>
+<aside class="notes">Walk the four layers bottom-up: your Kubernetes, the core stack that is always installed, optional services, and the control plane with Nova and the operator.</aside>
+</section>
+<section class="sd">
+<h2>The lakehouse core</h2>
+<div class="sd-cards">
+<div class="sd-card">
+<h3>Apache Iceberg</h3>
+<p>the table format every engine reads and writes. Not a service you install.</p>
+</div>
+<div class="sd-card">
+<h3>Lakekeeper</h3>
+<p>the Iceberg REST catalog: metadata, warehouses, short-lived credentials.</p>
+</div>
+<div class="sd-card">
+<h3>Trino</h3>
+<p>one SQL engine over every table you may read.</p>
+</div>
+<div class="sd-card">
+<h3>SeaweedFS</h3>
+<p>S3-compatible storage by default. Bring your own bucket instead.</p>
+</div>
+</div>
+<aside class="notes">The core is deliberately small and standard: a table format, a REST catalog, a SQL engine and object storage — all replaceable.</aside>
+</section>
+<section class="sd">
+<h2>One interface</h2>
+<div class="sd-split">
 <ul>
 <li>Catalog explorer over every catalog you may see</li>
 <li>SQL editor with results, history and lineage</li>
@@ -137,37 +114,28 @@ Note: The core is deliberately small and standard: a table format, a REST catalo
 <li>Dashboards from Superset, embedded with the same sign-in</li>
 <li>A platform health view that reports what is actually running</li>
 </ul>
+<img class="sd-shot" src="img/nova-overview.png" alt="stardelt Nova overview: catalogs, recent activity and platform apps">
 </div>
-<div><img class="sd-shot" src="img/nova-overview.png" alt="stardelt Nova overview: catalogs, recent activity and platform apps"></div>
 <aside class="notes">The interface is the product's opinion: Nova puts catalogs, SQL, pipelines, notebooks, streams and dashboards behind the same sign-in, so a team never juggles five tools.</aside>
 </section>
-<section class="sd-two">
-<div>
-<h1>Find the data</h1>
+<section class="sd">
+<h2>Find the data</h2>
+<div class="sd-split">
 <ul>
 <li>Catalogs, schemas, tables and views in one tree</li>
 <li>Columns, partitions, snapshots and table history</li>
 <li>Descriptions, tags and owners next to the data</li>
 <li>Lineage from the table you are looking at</li>
 </ul>
+<img class="sd-shot" src="img/nova-catalog.png" alt="stardelt Nova catalog explorer with catalogs, schemas and tables">
 </div>
-<div><img class="sd-shot" src="img/nova-catalog.png" alt="stardelt Nova catalog explorer with catalogs, schemas and tables"></div>
 <aside class="notes">Finding data is not a search box problem: it needs columns, partitions, snapshots, ownership and lineage in one place, next to the table you are looking at.</aside>
 </section>
-<section data-markdown class="sd-center"><textarea data-template>
-# Streaming that is a resource, not a project
-
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;text-align:left">
-
-<div>
-
-A `StreamApp` is a Kafka topic in and an Iceberg table out. The operator creates the application, the checkpoint on S3 and the status a reader can trust.
-
-</div>
-<div>
-
-```yaml
-apiVersion: stardelt.io/v1alpha1
+<section class="sd">
+<h2>Streaming that is a resource, not a project</h2>
+<div class="sd-split">
+<p>A <code>StreamApp</code> is a Kafka topic in and an Iceberg table out. The operator creates the application, the checkpoint on S3 and the status a reader can trust.</p>
+<pre><code>apiVersion: stardelt.io/v1alpha1
 kind: StreamApp
 metadata: { name: pegelonline }
 spec:
@@ -177,28 +145,15 @@ spec:
     table: bronze.pegelonline_continuous
     mode: merge
     mergeKeys: [station_uuid, timeseries, measured_at]
-  ownerGroup: mobility-analytics
-```
-
+  ownerGroup: mobility-analytics</code></pre>
 </div>
-</div>
-
-Note: Streaming is not a separate project with its own cluster and its own credentials: it is a Kubernetes resource the operator reconciles, topic in and Iceberg table out.
-</textarea></section>
-<section data-markdown class="sd-center"><textarea data-template>
-# The platform is a resource, too
-
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;text-align:left">
-
-<div>
-
-`PlatformInstance` describes an installation: the domain, the identity mode, the pillars that are on. `Catalog` and `SqlWarehouse` describe data domains and compute; `Connection` and `ServicePrincipal` describe how jobs reach the outside world.
-
-</div>
-<div>
-
-```yaml
-apiVersion: stardelt.io/v1alpha1
+<aside class="notes">Streaming is not a separate project with its own cluster and its own credentials: it is a Kubernetes resource the operator reconciles, topic in and Iceberg table out.</aside>
+</section>
+<section class="sd">
+<h2>The platform is a resource, too</h2>
+<div class="sd-split">
+<p><code>PlatformInstance</code> describes an installation: the domain, the identity mode, the pillars that are on. <code>Catalog</code> and <code>SqlWarehouse</code> describe data domains and compute; <code>Connection</code> and <code>ServicePrincipal</code> describe how jobs reach the outside world.</p>
+<pre><code>apiVersion: stardelt.io/v1alpha1
 kind: PlatformInstance
 metadata: { name: alpha }
 spec:
@@ -210,42 +165,42 @@ spec:
     batch: true
     notebooks: true
     dashboards: true
-    streaming: true
-```
-
+    streaming: true</code></pre>
+</div>
+<aside class="notes">The installation itself is a resource. That makes the platform reproducible, reviewable in Git and free of hidden configuration in a vendor console.</aside>
+</section>
+<section class="sd">
+<h2>Open and sovereign</h2>
+<div class="sd-cards">
+<div class="sd-card">
+<h3>Permissive only.</h3>
+<p>Apache 2.0 and MIT: Trino, Iceberg, Airflow, Superset, JupyterHub, Keycloak, CloudNativePG, Strimzi, and the stardelt components themselves.</p>
+</div>
+<div class="sd-card">
+<h3>Yours at every layer.</h3>
+<p>Your Kubernetes, your object store, your identity provider, your network. No license server, no phone-home at runtime.</p>
 </div>
 </div>
-
-Note: The installation itself is a resource. That makes the platform reproducible, reviewable in Git and free of hidden configuration in a vendor console.
-</textarea></section>
-<section data-markdown class="sd-center"><textarea data-template>
-# Open and sovereign
-
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;text-align:left">
-
-<div>
-
-**Permissive only.** Apache 2.0 and MIT: Trino, Iceberg, Airflow, Superset, JupyterHub, Keycloak, CloudNativePG, Strimzi, and the stardelt components themselves.
-
+<aside class="notes">Permissive licences are a functional choice, not a slogan: they are what makes a fork a real exit. And nothing phones home at runtime.</aside>
+</section>
+<section class="sd">
+<h2>Today</h2>
+<div class="sd-cards">
+<div class="sd-card">
+<h3>0.x, pre-alpha</h3>
+<p>the platform is being built in the open, and it changes quickly</p>
 </div>
-<div>
-
-**Yours at every layer.** Your Kubernetes, your object store, your identity provider, your network. No license server, no phone-home at runtime.
-
+<div class="sd-card">
+<h3>Working today:</h3>
+<p>catalog, SQL, Iceberg tables, pipelines, notebooks, service principals, streams, dashboards, backups</p>
+</div>
+<div class="sd-card">
+<h3>Next:</h3>
+<p>one-command installs on a fresh node, more pipelines and ingestion, the roadmap on the site</p>
 </div>
 </div>
-
-Note: Permissive licences are a functional choice, not a slogan: they are what makes a fork a real exit. And nothing phones home at runtime.
-</textarea></section>
-<section data-markdown class="sd-center"><textarea data-template>
-# Today
-
-- **0.x, pre-alpha** — the platform is being built in the open, and it changes quickly
-- **Working today:** catalog, SQL, Iceberg tables, pipelines, notebooks, service principals, streams, dashboards, backups
-- **Next:** one-command installs on a fresh node, more pipelines and ingestion, the roadmap on the site
-
-Note: Be honest about status: pre-alpha, but the listed capabilities work on main today. Point at the roadmap for what comes next.
-</textarea></section>
+<aside class="notes">Be honest about status: pre-alpha, but the listed capabilities work on main today. Point at the roadmap for what comes next.</aside>
+</section>
 <section id="together" data-transition="zoom" class="sd sd-europe">
 <div class="sd-row">
 <div>
@@ -257,21 +212,17 @@ Note: Be honest about status: pre-alpha, but the listed capabilities work on mai
 </div>
 <aside class="notes">Invitation, not a sales pitch: try it, open an issue, send a pull request. Permissive licences mean everything people contribute stays usable by everyone.</aside>
 </section>
-<section data-markdown class="sd-center"><textarea data-template>
-# Start it on your own cluster
-
-**Docs** — [stardelt.io/docs](https://stardelt.io/docs)
-**Quickstart** — [stardelt.io/docs/getting-started/quickstart](https://stardelt.io/docs/getting-started/quickstart)
-**Source** — [github.com/stardelt](https://github.com/stardelt)
-
-stardelt · your own data platform
-
-Note: Closing slide: give the three links, invite people to try the quickstart and to open issues.
-</textarea></section>
+<section class="sd sd-cover">
+<h2>Start it on your own cluster</h2>
+<p class="sd-lead"><strong>Docs</strong> — <a href="https://stardelt.io/docs">stardelt.io/docs</a></p>
+<p class="sd-lead"><strong>Quickstart</strong> — <a href="https://stardelt.io/docs/getting-started/quickstart">stardelt.io/docs/getting-started/quickstart</a></p>
+<p class="sd-lead"><strong>Source</strong> — <a href="https://github.com/stardelt">github.com/stardelt</a></p>
+<p class="sd-caption">stardelt · your own data platform</p>
+<aside class="notes">Closing slide: give the three links, invite people to try the quickstart and to open issues.</aside>
+</section>
 </div></div>
 <script src="../vendor/reveal/reveal.js"></script>
 <script src="../vendor/reveal/plugin/notes/notes.js"></script>
-<script src="../vendor/reveal/plugin/markdown/markdown.js"></script>
 <script src="../shared/init.js"></script>
 </body>
 </html>

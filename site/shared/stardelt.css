@@ -12,19 +12,9 @@ html, body, body.reveal-viewport { background: #18191b; }
 .reveal th + th, .reveal td + td { padding-left: 48px; }
 .reveal th { color: #8e949e; font-weight: 600; }
 .reveal .controls, .reveal .progress { color: #7a8aff; }
-.reveal section[data-markdown], .reveal .sd-two { padding: 112px 128px; background: #18191b; }
-.reveal section[data-markdown] { flex-direction: column; gap: 32px; }
-.reveal .sd-center { justify-content: center; }
-.reveal .sd-cover { justify-content: center; background: radial-gradient(ellipse at 80% 20%, #2a2f6b, #18191b 60%); }
-.reveal section[data-markdown] h1 { font-family: 'Space Grotesk', Arial, sans-serif; font-size: 80px; font-weight: 700; line-height: 1.1; color: #f3f4f6; }
-.reveal section[data-markdown] h2 { font-family: 'Space Grotesk', Arial, sans-serif; font-size: 56px; font-weight: 700; color: #f3f4f6; }
-.reveal section[data-markdown] p, .reveal section[data-markdown] li { font-size: 34px; line-height: 1.45; color: #b0b5bd; }
-.reveal section[data-markdown] li + li { margin-top: 12px; }
-.reveal section[data-markdown] strong { color: #e8eaed; }
 .reveal code { font-size: .85em; background: #282a2e; padding: 2px 8px; border-radius: 6px; }
 .reveal pre { background: #1f2124; border: 1px solid #3e4147; border-radius: 12px; padding: 24px; font-size: 24px; width: 100%; box-shadow: none; }
 .reveal pre code { background: none; padding: 0; }
-.reveal .sd-two { display: grid !important; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
 .reveal .sd-shot { width: 100%; border-radius: 16px; border: 1px solid #3e4147; box-shadow: 0 30px 80px rgba(0, 0, 0, .45); }
 
 /* Layouts (kit). Every layout is a <section class="sd ..."> */
