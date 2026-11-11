@@ -61,6 +61,14 @@ html, body { background: #18191b; }
 .reveal .sd.sd-europe .sd-row > div { flex: 1; display: flex; flex-direction: column; gap: 36px; }
 .reveal .sd .sd-stars { width: 520px; height: 520px; flex: none; }
 .reveal .sd .sd-gold { color: #ffcc00; }
+.reveal .sd.sd-europe h2 { font-size: 112px; line-height: 1.02; color: #ffffff; }
+.reveal .sd.sd-statement { justify-content: center; align-items: center; text-align: center; gap: 48px; }
+.reveal .sd.sd-statement .sd-display { font-family: 'Space Grotesk', Arial, sans-serif; font-size: 120px; font-weight: 700; line-height: 1.05; color: #f3f4f6; max-width: 1700px; }
+.reveal .sd.sd-statement .sd-lead { font-family: 'Space Grotesk', Arial, sans-serif; font-size: 72px; font-weight: 700; line-height: 1.15; max-width: 1700px; }
+.reveal .sd .sd-punch { font-family: 'Space Grotesk', Arial, sans-serif; font-size: 40px; font-weight: 700; color: #ffffff; }
+.reveal .sd.sd-alert > .sd-kicker { color: #ef6b6b; }
+.reveal .sd.sd-alert .sd-card { border-top: 4px solid #ffcc00; }
+.reveal .sd.sd-alert .sd-card .sd-kicker { color: #ffcc00; }
 @keyframes sd-twinkle { 0%,100% { opacity: 1; } 50% { opacity: .45; } }
 .reveal .sd-star { animation: sd-twinkle 3.2s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
 .reveal .sd .sd-split { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; flex: 1; }
