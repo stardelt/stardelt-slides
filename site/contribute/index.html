@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Build it with us</title>
+<meta name="description" content="How to contribute to stardelt: where to start, how a change gets in, and how to write an issue anyone can build. From the stardelt developer guide. Content Apache 2.0.">
+<link rel="stylesheet" href="../vendor/reveal/reveal.css">
+<link rel="stylesheet" href="../shared/stardelt.css">
+</head>
+<body>
+<div class="reveal"><div class="slides">
+<section class="sd sd-cover">
+<p class="sd-kicker">open source · Apache 2.0</p>
+<h1>Build it with us.</h1>
+<p class="sd-lead">An open data platform gets better with every person who tries it, breaks it and fixes it.</p>
+<aside class="notes">An invitation, not a sales pitch. The project is open source under Apache 2.0 and help is welcome: code, docs, bug reports, or telling us what confused you. The deck follows the developer guide at stardelt.io/docs/developer.</aside>
+</section>
+<section class="sd">
+<h2>Good ways to start</h2>
+<div class="sd-steps">
+<div>
+<h3>Try the quickstart</h3>
+<p>A fresh pair of eyes finds things the maintainers cannot.</p>
+</div>
+<div>
+<h3>Fix a page</h3>
+<p>Every page has an Edit this page link.</p>
+</div>
+<div>
+<h3>Pick up an issue</h3>
+<p>Issues labelled ready-to-implement list the exact files, steps and checks.</p>
+</div>
+</div>
+<aside class="notes">Three ways in, in the order of least effort: use it and report what went wrong, fix a page, or take a whole issue. Installing and reporting is the most useful thing a newcomer can do, because the maintainers can no longer see their own documentation. On an issue, comment "claiming" so nobody builds it twice.</aside>
+</section>
+<section class="sd sd-stat">
+<div class="sd-big">6</div>
+<p class="sd-lead">repositories, each with one check you run before a pull request.</p>
+<aside class="notes">Six repositories: docs, platform, the interface and API, the operator, the Python package and the sample pipelines. Each one has a single check to run before a pull request, listed in the guide. Paste the command and its result into the description.</aside>
+</section>
+<section class="sd">
+<h2>The two rules</h2>
+<div class="sd-cards">
+<div class="sd-card">
+<p class="sd-kicker">Rule one</p>
+<h3>Everything arrives as a pull request.</h3>
+<p>main is protected.</p>
+</div>
+<div class="sd-card">
+<p class="sd-kicker">Rule two</p>
+<h3>main stays installable.</h3>
+<p>There are no tagged releases yet, so people install from it.</p>
+</div>
+</div>
+<aside class="notes">Two rules hold everywhere, and everything else in the guide follows from them. main is protected, so a change arrives as a pull request and never as a push. And because there are no tagged releases yet, whatever lands on main is what people install.</aside>
+</section>
+<section class="sd">
+<h2>What a reviewer asks</h2>
+<div class="sd-cards">
+<div class="sd-card">
+<p class="sd-kicker">One</p>
+<p>Does it do what the description says, no more and no less?</p>
+</div>
+<div class="sd-card">
+<p class="sd-kicker">Two</p>
+<p>Does it change something a user or operator can see? Does it say so?</p>
+</div>
+<div class="sd-card">
+<p class="sd-kicker">Three</p>
+<p>Is there evidence that it works?</p>
+</div>
+<div class="sd-card">
+<p class="sd-kicker">Four</p>
+<p>Does it fit the rules and the license policy?</p>
+</div>
+</div>
+<aside class="notes">Expect one maintainer review, about correctness rather than style. A reviewer asks these four questions, so answer them in the pull request before they are asked. There is no fixed response time: ping a pull request that has been quiet for a week.</aside>
+</section>
+<section class="sd sd-quote">
+<h2>AI assistants are welcome.</h2>
+<p class="sd-lead">Name the model in the description, so a reviewer knows what to check more closely — and you are the author.</p>
+<aside class="notes">Assistants are welcome on two conditions. Name the model in the description, or as a Model trailer naming the provider and the model. And you are the author: run the checks yourself and answer the review yourself, because a green transcript is not evidence.</aside>
+</section>
+<section class="sd">
+<h2>An issue anyone can build</h2>
+<div class="sd-cards">
+<div class="sd-card">
+<h3>Name the file and symbol</h3>
+<p>Name the file, symbol and line, never "the controller".</p>
+</div>
+<div class="sd-card">
+<h3>Give the exact command and its output</h3>
+<p>"It works" cannot be checked.</p>
+</div>
+<div class="sd-card">
+<h3>One issue, one pull request</h3>
+<p>Up to about 150 lines, because small changes get merged.</p>
+</div>
+</div>
+<aside class="notes">An issue is ready when someone who has never seen the repository can do the work without asking a question. That means naming the file, symbol and line, giving the exact command and its expected output, and keeping one issue to one pull request. Run every command yourself before you paste it, so the issue cannot teach people to improvise.</aside>
+</section>
+<section class="sd sd-europe">
+<div class="sd-row">
+<div>
+<p class="sd-kicker">open, in public</p>
+<h2>Let's build it together.</h2>
+<p class="sd-lead">github.com/stardelt · stardelt.io/docs/developer</p>
+</div>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" aria-hidden="true" class="sd-stars"><polygon class="sd-star" points="300.0,66.0 307.6,89.5 332.3,89.5 312.4,104.0 320.0,127.5 300.0,113.0 280.0,127.5 287.6,104.0 267.7,89.5 292.4,89.5" fill="#ffcc00"/><polygon class="sd-star" points="400.0,92.8 407.6,116.3 432.3,116.3 412.4,130.8 420.0,154.3 400.0,139.8 380.0,154.3 387.6,130.8 367.7,116.3 392.4,116.3" fill="#ffcc00"/><polygon class="sd-star" points="473.2,166.0 480.8,189.5 505.5,189.5 485.6,204.0 493.2,227.5 473.2,213.0 453.2,227.5 460.9,204.0 440.9,189.5 465.6,189.5" fill="#ffcc00"/><polygon class="sd-star" points="500.0,266.0 507.6,289.5 532.3,289.5 512.4,304.0 520.0,327.5 500.0,313.0 480.0,327.5 487.6,304.0 467.7,289.5 492.4,289.5" fill="#ffcc00"/><polygon class="sd-star" points="473.2,366.0 480.8,389.5 505.5,389.5 485.6,404.0 493.2,427.5 473.2,413.0 453.2,427.5 460.9,404.0 440.9,389.5 465.6,389.5" fill="#ffcc00"/><polygon class="sd-star" points="400.0,439.2 407.6,462.7 432.3,462.7 412.4,477.2 420.0,500.7 400.0,486.2 380.0,500.7 387.6,477.2 367.7,462.7 392.4,462.7" fill="#ffcc00"/><polygon class="sd-star" points="300.0,466.0 307.6,489.5 332.3,489.5 312.4,504.0 320.0,527.5 300.0,513.0 280.0,527.5 287.6,504.0 267.7,489.5 292.4,489.5" fill="#ffcc00"/><polygon class="sd-star" points="200.0,439.2 207.6,462.7 232.3,462.7 212.4,477.2 220.0,500.7 200.0,486.2 180.0,500.7 187.6,477.2 167.7,462.7 192.4,462.7" fill="#ffcc00"/><polygon class="sd-star" points="126.8,366.0 134.4,389.5 159.1,389.5 139.1,404.0 146.8,427.5 126.8,413.0 106.8,427.5 114.4,404.0 94.5,389.5 119.2,389.5" fill="#ffcc00"/><polygon class="sd-star" points="100.0,266.0 107.6,289.5 132.3,289.5 112.4,304.0 120.0,327.5 100.0,313.0 80.0,327.5 87.6,304.0 67.7,289.5 92.4,289.5" fill="#ffcc00"/><polygon class="sd-star" points="126.8,166.0 134.4,189.5 159.1,189.5 139.1,204.0 146.8,227.5 126.8,213.0 106.8,227.5 114.4,204.0 94.5,189.5 119.2,189.5" fill="#ffcc00"/><polygon class="sd-star" points="200.0,92.8 207.6,116.3 232.3,116.3 212.4,130.8 220.0,154.3 200.0,139.8 180.0,154.3 187.6,130.8 167.7,116.3 192.4,116.3" fill="#ffcc00"/></svg>
+</div>
+<aside class="notes">Close by pointing at the two addresses: the organization on GitHub and the developer guide. The loudest help is a report of what confused you on the first try. Tell us, and the next person does not hit it.</aside>
+</section>
+</div></div>
+<script src="../vendor/reveal/reveal.js"></script>
+<script src="../vendor/reveal/plugin/notes/notes.js"></script>
+<script src="../shared/init.js"></script>
+</body>
+</html>
