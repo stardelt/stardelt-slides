@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How agents build stardelt</title>
+<meta name="description" content="How stardelt is developed: one maintainer, AI roles for vision, architecture and implementation, a runner under systemd, a weekly deep review, and what broke on the way. Content Apache 2.0.">
+<link rel="stylesheet" href="../vendor/reveal/reveal.css">
+<link rel="stylesheet" href="../shared/stardelt.css">
+</head>
+<body>
+<div class="reveal"><div class="slides">
+<section class="sd sd-cover">
+<p class="sd-kicker">Martin's experiences · November 2026</p>
+<h1>How agents build stardelt.</h1>
+<p class="sd-lead">One maintainer, four AI roles and a machine that works through the night.</p>
+<aside class="notes">This is a field report, not a product talk. stardelt itself contains no AI: the agents only build it. I will show who does what, how it runs on one machine, and what broke on the way.</aside>
+</section>
+<section class="sd sd-stat">
+<div class="sd-big">1,142</div>
+<p class="sd-lead">pull requests merged in 14 days, across 7 repositories.</p>
+<aside class="notes">Counted on GitHub for 28 October to 11 November 2026: nova 222, platform 353, docs 248, operator 205, python 78, demos 21, slides 15. In the same two weeks, 923 issues were closed. Most of these are small: one ticket, one pull request.</aside>
+</section>
+<section class="sd sd-section">
+<p class="sd-kicker">01</p>
+<h2>The roles</h2>
+<aside class="notes">Each role has one job and one thing it must never do. That rule did more for quality than any model upgrade.</aside>
+</section>
+<section class="sd">
+<h2>Four roles, one person who decides</h2>
+<table>
+<tr><th>Role</th><th>Runs as</th><th>When</th><th>Never</th></tr>
+<tr><td>Visionist</td><td>Claude Code, Opus</td><td>with me, plus a loop every 2 hours</td><td class="sd-mute">writes code</td></tr>
+<tr><td>Architect</td><td>opencode, DeepSeek V4.1 Flash, max effort</td><td>every hour, by a systemd timer</td><td class="sd-mute">implements</td></tr>
+<tr><td>Implementer</td><td>opencode, DeepSeek V4.1 Flash, low effort</td><td>one session per ticket, up to 3 at once</td><td class="sd-mute">changes a decision</td></tr>
+<tr><td>Deep review</td><td>Claude Fable</td><td>once a week, for five hours</td><td class="sd-mute">ships anything</td></tr>
+</table>
+<aside class="notes">The visionist is the product owner and architect I talk to: vision, UX and design, written down as tickets. The architect refines design tickets, verifies merged work and keeps about twelve tickets ready. The implementer takes exactly one ready ticket per session. The weekly Fable run reviews everything in depth. I decide, approve and roll out.</aside>
+</section>
+<section class="sd">
+<h2>A ticket's life</h2>
+<div class="sd-steps">
+<div>
+<h3>I talk</h3>
+<p>An idea, a bug or a complaint goes to the visionist.</p>
+</div>
+<div>
+<h3>It becomes a ticket</h3>
+<p>Files, symbols, steps and checks, labelled ready-to-implement.</p>
+</div>
+<div>
+<h3>The runner claims it</h3>
+<p>A session gets its own worktree, opens a pull request, waits for CI and merges.</p>
+</div>
+<div>
+<h3>Someone looks</h3>
+<p>The architect verifies; the visionist reviews screenshots.</p>
+</div>
+</div>
+<aside class="notes">Nothing reaches the implementer except as a ready ticket. The runner comments "claiming" on the issue, so two agents never build the same thing. A wrong step is not improvised around: the session comments, the ticket gets the label blocked, and it goes back to the architect.</aside>
+</section>
+<section class="sd sd-quote">
+<blockquote>A ticket is ready when a small model can build it without asking a question.</blockquote>
+<aside class="notes">Every step names a real file and symbol, with the file's hash on main, so a stale ticket is caught before work starts. Verify gives exact commands. Open questions is empty. Write it like that, and a cheap model at low effort does the work; most of a session is cached reads of the same context.</aside>
+</section>
+<section class="sd sd-section">
+<p class="sd-kicker">02</p>
+<h2>The machine</h2>
+<aside class="notes">All of this runs on one workstation, next to the development cluster it deploys to.</aside>
+</section>
+<section class="sd">
+<h2>Four systemd units do the scheduling</h2>
+<table>
+<tr><th>Unit</th><th>Does</th><th>Bounds</th></tr>
+<tr><td><code>stardelt-runner</code></td><td>Always on. Fills a free slot within 20 seconds.</td><td>3 sessions, 12 GB, 6 cores</td></tr>
+<tr><td><code>stardelt-architect</code></td><td>A timer, on the hour, every hour.</td><td>1 session, 6 GB, 2 cores</td></tr>
+<tr><td><code>stardelt-project-sync</code></td><td>Daily: every open issue on the project board.</td><td class="sd-mute">—</td></tr>
+<tr><td><code>stardelt-gc</code></td><td>Daily: removes build caches and agent scratch.</td><td class="sd-mute">—</td></tr>
+</table>
+<aside class="notes">systemd user units, nothing fancy. The runner is a long-running service; the architect is a one-shot service started by an hourly timer. The memory and CPU caps are there because the platform's own Kubernetes runs on the same machine.</aside>
+</section>
+<section class="sd">
+<h2>Five settings in the runner's unit</h2>
+<table>
+<tr><th>Setting</th><th>Why</th></tr>
+<tr><td><code>MAX_WORKERS=3</code></td><td>Three sessions at once; two when memory runs short.</td></tr>
+<tr><td><code>MAX_ATTEMPTS=2</code></td><td>Two tries, then the ticket is parked for a person.</td></tr>
+<tr><td><code>IMPL_MODEL=…#low</code></td><td>The model is pinned, never the harness default.</td></tr>
+<tr><td><code>RUSTC_WRAPPER=sccache</code></td><td>One compile cache for every session.</td></tr>
+<tr><td><code>KillMode=process</code></td><td>A runner restart leaves running sessions alone.</td></tr>
+</table>
+<aside class="notes">Two attempts per ticket, then it is parked for the architect. One shared compile cache, so three Rust sessions do not each rebuild the same dependencies. KillMode process means a runner restart does not kill the sessions that are running.</aside>
+</section>
+<section class="sd">
+<h2>I watch from anywhere</h2>
+<div class="sd-cards">
+<div class="sd-card">
+<p class="sd-kicker">Workspace</p>
+<h3>herdr on tmux</h3>
+<p>Every agent in its own pane and session, still there when I come back.</p>
+</div>
+<div class="sd-card">
+<p class="sd-kicker">Reach</p>
+<h3>Tailscale and mosh</h3>
+<p>The same sessions from the laptop or the phone, over a flaky connection.</p>
+</div>
+<div class="sd-card">
+<p class="sd-kicker">Nudge</p>
+<h3>A notification hook</h3>
+<p>When an agent waits for me, my phone says so.</p>
+</div>
+</div>
+<aside class="notes">herdr is a terminal workspace manager made for coding agents; it keeps the panes and sessions alive. Tailscale gives a private network to the machine, and mosh keeps the terminal alive when the train goes through a tunnel. A small hook daemon pushes a notification when a session needs a decision.</aside>
+</section>
+<section class="sd">
+<h2>The weekly deep review</h2>
+<div class="sd-steps">
+<div>
+<p class="sd-num">13:08</p>
+<p>Five hours before the weekly limit resets, the strongest model starts.</p>
+</div>
+<div>
+<p class="sd-num">4</p>
+<p>agents at once: vision, a decision audit, design refinement, security.</p>
+</div>
+<div>
+<p class="sd-num">18:00</p>
+<p>Wrap up: tickets filed, decisions for me, the next run scheduled.</p>
+</div>
+</div>
+<aside class="notes">A subscription's weekly quota that is not used is lost. So on the last afternoon before it resets, Fable agents do the slow, expensive thinking: where the product is heading, which decisions no longer hold, a threat model, and turning design tickets into ready ones. Times are UTC, on Thursdays.</aside>
+</section>
+<section class="sd sd-section">
+<p class="sd-kicker">03</p>
+<h2>What I learned</h2>
+<aside class="notes">Every rule in this setup was paid for by something that broke.</aside>
+</section>
+<section class="sd sd-alert">
+<p class="sd-kicker">What broke</p>
+<h2>Every rule was paid for.</h2>
+<div class="sd-cards">
+<div class="sd-card">
+<p class="sd-kicker">Two agents</p>
+<h3>built the same thing twice.</h3>
+<p>Fix: lanes, and a “claiming” comment before any work.</p>
+</div>
+<div class="sd-card">
+<p class="sd-kicker">Three sessions</p>
+<h3>restarted Kubernetes.</h3>
+<p>Fix: memory and CPU caps on the units.</p>
+</div>
+<div class="sd-card">
+<p class="sd-kicker">One empty string</p>
+<h3>stopped every notebook.</h3>
+<p>Fix: never write “” where Kubernetes means the default.</p>
+</div>
+</div>
+<aside class="notes">Early on, two agents shared the checkouts and each built the same fix. Later, three sessions and their compilers pushed the load to 20 on 8 cores, and Kubernetes restarted. And one ticket of mine set a storage class to an empty string, which is not the same as the default: no notebook could start until it was fixed.</aside>
+</section>
+<section class="sd sd-alert">
+<p class="sd-kicker">What broke</p>
+<h2>The night shift has its own bugs.</h2>
+<div class="sd-cards">
+<div class="sd-card">
+<p class="sd-kicker">A model</p>
+<h3>was geo-blocked overnight.</h3>
+<p>Fix: pin the model in the unit.</p>
+</div>
+<div class="sd-card">
+<p class="sd-kicker">A finished session</p>
+<h3>kept talking for 40 minutes.</h3>
+<p>Fix: the runner ends a session once its issue is closed.</p>
+</div>
+<div class="sd-card">
+<p class="sd-kicker">A free slot</p>
+<h3>sat idle for 15 minutes.</h3>
+<p>Fix: wake every 20 seconds, not every tick.</p>
+</div>
+</div>
+<aside class="notes">The harness's default model moved to one the provider does not serve in our country, and every session died at start. Some sessions merged their pull request and kept generating, holding a slot. And a session that ended mid-sleep left its slot empty until the next fifteen-minute tick, which was about half the lane's time.</aside>
+</section>
+<section class="sd">
+<h2>What works</h2>
+<div class="sd-cards">
+<div class="sd-card">
+<h3>Small tickets, cheap model</h3>
+<p>Precise steps beat a bigger model.</p>
+</div>
+<div class="sd-card">
+<h3>Screenshots, not “tests pass”</h3>
+<p>The UI is judged by looking at it, with realistic data.</p>
+</div>
+<div class="sd-card">
+<h3>The human decides</h3>
+<p>Agents propose. Decisions, rollouts and secrets stay with me.</p>
+</div>
+</div>
+<aside class="notes">The effort goes into the ticket, not the model. Green tests said a page worked while it looked like a mess; screenshots with noisy data catch that. And agents never get the decisions, the production rollout or a password.</aside>
+</section>
+<section class="sd sd-stat">
+<div class="sd-big">795</div>
+<p class="sd-lead">tickets done by the runner since 30 October. 9 parked for a person.</p>
+<aside class="notes">From the runner's own state: 928 sessions dispatched, 795 tickets finished, and 9 parked after two failed attempts. A parked ticket is not a failure of the model; usually a step in the ticket was wrong.</aside>
+</section>
+<section class="sd sd-cover">
+<p class="sd-kicker">everything in the open</p>
+<h1>github.com/stardelt</h1>
+<p class="sd-lead">The product, the tickets and every pull request the agents opened.</p>
+<aside class="notes">All of it is public: read the tickets to see what a small model can build from. The ticket rules are in the developer guide at stardelt.io/docs/developer. Questions welcome.</aside>
+</section>
+</div></div>
+<script src="../vendor/reveal/reveal.js"></script>
+<script src="../vendor/reveal/plugin/notes/notes.js"></script>
+<script src="../shared/init.js"></script>
+</body>
+</html>
