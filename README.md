@@ -16,9 +16,9 @@ which is what CI does on every pull request.
 
 - One deck is one folder `site/<slug>/` with `index.html` and an optional `img/` folder, plus one
   entry in `decks.json`.
-- A slide is a `<section>` on a 1920×1080 canvas. Write it either as HTML with inline styles
-  (preferred) or as `<section data-markdown class="sd-center|sd-cover|sd-default">`.
-- Every slide has speaker notes: `<aside class="notes">`, or `Note:` in a markdown slide.
+- A slide is a `<section class="sd …">` on a 1920×1080 canvas, using a kit layout such as
+  `sd-cover`, `sd-cards`, `sd-split` or `sd-figure` (copy them from `site/kit/index.html`).
+- Every slide has speaker notes: `<aside class="notes">`.
 - A deck loads only `../vendor/reveal/*`, `../shared/*` and its own `img/`. It loads nothing over
   `http(s)://`, and has no `<script>` of its own.
 - Graphite colours: `#18191b` bg, `#1f2124` surface, `#3e4147` border, `#e8eaed` text, `#b0b5bd` dim,

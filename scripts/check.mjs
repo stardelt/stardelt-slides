@@ -10,7 +10,6 @@ const fail = (file, rule) => problems.push(`${file}: ${rule}`);
 const ALLOWED_SCRIPTS = [
   '../vendor/reveal/reveal.js',
   '../vendor/reveal/plugin/notes/notes.js',
-  '../vendor/reveal/plugin/markdown/markdown.js',
   '../shared/init.js',
 ];
 
@@ -87,6 +86,9 @@ for (const rel of deckFiles) {
       fail(rel, 'src="../shared/init.js" must be the last <script>');
     }
   }
+  if (html.includes('data-markdown')) {
+    fail(rel, 'markdown sections are not part of the pattern; use the kit layouts');
+  }
 
   // (d) only vendored and shared scripts, no inline script bodies
   for (const m of html.matchAll(/<script\b([^>]*)>/g)) {
@@ -127,8 +129,7 @@ for (const rel of deckFiles) {
 
   // (g) every slide has speaker notes
   const sections = (html.match(/<section\b/g) || []).length;
-  const notes =
-    (html.match(/<aside class="notes">/g) || []).length + (html.match(/^Note:/gm) || []).length;
+  const notes = (html.match(/<aside class="notes">/g) || []).length;
   if (notes < sections) fail(rel, `${sections} <section> but ${notes} notes`);
 
   // (h) the deck folder stays small
