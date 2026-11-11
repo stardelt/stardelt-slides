@@ -121,10 +121,10 @@
 <h2>Open source is the exit door. Only if it opens.</h2>
 <table>
 <tr><th>Question</th><th>Source-available</th><th>Permissive open source</th></tr>
-<tr><td>Can you run it in production freely?</td><td>Often limited</td><td>Yes</td></tr>
-<tr><td>Can someone offer it as a service?</td><td>Usually forbidden</td><td>Yes</td></tr>
-<tr><td>Can you fork it and keep going?</td><td>Not really</td><td>Yes</td></tr>
-<tr><td>Can the owner change the rules later?</td><td>For new versions</td><td>Not for what you have</td></tr>
+<tr><td>Can you run it in production freely?</td><td class="sd-mute">Often limited</td><td>Yes</td></tr>
+<tr><td>Can someone offer it as a service?</td><td class="sd-mute">Usually forbidden</td><td>Yes</td></tr>
+<tr><td>Can you fork it and keep going?</td><td class="sd-mute">Not really</td><td>Yes</td></tr>
+<tr><td>Can the owner change the rules later?</td><td class="sd-mute">For new versions</td><td>Not for what you have</td></tr>
 </table>
 <p class="sd-lead">stardelt and its stack: Apache 2.0, MIT or BSD, with one documented, optional MPL 2.0 exception.</p>
 <aside class="notes">Licences decide whether the fourth test, continuity, is real. A fork of a permissively licensed project is a working exit; a fork of a source-available one is a legal question.</aside>
@@ -146,12 +146,12 @@
 <h2>No legacy inside.</h2>
 <table>
 <tr><th>stardelt uses</th><th>left behind</th></tr>
-<tr><td>S3 object storage, yours</td><td><s>HDFS</s></td></tr>
-<tr><td>Iceberg REST catalog</td><td><s>Hive Metastore</s></td></tr>
-<tr><td>Spark Connect</td><td><s>spark-submit on YARN</s></td></tr>
-<tr><td>Kafka in KRaft mode</td><td><s>ZooKeeper</s></td></tr>
-<tr><td>OIDC, your provider</td><td><s>Kerberos</s></td></tr>
-<tr><td>Rust control plane on Kubernetes</td><td><s>install scripts on VMs</s></td></tr>
+<tr><td>S3 object storage, yours</td><td class="sd-mute"><s>HDFS</s></td></tr>
+<tr><td>Iceberg REST catalog</td><td class="sd-mute"><s>Hive Metastore</s></td></tr>
+<tr><td>Spark Connect</td><td class="sd-mute"><s>spark-submit on YARN</s></td></tr>
+<tr><td>Kafka in KRaft mode</td><td class="sd-mute"><s>ZooKeeper</s></td></tr>
+<tr><td>OIDC, your provider</td><td class="sd-mute"><s>Kerberos</s></td></tr>
+<tr><td>Rust control plane on Kubernetes</td><td class="sd-mute"><s>install scripts on VMs</s></td></tr>
 </table>
 <aside class="notes">Sovereignty is not a reason to accept a 2010s stack. Every component is current-generation, cloud-native open source; nothing is there for compatibility with the last decade.</aside>
 </section>
