@@ -48,8 +48,21 @@ html, body { background: #18191b; }
 .reveal .sd .sd-steps > div { border-top: 4px solid #7a8aff; padding-top: 28px; display: flex; flex-direction: column; gap: 12px; counter-increment: step; }
 .reveal .sd .sd-steps > div::before { content: counter(step); font-family: 'Space Grotesk', Arial, sans-serif; font-size: 56px; color: #7a8aff; }
 .reveal .sd .sd-steps p { font-size: 28px; }
+/* A step whose number is content (a year) shows it in .sd-num instead of the generated counter. */
+.reveal .sd .sd-steps .sd-num { font-family: 'Space Grotesk', Arial, sans-serif; font-size: 72px; line-height: 1; }
+.reveal .sd .sd-steps > div:has(.sd-num)::before { content: none; }
 .reveal .sd.sd-quote { justify-content: center; }
 .reveal .sd.sd-quote blockquote { margin: 0; border-left: 6px solid #7a8aff; padding-left: 48px; font-family: 'Space Grotesk', Arial, sans-serif; font-size: 64px; line-height: 1.2; color: #f3f4f6; width: auto; box-shadow: none; }
+/* The EU look: a yellow kicker, the twelve stars on the right. */
+.reveal .sd.sd-europe { justify-content: center; background: radial-gradient(ellipse at 75% 45%, #1f4fd1, #003399 45%, #001a5c); }
+.reveal .sd.sd-europe .sd-kicker { color: #ffcc00; }
+.reveal .sd.sd-europe .sd-lead { color: #dfe6ff; }
+.reveal .sd .sd-row { display: flex; align-items: center; gap: 80px; }
+.reveal .sd.sd-europe .sd-row > div { flex: 1; display: flex; flex-direction: column; gap: 36px; }
+.reveal .sd .sd-stars { width: 520px; height: 520px; flex: none; }
+.reveal .sd .sd-gold { color: #ffcc00; }
+@keyframes sd-twinkle { 0%,100% { opacity: 1; } 50% { opacity: .45; } }
+.reveal .sd-star { animation: sd-twinkle 3.2s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
 .reveal .sd .sd-split { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; flex: 1; }
 .reveal .sd .sd-figure { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 20px; align-items: center; justify-content: center; }
 .reveal .sd .sd-figure img { max-width: 100%; max-height: 720px; object-fit: contain; }
