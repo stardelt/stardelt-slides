@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 860" width="1600" height="860" font-family="Inter, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="ft fd">
+<title id="ft">Who talks to whom</title>
+<desc id="fd">The maintainer talks to the visionist. The visionist, the weekly deep review and the hourly architect write tickets on GitHub. The runner reads the ready queue on GitHub, claims a ticket and starts an implementer session. An implementer opens a pull request, waits for CI and merges, or marks the ticket blocked for the architect, and rolls the change out to the dev cluster. No agent calls another directly: GitHub is the shared memory.</desc>
+<defs>
+  <marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0,0 L10,5 L0,10 Z" fill="#8e949e"/></marker>
+</defs>
+<style>
+  .box { fill: #1f2124; stroke-width: 2; }
+  .n { fill: #e8eaed; font-size: 26px; font-weight: 700; font-family: 'Space Grotesk', Inter, sans-serif; }
+  .m { fill: #b0b5bd; font-size: 17px; }
+  .w { fill: #8e949e; font-size: 16px; }
+  .l { fill: #b0b5bd; font-size: 16px; font-style: italic; paint-order: stroke; stroke: #18191b; stroke-width: 8px; stroke-linejoin: round; }
+  .ln { stroke: #8e949e; stroke-width: 2; fill: none; }
+  .chip { fill: #18191b; stroke: #3e4147; }
+  .ct { fill: #e8eaed; font-size: 15px; font-weight: 600; }
+</style>
+<rect width="1600" height="860" rx="20" fill="#18191b"/>
+
+<!-- arrows first, under the boxes -->
+<line class="ln" x1="205" y1="196" x2="205" y2="262" marker-start="url(#a)" marker-end="url(#a)"/>
+<text class="l" x="222" y="236">ideas, bugs, decisions</text>
+<line class="ln" x1="376" y1="110" x2="600" y2="212" marker-end="url(#a)"/>
+<text class="l" x="470" y="124">approves on issues</text>
+<line class="ln" x1="376" y1="360" x2="552" y2="360" marker-end="url(#a)"/>
+<text class="l" x="408" y="348">tickets</text>
+<line class="ln" x1="376" y1="640" x2="552" y2="560" marker-end="url(#a)"/>
+<text class="l" x="392" y="680">tickets, decisions</text>
+<line class="ln" x1="1224" y1="185" x2="1048" y2="244" marker-start="url(#a)" marker-end="url(#a)"/>
+<text class="l" x="1060" y="150">design → ready,</text>
+<text class="l" x="1060" y="170">checks what merged</text>
+<line class="ln" x1="1224" y1="365" x2="1048" y2="365" marker-start="url(#a)" marker-end="url(#a)"/>
+<text class="l" x="1066" y="353">queue, “claiming”</text>
+<line class="ln" x1="1395" y1="446" x2="1395" y2="502" marker-end="url(#a)"/>
+<text class="l" x="1410" y="480">starts a session</text>
+<line class="ln" x1="1224" y1="610" x2="1048" y2="560" marker-end="url(#a)"/>
+<text class="l" x="1060" y="622">PR, CI, merge</text>
+<text class="l" x="1060" y="642">or “blocked”</text>
+<line class="ln" x1="1224" y1="730" x2="1048" y2="780" marker-end="url(#a)"/>
+<text class="l" x="1100" y="790">rollout</text>
+
+<!-- people and Claude lanes, left -->
+<rect class="box" x="40" y="40" width="330" height="150" rx="16" stroke="#e8eaed"/>
+<text class="n" x="64" y="84">Martin</text>
+<text class="m" x="64" y="114">the maintainer</text>
+<text class="w" x="64" y="144">decides, approves,</text>
+<text class="w" x="64" y="166">answers the open questions</text>
+
+<rect class="box" x="40" y="268" width="330" height="200" rx="16" stroke="#c4b5fd"/>
+<rect x="40" y="268" width="8" height="200" rx="4" fill="#c4b5fd"/>
+<text class="n" x="64" y="312">Visionist</text>
+<text class="m" x="64" y="342">Claude Code · Opus</text>
+<text class="w" x="64" y="372">with me, and a loop every 2 h</text>
+<text class="w" x="64" y="402">vision, UX, design tickets,</text>
+<text class="w" x="64" y="424">ready tickets,</text>
+<text class="w" x="64" y="446">reviews by screenshot</text>
+
+<rect class="box" x="40" y="560" width="330" height="190" rx="16" stroke="#fcd34d"/>
+<rect x="40" y="560" width="8" height="190" rx="4" fill="#fcd34d"/>
+<text class="n" x="64" y="604">Deep review</text>
+<text class="m" x="64" y="634">Claude Fable · 4 agents</text>
+<text class="w" x="64" y="664">once a week, Thursday</text>
+<text class="w" x="64" y="694">vision, decision audit,</text>
+<text class="w" x="64" y="716">design refinement, security</text>
+
+<!-- GitHub hub -->
+<rect class="box" x="556" y="214" width="488" height="430" rx="20" stroke="#7a8aff" stroke-width="3"/>
+<text class="n" x="584" y="262" style="font-size:30px">GitHub</text>
+<text class="m" x="584" y="292">the only shared memory</text>
+<rect class="chip" x="584" y="320" width="200" height="44" rx="10"/><text class="ct" x="600" y="348">issues, 7 repos</text>
+<rect class="chip" x="800" y="320" width="216" height="44" rx="10"/><text class="ct" x="816" y="348">project board</text>
+<rect class="chip" x="584" y="378" width="432" height="44" rx="10" stroke="#86efac"/><text class="ct" x="600" y="406">label ready-to-implement</text>
+<rect class="chip" x="584" y="436" width="200" height="44" rx="10"/><text class="ct" x="600" y="464">“claiming”</text>
+<rect class="chip" x="800" y="436" width="216" height="44" rx="10" stroke="#f87171"/><text class="ct" x="816" y="464">label blocked</text>
+<rect class="chip" x="584" y="494" width="432" height="44" rx="10"/><text class="ct" x="600" y="522">pull requests and CI</text>
+<text class="w" x="584" y="580">No agent calls another one.</text>
+<text class="w" x="584" y="604">They read and write tickets.</text>
+
+<!-- opencode lanes, right -->
+<rect class="box" x="1230" y="40" width="330" height="170" rx="16" stroke="#7a8aff"/>
+<rect x="1230" y="40" width="8" height="170" rx="4" fill="#7a8aff"/>
+<text class="n" x="1254" y="84">Architect</text>
+<text class="m" x="1254" y="114">opencode · Flash · max</text>
+<text class="w" x="1254" y="144">every hour, systemd timer</text>
+<text class="w" x="1254" y="168">keeps ~12 tickets ready,</text>
+<text class="w" x="1254" y="190">verifies merged work</text>
+
+<rect class="box" x="1230" y="290" width="330" height="150" rx="16" stroke="#8e949e"/>
+<rect x="1230" y="290" width="8" height="150" rx="4" fill="#8e949e"/>
+<text class="n" x="1254" y="334">Runner</text>
+<text class="m" x="1254" y="364">a shell script, no model</text>
+<text class="w" x="1254" y="394">always on, wakes every 20 s</text>
+<text class="w" x="1254" y="418">parks a ticket after 2 tries</text>
+
+<rect class="box" x="1230" y="508" width="330" height="312" rx="16" stroke="#86efac"/>
+<rect x="1230" y="508" width="8" height="312" rx="4" fill="#86efac"/>
+<text class="n" x="1254" y="552">Implementer × 2</text>
+<text class="m" x="1254" y="582">opencode · Flash · low</text>
+<text class="w" x="1254" y="612">one ticket, own worktree</text>
+<text class="w" x="1254" y="646">subagents that edit</text>
+<rect class="chip" x="1254" y="658" width="92" height="34" rx="8"/><text class="ct" x="1266" y="681">nova-ui</text>
+<rect class="chip" x="1354" y="658" width="100" height="34" rx="8"/><text class="ct" x="1366" y="681">nova-api</text>
+<rect class="chip" x="1462" y="658" width="84" height="34" rx="8"/><text class="ct" x="1472" y="681">operator</text>
+<rect class="chip" x="1254" y="698" width="64" height="34" rx="8"/><text class="ct" x="1266" y="721">docs</text>
+<text class="w" x="1254" y="760">read-only subagents</text>
+<rect class="chip" x="1254" y="772" width="92" height="34" rx="8"/><text class="ct" x="1264" y="795">reviewer</text>
+<rect class="chip" x="1352" y="772" width="110" height="34" rx="8"/><text class="ct" x="1362" y="795">spec-keeper</text>
+<rect class="chip" x="1468" y="772" width="84" height="34" rx="8"/><text class="ct" x="1476" y="795">research</text>
+
+<!-- product plane -->
+<rect class="box" x="556" y="720" width="488" height="110" rx="16" stroke="#5eead4" stroke-dasharray="8 6"/>
+<text class="n" x="584" y="764" style="font-size:22px">Dev cluster (Kubernetes)</text>
+<text class="w" x="584" y="796">rollouts, live checks, screenshots</text>
+</svg>

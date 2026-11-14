@@ -15,7 +15,7 @@
 <p class="sd-kicker">Martin's experiences · November 2026</p>
 <h1>How agents build stardelt.</h1>
 <p class="sd-lead">One maintainer, four AI roles and a machine that works through the night.</p>
-<aside class="notes">This is a field report, not a product talk. stardelt itself contains no AI: the agents only build it. I will show who does what, how it runs on one machine, and what broke on the way.</aside>
+<aside class="notes">This is a field report, not a product talk. The agents in this deck only build stardelt; none of them is shipped. The assistant that stardelt will offer its users is a different topic. I will show who does what, how the agents talk to each other, how they are scheduled on one machine, and what broke on the way.</aside>
 </section>
 <section class="sd sd-stat">
 <div class="sd-big">1,142</div>
@@ -33,10 +33,32 @@
 <tr><th>Role</th><th>Runs as</th><th>When</th><th>Never</th></tr>
 <tr><td>Visionist</td><td>Claude Code, Opus</td><td>with me, plus a loop every 2 hours</td><td class="sd-mute">writes code</td></tr>
 <tr><td>Architect</td><td>opencode, DeepSeek V4.1 Flash, max effort</td><td>every hour, by a systemd timer</td><td class="sd-mute">implements</td></tr>
-<tr><td>Implementer</td><td>opencode, DeepSeek V4.1 Flash, low effort</td><td>one session per ticket, up to 3 at once</td><td class="sd-mute">changes a decision</td></tr>
+<tr><td>Implementer</td><td>opencode, DeepSeek V4.1 Flash, low effort</td><td>one session per ticket, up to 2 at once</td><td class="sd-mute">changes a decision</td></tr>
 <tr><td>Deep review</td><td>Claude Fable</td><td>once a week, for five hours</td><td class="sd-mute">ships anything</td></tr>
 </table>
 <aside class="notes">The visionist is the product owner and architect I talk to: vision, UX and design, written down as tickets. The architect refines design tickets, verifies merged work and keeps about twelve tickets ready. The implementer takes exactly one ready ticket per session. The weekly Fable run reviews everything in depth. I decide, approve and roll out.</aside>
+</section>
+<section class="sd">
+<h2>Who talks to whom.</h2>
+<div class="sd-figure">
+<img src="img/fleet.svg" alt="The maintainer talks to the visionist. The visionist, the weekly deep review and the hourly architect write tickets on GitHub. The runner claims ready tickets and starts implementer sessions, which merge pull requests and roll out to the dev cluster.">
+<p class="sd-caption">No agent calls another one. They meet on GitHub: tickets, labels and pull requests.</p>
+</div>
+<aside class="notes">Read it from the left. Ideas, bugs and complaints go from me to the visionist. The visionist and the weekly deep review write tickets. Every hour the architect turns design tickets into ready ones and checks what merged. The runner is a plain shell script: it reads the ready queue, comments "claiming" and starts an implementer session. The implementer opens a pull request, waits for CI, merges and rolls out to the dev cluster. If a step is wrong, it labels the ticket blocked and the architect picks it up. GitHub is the only shared memory, so any session can die and the next one carries on.</aside>
+</section>
+<section class="sd">
+<h2>Nine agent definitions, two kinds.</h2>
+<table>
+<tr><th>Agent</th><th>Kind</th><th>Can</th></tr>
+<tr><td><code>architect</code></td><td>primary, started by the timer</td><td>read every repository, write and label tickets, review pull requests</td></tr>
+<tr><td><code>implementer</code></td><td>primary, started by the runner</td><td>one ticket: own worktree, pull request, CI, merge, rollout</td></tr>
+<tr><td><code>nova-ui</code>, <code>nova-api</code></td><td>subagent that edits</td><td>Nova's React frontend; Nova's Rust backend</td></tr>
+<tr><td><code>operator</code>, <code>docs</code></td><td>subagent that edits</td><td>the Kubernetes operator; the documentation site</td></tr>
+<tr><td><code>reviewer</code></td><td class="sd-mute">subagent, read-only</td><td>correctness, regressions, missing tests</td></tr>
+<tr><td><code>spec-keeper</code></td><td class="sd-mute">subagent, read-only</td><td>checks a ticket's step against the code and the decisions</td></tr>
+<tr><td><code>research</code></td><td class="sd-mute">subagent, read-only</td><td>public documentation and open source</td></tr>
+</table>
+<aside class="notes">The two primary agents run on their own. The seven subagents are called by them, at most two at a time per session. A subagent that edits is fenced to one part of one repository: nova-ui may only touch the frontend folder. The read-only ones cannot change a file. The spec-keeper stands in for the architect when an implementer doubts a step, and its answer is checked against the code before anyone acts on it. The visionist and the deep review are Claude sessions and are not in this list.</aside>
 </section>
 <section class="sd">
 <h2>A ticket's life</h2>
@@ -64,6 +86,27 @@
 <blockquote>A ticket is ready when a small model can build it without asking a question.</blockquote>
 <aside class="notes">Every step names a real file and symbol, with the file's hash on main, so a stale ticket is caught before work starts. Verify gives exact commands. Open questions is empty. Write it like that, and a cheap model at low effort does the work; most of a session is cached reads of the same context.</aside>
 </section>
+<section class="sd">
+<h2>The hand-off is a label.</h2>
+<div class="sd-cards">
+<div class="sd-card">
+<p class="sd-kicker">ready-to-implement</p>
+<h3>A small model can build it.</h3>
+<p>Files, symbols, hashes and checks. No open question.</p>
+</div>
+<div class="sd-card">
+<p class="sd-kicker">“claiming”</p>
+<h3>One ticket, one session.</h3>
+<p>The comment comes before any work, so nothing is built twice.</p>
+</div>
+<div class="sd-card">
+<p class="sd-kicker">blocked</p>
+<h3>A wrong step goes back.</h3>
+<p>The session quotes the real output, comments “released” and stops.</p>
+</div>
+</div>
+<aside class="notes">This is the whole protocol between the agents. The order of the queue is milestone, then priority, then issue number, and a ticket that must wait for another says "Land after" with the number. After two failed tries the runner parks the ticket itself, labelled blocked, with secrets removed from the comment. The architect fixes the step and removes the label; it never improvises around a wrong step.</aside>
+</section>
 <section class="sd sd-section">
 <p class="sd-kicker">02</p>
 <h2>The machine</h2>
@@ -73,7 +116,7 @@
 <h2>Four systemd units do the scheduling</h2>
 <table>
 <tr><th>Unit</th><th>Does</th><th>Bounds</th></tr>
-<tr><td><code>stardelt-runner</code></td><td>Always on. Fills a free slot within 20 seconds.</td><td>3 sessions, 12 GB, 6 cores</td></tr>
+<tr><td><code>stardelt-runner</code></td><td>Always on. Fills a free slot within 20 seconds.</td><td>2 sessions, 12 GB, 6 cores</td></tr>
 <tr><td><code>stardelt-architect</code></td><td>A timer, on the hour, every hour.</td><td>1 session, 6 GB, 2 cores</td></tr>
 <tr><td><code>stardelt-project-sync</code></td><td>Daily: every open issue on the project board.</td><td class="sd-mute">—</td></tr>
 <tr><td><code>stardelt-gc</code></td><td>Daily: removes build caches and agent scratch.</td><td class="sd-mute">—</td></tr>
@@ -81,10 +124,18 @@
 <aside class="notes">systemd user units, nothing fancy. The runner is a long-running service; the architect is a one-shot service started by an hourly timer. The memory and CPU caps are there because the platform's own Kubernetes runs on the same machine.</aside>
 </section>
 <section class="sd">
+<h2>The day and the week.</h2>
+<div class="sd-figure">
+<img src="img/schedule.svg" alt="One day in UTC: the runner is always on and keeps two implementer sessions busy, the architect starts every hour, the visionist loop every two hours, the board sync at 05:05 and the cache cleanup at 04:15. Once a week, on Thursday from 13:08 to 18:00, the deep review runs.">
+<p class="sd-caption">Busy around the clock on one workstation. The most expensive model works once a week.</p>
+</div>
+<aside class="notes">The green blocks are implementer sessions: when one ends, the runner fills the slot within twenty seconds. The architect's tick is a one-shot service on the hour. The visionist's two-hour loop lives in my Claude Code session, so it runs while that session is open. The board sync puts every open issue on the project board at 05:05, and the cleanup at 04:15 removes build caches, because a night of sessions once filled the disk. On Thursday afternoon, before the weekly quota resets, the Fable deep review runs for about five hours.</aside>
+</section>
+<section class="sd">
 <h2>Five settings in the runner's unit</h2>
 <table>
 <tr><th>Setting</th><th>Why</th></tr>
-<tr><td><code>MAX_WORKERS=3</code></td><td>Three sessions at once; two when memory runs short.</td></tr>
+<tr><td><code>MAX_WORKERS=2</code></td><td>Two sessions at once; three when memory allows.</td></tr>
 <tr><td><code>MAX_ATTEMPTS=2</code></td><td>Two tries, then the ticket is parked for a person.</td></tr>
 <tr><td><code>IMPL_MODEL=…#low</code></td><td>The model is pinned, never the harness default.</td></tr>
 <tr><td><code>RUSTC_WRAPPER=sccache</code></td><td>One compile cache for every session.</td></tr>
