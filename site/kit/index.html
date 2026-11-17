@@ -134,7 +134,7 @@
 <pre><code>import stardelt
 from transforms import daily_totals
 
-daily = stardelt.sql("select day, amount from mobility.bronze.trips")
+daily = spark.sql("select day, amount from mobility.bronze.trips")
 daily_totals(daily).head()
 stardelt.publish("daily_trips.ipynb")</code></pre>
 <p class="sd-foot">The notebook keeps working after it is published.</p>
