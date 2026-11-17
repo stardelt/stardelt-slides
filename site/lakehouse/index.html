@@ -62,12 +62,12 @@
 <ul>
 <li><code>%sql</code> and <code>%%sql</code> run in a notebook cell; the connection is called <code>warehouse</code>.</li>
 <li>The token is read on every request, so an open kernel survives a rotation.</li>
-<li>The query runs as you, exactly like <code>stardelt.sql()</code>.</li>
+<li>The query runs as you, in SQL or with <code>spark</code>.</li>
 <li>The SQL editor runs the same statements.</li>
 </ul>
 <img class="sd-shot" src="img/sql.png" alt="Nova's SQL editor with a query and its results">
 </div>
-<aside class="notes">The notebook image already loads JupySQL, so there is no install cell, and the connection is called warehouse. The token is read again on every request, so a kernel that stays open keeps working after your access token rotates. The query runs as you, exactly like stardelt.sql().</aside>
+<aside class="notes">The notebook image already loads JupySQL, so there is no install cell, and the connection is called warehouse. The token is read again on every request, so a kernel that stays open keeps working after your access token rotates. The query runs as you, in SQL or with spark.</aside>
 </section>
 <section class="sd sd-section">
 <div class="sd-num">03</div>
