@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1640 900" width="1640" height="900" font-family="Inter, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="mt">
+<title id="mt">The dark factory: build</title>
+<defs>
+  <marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0,0 L10,5 L0,10 Z" fill="#8e949e"/></marker>
+  <marker id="b" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto-start-reverse" markerUnits="userSpaceOnUse"><path d="M0,0 L12,6 L0,12 Z" fill="#7a8aff"/></marker>
+</defs>
+<style>
+  .band { fill: #1f2124; stroke: #7a8aff; stroke-width: 2; }
+  .panel { fill: #1f2124; stroke: #3e4147; stroke-width: 1.5; }
+  .box { fill: #26282c; stroke: #3e4147; stroke-width: 1.5; }
+  .box.dash { stroke: #b0b5bd; stroke-dasharray: 7 6; }
+  .box.key { stroke: #7a8aff; stroke-width: 2; }
+  .pill { fill: #23264a; stroke: #7a8aff; stroke-width: 1.5; }
+  .n { fill: #e8eaed; font-size: 22px; font-weight: 700; font-family: 'Space Grotesk', Inter, sans-serif; }
+  .you { fill: #f3f4f6; font-size: 30px; font-weight: 700; font-family: 'Space Grotesk', Inter, sans-serif; }
+  .h { fill: #7a8aff; font-size: 16px; font-weight: 600; letter-spacing: 3px; }
+  .m { fill: #b0b5bd; font-size: 16px; }
+  .w { fill: #8e949e; font-size: 17px; }
+  .l { fill: #b0b5bd; font-size: 17px; font-style: italic; }
+  .ln { stroke: #8e949e; stroke-width: 2; fill: none; }
+  .loop { stroke: #7a8aff; stroke-width: 2.5; stroke-dasharray: 10 7; fill: none; }
+</style>
+<rect width="1640" height="900" rx="20" fill="#18191b"/>
+<g opacity="0.22">
+<rect class="band" x="40" y="20" width="1560" height="112" rx="16"/>
+<text class="h" x="72" y="58">YOU</text>
+<text class="you" x="72" y="104">decide · answer one plain question · merge every rule change</text>
+<rect class="pill" x="1250" y="40" width="300" height="72" rx="36"/>
+<text class="n" x="1400" y="72" text-anchor="middle" style="font-size:21px">morning digest, 06:30</text>
+<text class="m" x="1400" y="96" text-anchor="middle">needs you · shipped · factory · red flags</text>
+<path class="ln" d="M300 132 V246" marker-end="url(#a)"/>
+<text class="l" x="312" y="157">ideas, answers</text>
+<path class="ln" d="M1580 132 V585 H1504" marker-end="url(#a)"/>
+<text class="l" transform="translate(1596 420) rotate(-90)" text-anchor="middle">you merge each rule</text>
+</g>
+<g opacity="0.22">
+<rect class="panel" x="40" y="170" width="345" height="570" rx="14"/>
+<text class="h" x="64" y="208">01 SHAPE</text>
+<rect class="box" x="82" y="250" width="260" height="70" rx="10"/><text class="n" x="102" y="281">Visionist</text><text class="m" x="102" y="305">with me, and every 2 hours</text>
+<rect class="box" x="82" y="350" width="260" height="70" rx="10"/><text class="n" x="102" y="381">Architect</text><text class="m" x="102" y="405">hourly: refine, verify</text>
+<path class="ln" d="M212 320 V346" marker-end="url(#a)"/>
+<rect class="box key" x="82" y="450" width="260" height="70" rx="10"/><text class="n" x="102" y="481">Preflight</text><text class="m" x="102" y="505">six checks on every ticket</text>
+<path class="ln" d="M212 420 V446" marker-end="url(#a)"/>
+<text class="m" x="64" y="580">Ready means a small model</text><text class="m" x="64" y="604">builds it without asking</text><text class="m" x="64" y="628">a single question.</text>
+</g>
+<g opacity="1">
+<rect class="panel" x="425" y="170" width="345" height="570" rx="14"/>
+<text class="h" x="449" y="208">02 BUILD</text>
+<rect class="box" x="467" y="250" width="260" height="70" rx="10"/><text class="n" x="487" y="281">Ready queue</text><text class="m" x="487" y="305">target: 12 tickets</text>
+<rect class="box" x="467" y="350" width="260" height="70" rx="10"/><text class="n" x="487" y="381">Runner</text><text class="m" x="487" y="405">fills a free slot in 20 s</text>
+<path class="ln" d="M597 320 V346" marker-end="url(#a)"/>
+<rect class="box" x="467" y="450" width="260" height="70" rx="10"/><text class="n" x="487" y="481">Implementer × 2</text><text class="m" x="487" y="505">one ticket, one worktree</text>
+<path class="ln" d="M597 420 V446" marker-end="url(#a)"/>
+<rect class="box" x="467" y="550" width="260" height="70" rx="10"/><text class="n" x="487" y="581">Pull request</text><text class="m" x="487" y="605">CI must be green</text>
+<path class="ln" d="M597 520 V546" marker-end="url(#a)"/>
+
+</g>
+<g opacity="0.22">
+<rect class="panel" x="810" y="170" width="345" height="570" rx="14"/>
+<text class="h" x="834" y="208">03 SHIP</text>
+<rect class="box" x="852" y="250" width="260" height="70" rx="10"/><text class="n" x="872" y="281">Risk check</text><text class="m" x="872" y="305">security, CRDs, sign-in, CI</text>
+<rect class="box dash" x="852" y="350" width="260" height="70" rx="10"/><text class="n" x="872" y="381">Reviewer</text><text class="m" x="872" y="405">another model, risky only</text>
+<path class="ln" d="M982 320 V346" marker-end="url(#a)"/>
+<rect class="box" x="852" y="450" width="260" height="70" rx="10"/><text class="n" x="872" y="481">Merge</text><text class="m" x="872" y="505">squash, on green</text>
+<path class="ln" d="M982 420 V446" marker-end="url(#a)"/>
+<rect class="box" x="852" y="550" width="260" height="70" rx="10"/><text class="n" x="872" y="581">Pin and roll out</text><text class="m" x="872" y="605">to the lab cluster</text>
+<path class="ln" d="M982 520 V546" marker-end="url(#a)"/>
+<rect class="box key" x="852" y="650" width="260" height="70" rx="10"/><text class="n" x="872" y="681">Verify live</text><text class="m" x="872" y="705">merged is not live</text>
+<path class="ln" d="M982 620 V646" marker-end="url(#a)"/>
+
+</g>
+<g opacity="0.22">
+<rect class="panel" x="1195" y="170" width="345" height="570" rx="14"/>
+<text class="h" x="1219" y="208">04 LEARN</text>
+<rect class="box" x="1237" y="250" width="260" height="70" rx="10"/><text class="n" x="1257" y="281">Hand-back</text><text class="m" x="1257" y="305">with its class, D1 to D6</text>
+<rect class="box" x="1237" y="350" width="260" height="70" rx="10"/><text class="n" x="1257" y="381">Scoreboard</text><text class="m" x="1257" y="405">bounce rate, red minutes</text>
+<path class="ln" d="M1367 320 V346" marker-end="url(#a)"/>
+<rect class="box" x="1237" y="450" width="260" height="70" rx="10"/><text class="n" x="1257" y="481">Proposed rule</text><text class="m" x="1257" y="505">a cause seen twice</text>
+<path class="ln" d="M1367 420 V446" marker-end="url(#a)"/>
+<rect class="box key" x="1237" y="550" width="260" height="70" rx="10"/><text class="n" x="1257" y="581">lessons.md</text><text class="m" x="1257" y="605">at most 40 rules</text>
+<path class="ln" d="M1367 520 V546" marker-end="url(#a)"/>
+
+</g>
+<g opacity="0.22">
+<path class="ln" d="M342 485 H405 V285 H463" marker-end="url(#a)"/>
+<path class="ln" d="M727 585 H790 V285 H848" marker-end="url(#a)"/>
+<path class="ln" d="M1112 685 H1175 V285 H1233" marker-end="url(#a)"/>
+<path class="loop" d="M1367 620 V790 H300 V524" marker-end="url(#b)"/>
+<text class="l" x="790" y="822" text-anchor="middle" style="fill:#7a8aff">the rules check the next ticket</text>
+<text class="w" x="820" y="872" text-anchor="middle">No agent calls another. They meet on GitHub: tickets, labels and pull requests.</text>
+</g>
+</svg>

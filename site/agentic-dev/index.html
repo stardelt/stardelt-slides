@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>How agents build stardelt</title>
-<meta name="description" content="How stardelt is developed: one maintainer, AI roles for vision, architecture and implementation, a runner under systemd, a weekly deep review, and what broke on the way. Content Apache 2.0.">
+<title>The dark factory</title>
+<meta name="description" content="How agents build stardelt: one map of the whole factory (shape, build, ship, learn), how it learns from every hand-back, and how one person stays in charge. Content Apache 2.0.">
 <link rel="stylesheet" href="../vendor/reveal/reveal.css">
 <link rel="stylesheet" href="../shared/stardelt.css">
 </head>
@@ -12,116 +12,296 @@
 <div class="reveal"><div class="slides">
 <section class="sd sd-cover">
 <img class="sd-wordmark" src="../shared/logo-wordmark-dark.svg" alt="stardelt">
-<p class="sd-kicker">Martin's experiences · November 2026</p>
-<h1>How agents build stardelt.</h1>
-<p class="sd-lead">One maintainer, four AI roles and a machine that works through the night.</p>
-<aside class="notes">This is a field report, not a product talk. The agents in this deck only build stardelt; none of them is shipped. The assistant that stardelt will offer its users is a different topic. I will show who does what, how the agents talk to each other, how they are scheduled on one machine, and what broke on the way.</aside>
+<p class="sd-kicker">Martin’s experiences · November 2026</p>
+<h1>The dark factory.</h1>
+<p class="sd-lead">How agents build stardelt around the clock, and how one person stays in charge.</p>
+<aside class="notes">A field report about the build plane: the agents that develop stardelt. They run on my workstation and never ship with the product. stardelt does ship agents for its customers, but that is a different talk. “Dark” means the factory runs at night with the lights off. It does not mean nobody is watching, and the second half of this talk shows how.</aside>
 </section>
 <section class="sd sd-stat">
-<div class="sd-big">1,142</div>
-<p class="sd-lead">pull requests merged in 14 days, across 7 repositories.</p>
-<aside class="notes">Counted on GitHub for 28 October to 11 November 2026: nova 222, platform 353, docs 248, operator 205, python 78, demos 21, slides 15. In the same two weeks, 923 issues were closed. Most of these are small: one ticket, one pull request.</aside>
+<div class="sd-big">2,129</div>
+<p class="sd-lead">pull requests merged in 14 days, in public repositories.</p>
+<aside class="notes">Counted on GitHub for 6 to 20 November 2026. Another 370 went into the private design repository, and 1,812 issues were closed in the same two weeks. Most are small: one ticket, one pull request.</aside>
+</section>
+<section class="sd">
+<h2>The whole factory on one slide.</h2>
+<div class="sd-figure">
+<img src="img/factory-map.svg" alt="The dark factory. Across the top: you decide, answer one plain question and merge every rule change, and read the morning digest. Below, four stages from left to right. Shape: the visionist, the hourly architect and a preflight check on every ticket. Build: the ready queue, the runner, two implementer sessions and a pull request with green CI. Ship: a risk check, a reviewer on another model for risky changes, merge, pin and roll out to the lab, and a live check. Learn: hand-backs with their class, the scoreboard, proposed rules and lessons.md with at most 40 rules, which loops back to check the next ticket.">
+</div>
+<aside class="notes">Four stages, left to right. Shape turns an idea into a ticket. Build turns a ticket into a pull request. Ship takes it to the lab and checks it there. Learn turns every failure into a rule that checks the next ticket. I sit across the top. Every section starts with this picture, with its stage lit.</aside>
 </section>
 <section class="sd sd-section">
-<p class="sd-kicker">01</p>
-<h2>The roles</h2>
-<aside class="notes">Each role has one job and one thing it must never do. That rule did more for quality than any model upgrade.</aside>
+<div class="sd-row">
+<div><p class="sd-num">01</p><h2>Shape</h2><p class="sd-lead">An idea becomes a ticket a small model can build.</p></div>
+<img src="img/factory-map-shape.svg" alt="The factory map with the Shape stage lit: visionist, architect, preflight." style="width:1060px;flex:none">
+</div>
+<aside class="notes">The expensive thinking happens here, once, so that the building can be cheap.</aside>
 </section>
 <section class="sd">
-<h2>Four roles, one person who decides</h2>
+<h2>Five roles, one person who decides.</h2>
 <table>
 <tr><th>Role</th><th>Runs as</th><th>When</th><th>Never</th></tr>
-<tr><td>Visionist</td><td>Claude Code, Opus</td><td>with me, plus a loop every 2 hours</td><td class="sd-mute">writes code</td></tr>
-<tr><td>Architect</td><td>opencode, DeepSeek V4.1 Flash, max effort</td><td>every hour, by a systemd timer</td><td class="sd-mute">implements</td></tr>
-<tr><td>Implementer</td><td>opencode, DeepSeek V4.1 Flash, low effort</td><td>one session per ticket, up to 2 at once</td><td class="sd-mute">changes a decision</td></tr>
-<tr><td>Deep review</td><td>Claude Fable</td><td>once a week, for five hours</td><td class="sd-mute">ships anything</td></tr>
+<tr><td>Visionist</td><td>Claude Code, Opus</td><td>with me, and every 2 hours</td><td class="sd-mute">writes code</td></tr>
+<tr><td>Architect</td><td>opencode, DeepSeek V4.1 Flash</td><td>every hour, on a timer</td><td class="sd-mute">implements</td></tr>
+<tr><td>Implementer</td><td>the same model, low effort</td><td>one session per ticket, 2 at once</td><td class="sd-mute">changes a decision</td></tr>
+<tr><td>Reviewer</td><td>a model from another family</td><td>risky pull requests only</td><td class="sd-mute">merges</td></tr>
+<tr><td>Deep review</td><td>Claude Fable</td><td>once a week, five hours</td><td class="sd-mute">ships anything</td></tr>
 </table>
-<aside class="notes">The visionist is the product owner and architect I talk to: vision, UX and design, written down as tickets. The architect refines design tickets, verifies merged work and keeps about twelve tickets ready. The implementer takes exactly one ready ticket per session. The weekly Fable run reviews everything in depth. I decide, approve and roll out.</aside>
+<aside class="notes">Each role has one job and one thing it must never do. That rule did more for quality than any model upgrade. The reviewer is new: it reads only the pull requests that can hurt, on a different model family from the one that wrote them.</aside>
 </section>
 <section class="sd">
-<h2>Who talks to whom.</h2>
-<div class="sd-figure">
-<img src="img/fleet.svg" alt="The maintainer talks to the visionist. The visionist, the weekly deep review and the hourly architect write tickets on GitHub. The runner claims ready tickets and starts implementer sessions, which merge pull requests and roll out to the dev cluster.">
-<p class="sd-caption">No agent calls another one. They meet on GitHub: tickets, labels and pull requests.</p>
+<h2>They meet on GitHub, never directly.</h2>
+<div class="sd-cards">
+<div class="sd-card">
+<h3><code>ready-to-implement</code></h3>
+<p>A small model can build it. Files, symbols, checks, no open question.</p>
 </div>
-<aside class="notes">Read it from the left. Ideas, bugs and complaints go from me to the visionist. The visionist and the weekly deep review write tickets. Every hour the architect turns design tickets into ready ones and checks what merged. The runner is a plain shell script: it reads the ready queue, comments "claiming" and starts an implementer session. The implementer opens a pull request, waits for CI, merges and rolls out to the dev cluster. If a step is wrong, it labels the ticket blocked and the architect picks it up. GitHub is the only shared memory, so any session can die and the next one carries on.</aside>
-</section>
-<section class="sd">
-<h2>Nine agent definitions, two kinds.</h2>
-<table>
-<tr><th>Agent</th><th>Kind</th><th>Can</th></tr>
-<tr><td><code>architect</code></td><td>primary, started by the timer</td><td>read every repository, write and label tickets, review pull requests</td></tr>
-<tr><td><code>implementer</code></td><td>primary, started by the runner</td><td>one ticket: own worktree, pull request, CI, merge, rollout</td></tr>
-<tr><td><code>nova-ui</code>, <code>nova-api</code></td><td>subagent that edits</td><td>Nova's React frontend; Nova's Rust backend</td></tr>
-<tr><td><code>operator</code>, <code>docs</code></td><td>subagent that edits</td><td>the Kubernetes operator; the documentation site</td></tr>
-<tr><td><code>reviewer</code></td><td class="sd-mute">subagent, read-only</td><td>correctness, regressions, missing tests</td></tr>
-<tr><td><code>spec-keeper</code></td><td class="sd-mute">subagent, read-only</td><td>checks a ticket's step against the code and the decisions</td></tr>
-<tr><td><code>research</code></td><td class="sd-mute">subagent, read-only</td><td>public documentation and open source</td></tr>
-</table>
-<aside class="notes">The two primary agents run on their own. The seven subagents are called by them, at most two at a time per session. A subagent that edits is fenced to one part of one repository: nova-ui may only touch the frontend folder. The read-only ones cannot change a file. The spec-keeper stands in for the architect when an implementer doubts a step, and its answer is checked against the code before anyone acts on it. The visionist and the deep review are Claude sessions and are not in this list.</aside>
-</section>
-<section class="sd">
-<h2>A ticket's life</h2>
-<div class="sd-steps">
-<div>
-<h3>I talk</h3>
-<p>An idea, a bug or a complaint goes to the visionist.</p>
+<div class="sd-card">
+<h3><code>claiming</code></h3>
+<p>One ticket, one session. Nothing is built twice.</p>
 </div>
-<div>
-<h3>It becomes a ticket</h3>
-<p>Files, symbols, steps and checks, labelled ready-to-implement.</p>
+<div class="sd-card">
+<h3><code>blocked</code></h3>
+<p>A step was wrong. The session says why and stops instead of improvising.</p>
 </div>
-<div>
-<h3>The runner claims it</h3>
-<p>A session gets its own worktree, opens a pull request, waits for CI and merges.</p>
-</div>
-<div>
-<h3>Someone looks</h3>
-<p>The architect verifies; the visionist reviews screenshots.</p>
+<div class="sd-card">
+<h3><code>needs-maintainer</code></h3>
+<p>It waits for me, with one plain question.</p>
 </div>
 </div>
-<aside class="notes">Nothing reaches the implementer except as a ready ticket. The runner comments "claiming" on the issue, so two agents never build the same thing. A wrong step is not improvised around: the session comments, the ticket gets the label blocked, and it goes back to the architect.</aside>
+<aside class="notes">No agent calls another one. The hand-off is a label on a ticket, so everything is visible and can be replayed later.</aside>
 </section>
 <section class="sd sd-quote">
 <blockquote>A ticket is ready when a small model can build it without asking a question.</blockquote>
-<aside class="notes">Every step names a real file and symbol, with the file's hash on main, so a stale ticket is caught before work starts. Verify gives exact commands. Open questions is empty. Write it like that, and a cheap model at low effort does the work; most of a session is cached reads of the same context.</aside>
-</section>
-<section class="sd">
-<h2>The hand-off is a label.</h2>
-<div class="sd-cards">
-<div class="sd-card">
-<p class="sd-kicker">ready-to-implement</p>
-<h3>A small model can build it.</h3>
-<p>Files, symbols, hashes and checks. No open question.</p>
-</div>
-<div class="sd-card">
-<p class="sd-kicker">“claiming”</p>
-<h3>One ticket, one session.</h3>
-<p>The comment comes before any work, so nothing is built twice.</p>
-</div>
-<div class="sd-card">
-<p class="sd-kicker">blocked</p>
-<h3>A wrong step goes back.</h3>
-<p>The session quotes the real output, comments “released” and stops.</p>
-</div>
-</div>
-<aside class="notes">This is the whole protocol between the agents. The order of the queue is milestone, then priority, then issue number, and a ticket that must wait for another says "Land after" with the number. After two failed tries the runner parks the ticket itself, labelled blocked, with secrets removed from the comment. The architect fixes the step and removes the label; it never improvises around a wrong step.</aside>
+<aside class="notes">Every step names a real file and symbol, with the file’s hash on main, so a stale ticket is caught before work starts. Verify gives exact commands. Open questions is empty. Write it like that, and a cheap model at low effort does the work.</aside>
 </section>
 <section class="sd sd-section">
-<p class="sd-kicker">02</p>
-<h2>The machine</h2>
-<aside class="notes">All of this runs on one workstation, next to the development cluster it deploys to.</aside>
+<div class="sd-row">
+<div><p class="sd-num">02</p><h2>Build</h2><p class="sd-lead">The runner never sleeps, and never starts a bad ticket.</p></div>
+<img src="img/factory-map-build.svg" alt="The factory map with the Build stage lit: ready queue, runner, implementers, pull request." style="width:1060px;flex:none">
+</div>
+<aside class="notes">From ready ticket to green pull request, with nobody watching.</aside>
 </section>
 <section class="sd">
-<h2>Four systemd units do the scheduling</h2>
+<h2>One ticket, one session, one pull request.</h2>
+<div class="sd-cards">
+<div class="sd-card">
+<h3>20 s</h3>
+<p>A free slot is filled within twenty seconds, day and night.</p>
+</div>
+<div class="sd-card">
+<h3>2 tries</h3>
+<p>Then the ticket is parked for a person. No third guess.</p>
+</div>
+<div class="sd-card">
+<h3>30 min</h3>
+<p>About that long from ready to closed, over the last 14 days.</p>
+</div>
+</div>
+<aside class="notes">Each session gets its own worktree, opens a pull request, waits for CI and merges. The runner ends a session as soon as its issue is closed, so a finished session cannot hold a slot.</aside>
+</section>
+<section class="sd">
+<h2>A preflight before the first token.</h2>
+<div class="sd-split">
+<div class="sd-card">
+<p class="sd-kicker">Checked before dispatch</p>
+<ul>
+<li>The ticket has steps, checks, files, and no open question</li>
+<li>Every path it names exists</li>
+<li>No command reads two inputs at once</li>
+<li>Every command parses</li>
+<li>No check row another ticket also claims</li>
+<li>No platform change without its operator twin</li>
+</ul>
+</div>
+<div class="sd-card">
+<p class="sd-kicker">Why</p>
+<h3>12 of 21 hand-backs were defects in the ticket, not in the code.</h3>
+<p>Each one cost a full session before it showed. A failed preflight parks the ticket without spending one.</p>
+</div>
+</div>
+<aside class="notes">The linter turns the most common ticket mistakes into a script. The architect runs it before it marks a ticket ready, and the runner runs it again before dispatch. An error parks the ticket and does not count as an attempt.</aside>
+</section>
+<section class="sd sd-section">
+<div class="sd-row">
+<div><p class="sd-num">03</p><h2>Ship</h2><p class="sd-lead">Green CI is where checking starts, not where it ends.</p></div>
+<img src="img/factory-map-ship.svg" alt="The factory map with the Ship stage lit: risk check, reviewer, merge, roll out, verify live." style="width:1060px;flex:none">
+</div>
+<aside class="notes">Two questions after the code is written: who should read it, and is it really live?</aside>
+</section>
+<section class="sd">
+<h2>Risk decides who reads a pull request.</h2>
+<div class="sd-split">
+<div class="sd-card">
+<p class="sd-kicker">Most pull requests</p>
+<h3>Merge on green CI.</h3>
+<p>Docs, UI copy, tests, a new check: the session merges its own work once CI passes.</p>
+</div>
+<div class="sd-card">
+<p class="sd-kicker">Risky ones get a second model first</p>
+<h3>Security, resource definitions, sign-in, the Spark front door, CI workflows, anything breaking.</h3>
+<p>A blocking finding is fixed and reviewed once more. A second one sends the ticket back.</p>
+</div>
+</div>
+<p class="sd-punch">A gate on everything gets rubber-stamped. A gate on what can hurt gets read.</p>
+<aside class="notes">The reviewer runs on a different model family, so it does not share the writer’s blind spots. I can’t read a hundred pull requests a day, and I don’t have to.</aside>
+</section>
+<section class="sd sd-alert">
+<p class="sd-kicker">Ship</p>
+<h2>Merged is not live.</h2>
+<div class="sd-cards">
+<div class="sd-card">
+<p class="sd-kicker">Seven times</p>
+<h3>main went red on one image pin.</h3>
+<p>Fix: the pin and its golden test move in one change.</p>
+</div>
+<div class="sd-card">
+<p class="sd-kicker">13 Secrets</p>
+<h3>still held a credential after the fix merged.</h3>
+<p>Fix: a ticket closes on the lab’s answer, not on CI.</p>
+</div>
+<div class="sd-card">
+<p class="sd-kicker">This morning</p>
+<h3>the runner ran scripts from four hours earlier.</h3>
+<p>Fix, ticketed: its checkout follows main on every pass.</p>
+</div>
+</div>
+<aside class="notes">The most common failure is not broken code. It is correct code that never reached the cluster. So every hour the architect checks recent deliveries against the live lab, and a ticket’s Verify section runs there.</aside>
+</section>
+<section class="sd sd-section">
+<div class="sd-row">
+<div><p class="sd-num">04</p><h2>Learn</h2><p class="sd-lead">Every hand-back teaches the next ticket.</p></div>
+<img src="img/factory-map-learn.svg" alt="The factory map with the Learn stage lit: hand-back, scoreboard, proposed rule, lessons.md." style="width:1060px;flex:none">
+</div>
+<aside class="notes">The factory gets better without anyone retraining a model. It learns through a short list of rules.</aside>
+</section>
+<section class="sd">
+<h2>Six ways a ticket goes wrong.</h2>
+<table>
+<tr><th>Class</th><th>What happened</th></tr>
+<tr><td>D1</td><td>A name that does not exist: a file, a function, a make target</td></tr>
+<tr><td>D2</td><td>A permission nobody tested</td></tr>
+<tr><td>D3</td><td>A stale line number, or two tickets on the same check</td></tr>
+<tr><td>D4</td><td>A command that cannot run as written</td></tr>
+<tr><td>D5</td><td>A missing twin, or a test file missing from the list</td></tr>
+<tr><td>D6</td><td>Image pins and licences</td></tr>
+</table>
+<p class="sd-foot">Every hand-back now carries its class.</p>
+<aside class="notes">Measured on the hand-backs of one week. The classes are the vocabulary: a session that gives a ticket back says which one, and the scoreboard counts them.</aside>
+</section>
+<section class="sd">
+<h2>A playbook of at most 40 rules.</h2>
+<div class="sd-cards">
+<div class="sd-card">
+<h3>Count</h3>
+<p>Every hand-back adds a hit to the rule it broke.</p>
+</div>
+<div class="sd-card">
+<h3>Propose</h3>
+<p>A cause seen twice becomes a proposed rule, as a pull request.</p>
+</div>
+<div class="sd-card">
+<h3>Merge</h3>
+<p>Only I merge a rule. When the book is full, the rule with the fewest hits goes.</p>
+</div>
+</div>
+<p class="sd-punch">The architect’s instructions were 10,960 lines this morning, mostly its own diary. Now they are 161.</p>
+<aside class="notes">A short, curated list beats a growing log. The agents read lessons.md before they write a ticket. They may count, and they may propose. They may not change their own rules.</aside>
+</section>
+<section class="sd">
+<h2>The scoreboard, last 14 days.</h2>
+<div class="sd-cards">
+<div class="sd-card">
+<div class="sd-big" style="font-size:104px;color:#7a8aff">1,799</div>
+<p>sessions</p>
+</div>
+<div class="sd-card">
+<div class="sd-big" style="font-size:104px;color:#7a8aff">1,565</div>
+<p>tickets closed</p>
+</div>
+<div class="sd-card">
+<div class="sd-big" style="font-size:104px;color:#7a8aff">12.5%</div>
+<p>handed back</p>
+</div>
+<div class="sd-card">
+<div class="sd-big" style="font-size:104px;color:#7a8aff">262</div>
+<p>times the queue ran dry</p>
+</div>
+</div>
+<aside class="notes">The last number is the lesson. Building is no longer the bottleneck. Writing good tickets is, which is why the preflight and the playbook sit in front of the queue.</aside>
+</section>
+<section class="sd sd-section">
+<div class="sd-row">
+<div><p class="sd-num">05</p><h2>You stay in the loop</h2><p class="sd-lead">Dark means unattended, not unwatched.</p></div>
+<img src="img/factory-map-you.svg" alt="The factory map with the top band lit: you decide, answer one plain question, merge every rule change, and read the morning digest." style="width:1060px;flex:none">
+</div>
+<aside class="notes">Everything above runs without me. This section is about how it stops for me, and only when it should.</aside>
+</section>
+<section class="sd">
+<h2>One plain question.</h2>
+<div class="sd-split">
+<div class="sd-card">
+<p class="sd-kicker">What reaches me</p>
+<h3>Can people who may only view a Spark cluster also run code on it?</h3>
+<p>A: no, viewing only (recommended).  B: yes.  Reversible: yes.</p>
+</div>
+<div class="sd-card">
+<p class="sd-kicker">The rule</p>
+<ul>
+<li>One question, ending in a question mark</li>
+<li>The options and a recommendation</li>
+<li>No jargon without half a sentence that explains it</li>
+<li>Reversible: yes or no</li>
+</ul>
+</div>
+</div>
+<aside class="notes">A question I can’t understand costs a day. This is a real one from this week; I answered it in one word.</aside>
+</section>
+<section class="sd">
+<h2>Silence has a default.</h2>
+<div class="sd-cards">
+<div class="sd-card">
+<h3>72 h</h3>
+<p>A reversible question with no answer gets its recommendation applied, and the ticket says so.</p>
+</div>
+<div class="sd-card">
+<h3>Never</h3>
+<p>Security, money, licences, deleting data and anything public wait for a real answer.</p>
+</div>
+</div>
+<aside class="notes">Without a default, a busy week stops the factory. With one, I only have to read what I would actually decide differently.</aside>
+</section>
+<section class="sd">
+<h2>The morning digest.</h2>
+<div class="sd-split">
+<div class="sd-card">
+<p class="sd-kicker">One pinned issue, rewritten at 06:30</p>
+<ul>
+<li>Needs you: every open question, oldest first</li>
+<li>Shipped: what closed yesterday</li>
+<li>Factory: the scoreboard, one line</li>
+<li>Red flags: main red, an empty queue, an old question</li>
+</ul>
+</div>
+<div class="sd-card">
+<p class="sd-kicker">And the rules</p>
+<h3>The factory proposes its rules. I merge them.</h3>
+<p>A change to a prompt or to the playbook arrives as a pull request with my label. No agent merges it.</p>
+</div>
+</div>
+<aside class="notes">I get a notification only when Needs you or Red flags has something in it. On a quiet day, nothing arrives.</aside>
+</section>
+<section class="sd">
+<h2>One workstation, five units.</h2>
 <table>
 <tr><th>Unit</th><th>Does</th><th>Bounds</th></tr>
-<tr><td><code>stardelt-runner</code></td><td>Always on. Fills a free slot within 20 seconds.</td><td>2 sessions, 12 GB, 6 cores</td></tr>
-<tr><td><code>stardelt-architect</code></td><td>A timer, on the hour, every hour.</td><td>1 session, 6 GB, 2 cores</td></tr>
-<tr><td><code>stardelt-project-sync</code></td><td>Daily: every open issue on the project board.</td><td class="sd-mute">—</td></tr>
-<tr><td><code>stardelt-gc</code></td><td>Daily: removes build caches and agent scratch.</td><td class="sd-mute">—</td></tr>
+<tr><td>runner</td><td>Always on. Fills a free slot within 20 seconds.</td><td>2 sessions, 12 GB, 6 cores</td></tr>
+<tr><td>architect</td><td>On the hour, every hour.</td><td>1 session, 6 GB, 2 cores</td></tr>
+<tr><td>digest</td><td>06:30 every morning.</td><td>—</td></tr>
+<tr><td>project-sync</td><td>Daily: every open issue on the board.</td><td>—</td></tr>
+<tr><td>gc</td><td>Daily: build caches and agent scratch.</td><td>—</td></tr>
 </table>
-<aside class="notes">systemd user units, nothing fancy. The runner is a long-running service; the architect is a one-shot service started by an hourly timer. The memory and CPU caps are there because the platform's own Kubernetes runs on the same machine.</aside>
+<p class="sd-foot">I watch from anywhere: a terminal workspace, a private network, and a phone notification when an agent waits for me.</p>
+<aside class="notes">systemd user units, nothing fancy. The caps are there because the platform’s own Kubernetes runs on the same machine. The model is pinned in the unit, there are two attempts per ticket, one compile cache serves every session, and a runner restart leaves running sessions alone. I watch from anywhere: herdr on tmux keeps every agent’s pane alive, Tailscale and mosh reach it from the laptop or the phone, and a small hook pushes a notification when a session waits for me.</aside>
 </section>
 <section class="sd">
 <h2>The day and the week.</h2>
@@ -129,63 +309,7 @@
 <img src="img/schedule.svg" alt="One day in UTC: the runner is always on and keeps two implementer sessions busy, the architect starts every hour, the visionist loop every two hours, the board sync at 05:05 and the cache cleanup at 04:15. Once a week, on Thursday from 13:08 to 18:00, the deep review runs.">
 <p class="sd-caption">Busy around the clock on one workstation. The most expensive model works once a week.</p>
 </div>
-<aside class="notes">The green blocks are implementer sessions: when one ends, the runner fills the slot within twenty seconds. The architect's tick is a one-shot service on the hour. The visionist's two-hour loop lives in my Claude Code session, so it runs while that session is open. The board sync puts every open issue on the project board at 05:05, and the cleanup at 04:15 removes build caches, because a night of sessions once filled the disk. On Thursday afternoon, before the weekly quota resets, the Fable deep review runs for about five hours.</aside>
-</section>
-<section class="sd">
-<h2>Five settings in the runner's unit</h2>
-<table>
-<tr><th>Setting</th><th>Why</th></tr>
-<tr><td><code>MAX_WORKERS=2</code></td><td>Two sessions at once; three when memory allows.</td></tr>
-<tr><td><code>MAX_ATTEMPTS=2</code></td><td>Two tries, then the ticket is parked for a person.</td></tr>
-<tr><td><code>IMPL_MODEL=…#low</code></td><td>The model is pinned, never the harness default.</td></tr>
-<tr><td><code>RUSTC_WRAPPER=sccache</code></td><td>One compile cache for every session.</td></tr>
-<tr><td><code>KillMode=process</code></td><td>A runner restart leaves running sessions alone.</td></tr>
-</table>
-<aside class="notes">Two attempts per ticket, then it is parked for the architect. One shared compile cache, so three Rust sessions do not each rebuild the same dependencies. KillMode process means a runner restart does not kill the sessions that are running.</aside>
-</section>
-<section class="sd">
-<h2>I watch from anywhere</h2>
-<div class="sd-cards">
-<div class="sd-card">
-<p class="sd-kicker">Workspace</p>
-<h3>herdr on tmux</h3>
-<p>Every agent in its own pane and session, still there when I come back.</p>
-</div>
-<div class="sd-card">
-<p class="sd-kicker">Reach</p>
-<h3>Tailscale and mosh</h3>
-<p>The same sessions from the laptop or the phone, over a flaky connection.</p>
-</div>
-<div class="sd-card">
-<p class="sd-kicker">Nudge</p>
-<h3>A notification hook</h3>
-<p>When an agent waits for me, my phone says so.</p>
-</div>
-</div>
-<aside class="notes">herdr is a terminal workspace manager made for coding agents; it keeps the panes and sessions alive. Tailscale gives a private network to the machine, and mosh keeps the terminal alive when the train goes through a tunnel. A small hook daemon pushes a notification when a session needs a decision.</aside>
-</section>
-<section class="sd">
-<h2>The weekly deep review</h2>
-<div class="sd-steps">
-<div>
-<p class="sd-num">13:08</p>
-<p>Five hours before the weekly limit resets, the strongest model starts.</p>
-</div>
-<div>
-<p class="sd-num">4</p>
-<p>agents at once: vision, a decision audit, design refinement, security.</p>
-</div>
-<div>
-<p class="sd-num">18:00</p>
-<p>Wrap up: tickets filed, decisions for me, the next run scheduled.</p>
-</div>
-</div>
-<aside class="notes">A subscription's weekly quota that is not used is lost. So on the last afternoon before it resets, Fable agents do the slow, expensive thinking: where the product is heading, which decisions no longer hold, a threat model, and turning design tickets into ready ones. Times are UTC, on Thursdays.</aside>
-</section>
-<section class="sd sd-section">
-<p class="sd-kicker">03</p>
-<h2>What I learned</h2>
-<aside class="notes">Every rule in this setup was paid for by something that broke.</aside>
+<aside class="notes">Busy around the clock on one workstation. The most expensive model works once a week, in the five hours before its quota resets. Not on the picture yet: the morning digest at 06:30 Berlin time.</aside>
 </section>
 <section class="sd sd-alert">
 <p class="sd-kicker">What broke</p>
@@ -202,64 +326,44 @@
 <p>Fix: memory and CPU caps on the units.</p>
 </div>
 <div class="sd-card">
-<p class="sd-kicker">One empty string</p>
-<h3>stopped every notebook.</h3>
-<p>Fix: never write “” where Kubernetes means the default.</p>
-</div>
-</div>
-<aside class="notes">Early on, two agents shared the checkouts and each built the same fix. Later, three sessions and their compilers pushed the load to 20 on 8 cores, and Kubernetes restarted. And one ticket of mine set a storage class to an empty string, which is not the same as the default: no notebook could start until it was fixed.</aside>
-</section>
-<section class="sd sd-alert">
-<p class="sd-kicker">What broke</p>
-<h2>The night shift has its own bugs.</h2>
-<div class="sd-cards">
-<div class="sd-card">
 <p class="sd-kicker">A model</p>
 <h3>was geo-blocked overnight.</h3>
 <p>Fix: pin the model in the unit.</p>
 </div>
 <div class="sd-card">
-<p class="sd-kicker">A finished session</p>
-<h3>kept talking for 40 minutes.</h3>
-<p>Fix: the runner ends a session once its issue is closed.</p>
-</div>
-<div class="sd-card">
-<p class="sd-kicker">A free slot</p>
-<h3>sat idle for 15 minutes.</h3>
-<p>Fix: wake every 20 seconds, not every tick.</p>
+<p class="sd-kicker">A parked ticket</p>
+<h3>was picked up again every minute.</h3>
+<p>Fix: the queue skips anything waiting for me.</p>
 </div>
 </div>
-<aside class="notes">The harness's default model moved to one the provider does not serve in our country, and every session died at start. Some sessions merged their pull request and kept generating, holding a slot. And a session that ended mid-sleep left its slot empty until the next fifteen-minute tick, which was about half the lane's time.</aside>
+<aside class="notes">Every rule in this setup was paid for by something that broke. The last one is from this week: a ticket waiting for my merge looked ready, so the runner kept starting sessions that could only give it back.</aside>
 </section>
 <section class="sd">
-<h2>What works</h2>
-<div class="sd-cards">
+<h2>Next: checks the agents never see.</h2>
+<div class="sd-split">
 <div class="sd-card">
-<h3>Small tickets, cheap model</h3>
-<p>Precise steps beat a bigger model.</p>
+<p class="sd-kicker">Holdout scenarios</p>
+<ul>
+<li>Five journeys through the public demo</li>
+<li>Run every night in a real browser, on another model</li>
+<li>Scored 0, ½ or 1, with a screenshot</li>
+<li>Kept outside the code the agents edit</li>
+</ul>
 </div>
 <div class="sd-card">
-<h3>Screenshots, not “tests pass”</h3>
-<p>The UI is judged by looking at it, with realistic data.</p>
-</div>
-<div class="sd-card">
-<h3>The human decides</h3>
-<p>Agents propose. Decisions, rollouts and secrets stay with me.</p>
+<p class="sd-kicker">Why</p>
+<h3>“The ticket is closed” and “a person can do it” are different facts.</h3>
+<p>One night every ticket was closed and every check was green, and the demo notebook hung on its first cell.</p>
 </div>
 </div>
-<aside class="notes">The effort goes into the ticket, not the model. Green tests said a page worked while it looked like a mess; screenshots with noisy data catch that. And agents never get the decisions, the production rollout or a password.</aside>
-</section>
-<section class="sd sd-stat">
-<div class="sd-big">795</div>
-<p class="sd-lead">tickets done by the runner since 30 October. 9 parked for a person.</p>
-<aside class="notes">From the runner's own state: 928 sessions dispatched, 795 tickets finished, and 9 parked after two failed attempts. A parked ticket is not a failure of the model; usually a step in the ticket was wrong.</aside>
+<aside class="notes">The score is never a merge gate. A journey at zero two nights running becomes a bug ticket, written from the screenshot.</aside>
 </section>
 <section class="sd sd-cover">
 <p class="sd-kicker">everything in the open</p>
 <h1>github.com/stardelt</h1>
 <p class="sd-lead">The product, the tickets and every pull request the agents opened.</p>
 <img class="sd-wordmark" src="../shared/logo-wordmark-dark.svg" alt="stardelt">
-<aside class="notes">All of it is public: read the tickets to see what a small model can build from. The ticket rules are in the developer guide at stardelt.io/docs/developer. Questions welcome.</aside>
+<aside class="notes">Every ticket in this talk is public. Read one, and you have seen how the factory thinks. The ticket rules are in the developer guide at stardelt.io/docs/developer. Questions welcome.</aside>
 </section>
 </div></div>
 <script src="../vendor/reveal/reveal.js"></script>
