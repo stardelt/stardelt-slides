@@ -8,5 +8,5 @@
   {"slug": "how-it-works", "title": "How stardelt works", "summary": "The architecture in one picture: one front door, open engines, plugs instead of a monolith.", "date": "2026-11"},
   {"slug": "lineage", "title": "Where does this table come from?", "summary": "Table lineage in Nova: who makes a table, what it is made from, and who uses it.", "date": "2026-11"},
   {"slug": "contribute", "title": "Build it with us", "summary": "How to contribute to stardelt: where to start, how a change gets in, and how to write an issue anyone can build.", "date": "2026-11"},
-  {"slug": "agentic-dev", "title": "How agents build stardelt", "summary": "Martin's experiences: a visionist, an architect and implementers on a timer, a weekly deep review, and what broke on the way.", "date": "2026-11"}
+  {"slug": "agentic-dev", "title": "The dark factory", "summary": "How agents build stardelt around the clock: one map of the whole factory, how it learns from every hand-back, and how one person stays in charge.", "date": "2026-11"}
 ]
