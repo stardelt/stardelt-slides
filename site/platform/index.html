@@ -15,8 +15,9 @@
 <p class="sd-lead">Your own data platform</p>
 <p class="sd-lead">One sign-in, one interface, one API — inside your own Kubernetes.</p>
 <p class="sd-caption">Open source · Apache 2.0 components · Kubernetes-native</p>
-<aside class="notes">Title slide. Say what the talk is: a data platform you own, built from permissive open source, on your own Kubernetes.</aside>
+<aside class="notes">Title slide. Say what the talk is: a data platform you own, built from permissive open source, on your own Kubernetes. For a five-minute talk, show slides 1, 2, 5, 6, 7, 17 and 19.</aside>
 </section>
+
 <section id="name" class="sd">
 <div class="sd-split">
 <img class="sd-mark-hero" src="../shared/logo.svg" alt="The stardelt mark: a star inside a triangle, the Greek letter delta">
@@ -30,12 +31,14 @@
 </div>
 <aside class="notes">The name joins the two ideas the platform stands on. The star schema is dimensional modelling, popularised by Ralph Kimball in the 1990s. Delta means change over time, and it recalls the table formats that made the lakehouse possible; stardelt uses Apache Iceberg. A third reading, if the room likes it: a river delta is where many streams meet before they reach the sea, like sources flowing into one lake.</aside>
 </section>
+
 <section id="own" data-transition="zoom" class="sd sd-statement" style="background:radial-gradient(ellipse at 50% 120%, #2a2f6b, #18191b 60%)">
 <p class="sd-kicker">why we build it</p>
 <p class="sd-display">Your data is your company’s memory.</p>
 <p class="fragment fade-up sd-lead sd-gold">Don’t rent it. Own it.</p>
 <aside class="notes">One sentence for the room before any technology: whoever runs your data platform holds your company’s memory. stardelt exists so that this is you.</aside>
 </section>
+
 <section id="europe" data-transition="zoom" class="sd sd-europe">
 <div class="sd-row">
 <div>
@@ -47,6 +50,7 @@
 </div>
 <aside class="notes">The emotional core of the talk. Europe is not too small or too late: it is the largest single market in the world's democracies. The question is not whether we can, but whether we decide to.</aside>
 </section>
+
 <section class="sd">
 <h2>Data platforms are rented, not owned</h2>
 <div class="sd-cards">
@@ -69,6 +73,7 @@
 </div>
 <aside class="notes">Set up the problem in four words: rented, fragmented, locked in, opaque. Ask the audience which of them they recognise.</aside>
 </section>
+
 <section class="sd">
 <h2>What stardelt is</h2>
 <div class="sd-cards">
@@ -87,36 +92,48 @@
 </div>
 <aside class="notes">Three promises: one sign-in, one interface, one API. Each one answers a layer of lock-in from the previous slide.</aside>
 </section>
+
 <section class="sd">
-<h2>The shape of it</h2>
+<h2>The whole platform in one picture</h2>
 <div class="sd-figure">
-<img src="img/architecture-layers.svg" alt="stardelt architecture: Nova and the operator on top, the always-installed core stack, optional services, and your Kubernetes underneath">
-<p class="sd-caption">Control plane, data plane, applications and platform services. On your Kubernetes, nothing calls home.</p>
+<img src="img/how-stardelt-works.svg" alt="How stardelt works: people, scripts, notebooks and AI assistants sign in once and talk to one front door, stardelt Nova, which asks the SQL engine, the catalog and Airflow for them; table files live in SeaweedFS; the operator, Postgres, ingress and cert-manager run on Kubernetes underneath">
+<p class="sd-caption">Read it from the top: people and tools, Nova, engines, catalog, storage, control plane.</p>
 </div>
-<aside class="notes">Walk the four layers bottom-up: your Kubernetes, the core stack that is always installed, optional services, and the control plane with Nova and the operator.</aside>
+<aside class="notes">Read the picture from the top. People and tools sign in once and talk to one front door, stardelt Nova. Nova asks the engines and the catalog on their behalf, table files live in storage, and the control plane runs on the Kubernetes cluster you bring.</aside>
 </section>
+
 <section class="sd">
-<h2>The lakehouse core</h2>
 <div class="sd-cards">
 <div class="sd-card">
-<h3>Apache Iceberg</h3>
-<p>The table format every engine reads and writes. Not a service you install.</p>
+<h3>One sign-in</h3>
+<p>The OIDC provider you already run holds users and groups; small installs can start with the bundled Keycloak.</p>
 </div>
 <div class="sd-card">
-<h3>Lakekeeper</h3>
-<p>The Iceberg REST catalog: metadata, warehouses, short-lived credentials.</p>
+<h3>One API</h3>
+<p>Whatever you can click, you can call.</p>
 </div>
 <div class="sd-card">
-<h3>Trino</h3>
-<p>One SQL engine over every table you may read.</p>
-</div>
-<div class="sd-card">
-<h3>SeaweedFS</h3>
-<p>S3-compatible storage by default. Bring your own bucket instead.</p>
+<h3>Nova acts as you</h3>
+<p>With sign-in on, your token goes on to the engines, so what you may read is decided by the engine and the catalog for you, not by Nova's own power.</p>
 </div>
 </div>
-<aside class="notes">The core is deliberately small and standard: a table format, a REST catalog, a SQL engine and object storage — all replaceable.</aside>
+<aside class="notes">One sign-in: the browser uses the sign-in page, the command line uses the device code flow, and the same token reaches the engines. One API: whatever you can click, you can call. Nova acts as you, so permissions are enforced by the engine and the catalog.</aside>
 </section>
+
+<section class="sd">
+<div class="sd-cards">
+<div class="sd-card">
+<h3>Plugs, not a monolith</h3>
+<p>The engine, the catalog, the identity provider and the object store are replaceable behind open contracts (SQL, the Iceberg REST catalog, OIDC, S3).</p>
+</div>
+<div class="sd-card">
+<h3>Known limits</h3>
+<p>Results Nova keeps in memory are capped (100 000 rows or about 64 MiB per statement); storage credentials are one platform key today, not yet one short-lived key per person.</p>
+</div>
+</div>
+<aside class="notes">Plugs, not a monolith: the engine, the catalog, the identity provider and the object store are replaceable behind open contracts. The known limits are the in-memory result cap and one platform storage key. Say both plainly; the audience will ask about the second.</aside>
+</section>
+
 <section class="sd">
 <h2>One interface</h2>
 <div class="sd-split">
@@ -131,6 +148,7 @@
 </div>
 <aside class="notes">The interface is the product's opinion: Nova puts catalogs, SQL, pipelines, notebooks, streams and dashboards behind the same sign-in, so a team never juggles five tools.</aside>
 </section>
+
 <section class="sd">
 <h2>Find the data</h2>
 <div class="sd-split">
@@ -144,6 +162,7 @@
 </div>
 <aside class="notes">Finding data is not a search box problem: it needs columns, partitions, snapshots, ownership and lineage in one place, next to the table you are looking at.</aside>
 </section>
+
 <section class="sd">
 <h2>Streaming that is a resource, not a project</h2>
 <div class="sd-split">
@@ -162,6 +181,7 @@ spec:
 </div>
 <aside class="notes">Streaming is not a separate project with its own cluster and its own credentials: it is a Kubernetes resource the operator reconciles, topic in and Iceberg table out.</aside>
 </section>
+
 <section class="sd">
 <h2>The platform is a resource, too</h2>
 <div class="sd-split">
@@ -182,12 +202,38 @@ spec:
 </div>
 <aside class="notes">The installation itself is a resource. That makes the platform reproducible, reviewable in Git and free of hidden configuration in a vendor console.</aside>
 </section>
+
+<section class="sd">
+<h2>Where each task is done</h2>
+<table>
+<thead>
+<tr><th>Where</th><th>What it is for</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Nova</strong></td><td>finding and exploring data, writing SQL and notebooks, running, stopping and retrying, watching what happened</td></tr>
+<tr><td><strong>API, command line, agents</strong></td><td>everything Nova does, and automation</td></tr>
+<tr><td><strong>Kubernetes resources</strong></td><td>lasting settings an administrator or your GitOps tool owns: <code>PlatformInstance</code>, <code>Lakehouse</code>, <code>Catalog</code>, <code>Connection</code>, <code>ServicePrincipal</code>, <code>Pipeline</code>, <code>StreamApp</code></td></tr>
+<tr><td><strong>Git</strong></td><td>the only way a team's work moves from dev to prod: pipelines, notebooks, SQL, stream apps</td></tr>
+</tbody>
+</table>
+<aside class="notes">Four places to look for anything: Nova, the API, Kubernetes resources, and Git. Nova is never for anything you could not also do through the API. Kubernetes resources and Git carry lasting settings and a team's work, never runs, results or secret values.</aside>
+</section>
+
+<section class="sd">
+<h2>Build once, deploy many</h2>
+<div class="sd-figure">
+<img src="img/stages.svg" alt="Stages: Git carries the team's work from dev to prod; data, runs and secrets stay in each stage">
+<p class="sd-caption">Build once, deploy many: a stage never copies objects to another stage; Git carries them.</p>
+</div>
+<aside class="notes">Build once, deploy many: a stage never copies objects to another stage; Git carries them. The platform's own settings move through the GitOps tool you already run.</aside>
+</section>
+
 <section class="sd">
 <h2>Open and sovereign</h2>
 <div class="sd-cards">
 <div class="sd-card">
-<h3>Permissive only.</h3>
-<p>Apache 2.0 and MIT: Trino, Iceberg, Airflow, Superset, JupyterHub, Keycloak, CloudNativePG, Strimzi, and the stardelt components themselves.</p>
+<h3>Permissive licences.</h3>
+<p>Apache 2.0 and MIT: Trino, Iceberg, Airflow, Superset, JupyterHub, Keycloak, CloudNativePG, Strimzi and the stardelt components. Every exception is named at stardelt.io/docs/architecture/licenses.</p>
 </div>
 <div class="sd-card">
 <h3>Yours at every layer.</h3>
@@ -196,12 +242,13 @@ spec:
 </div>
 <aside class="notes">Permissive licences are a functional choice, not a slogan: they are what makes a fork a real exit. And nothing phones home at runtime.</aside>
 </section>
+
 <section class="sd">
 <h2>Today</h2>
 <div class="sd-cards">
 <div class="sd-card">
-<h3>0.x, pre-alpha</h3>
-<p>Built in the open, and changing quickly.</p>
+<h3>0.0.x, alpha</h3>
+<p>Each release is proven on a fresh node before it is published. Built in the open, and changing quickly.</p>
 </div>
 <div class="sd-card">
 <h3>Working today</h3>
@@ -209,11 +256,12 @@ spec:
 </div>
 <div class="sd-card">
 <h3>Next</h3>
-<p>One-command installs on a fresh node, more pipelines and ingestion, the roadmap on the site.</p>
+<p>Docs for each release, the operator as the one install path, more ingestion. The roadmap is on the site.</p>
 </div>
 </div>
-<aside class="notes">Be honest about status: pre-alpha, but the listed capabilities work on main today. Point at the roadmap for what comes next.</aside>
+<aside class="notes">Be honest about status: alpha, and the listed capabilities are in the latest release. Point at the roadmap for what comes next.</aside>
 </section>
+
 <section id="together" data-transition="zoom" class="sd sd-europe">
 <div class="sd-row">
 <div>
@@ -225,6 +273,7 @@ spec:
 </div>
 <aside class="notes">Invitation, not a sales pitch: try it, open an issue, send a pull request. Permissive licences mean everything people contribute stays usable by everyone.</aside>
 </section>
+
 <section class="sd sd-cover">
 <h2>Start it on your own cluster</h2>
 <p class="sd-lead"><strong>Docs</strong> — <a href="https://stardelt.io/docs">stardelt.io/docs</a></p>
