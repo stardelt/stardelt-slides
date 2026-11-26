@@ -1,6 +1,6 @@
 // Builds `_site/` from `site/` and `decks.json`: the deck files, an index page,
 // a 404 page, the custom-domain file and `.nojekyll`.
-import { readFileSync, rmSync, mkdirSync, cpSync, writeFileSync } from 'node:fs';
+import { readFileSync, rmSync, mkdirSync, cpSync, writeFileSync, existsSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 
 const root = resolve(import.meta.dirname, '..');
@@ -65,4 +65,27 @@ writeFileSync(join(out, '404.html'), page);
 writeFileSync(join(out, 'CNAME'), 'slides.stardelt.io\n');
 writeFileSync(join(out, '.nojekyll'), '');
 
-console.log(`built ${out} with ${decks.length} deck(s)`);
+// A merged deck keeps its old address: one small page per entry in redirects.json.
+const redirectsPath = join(root, 'redirects.json');
+const redirects = existsSync(redirectsPath) ? JSON.parse(readFileSync(redirectsPath, 'utf8')) : {};
+for (const [from, to] of Object.entries(redirects)) {
+  mkdirSync(join(out, from), { recursive: true });
+  writeFileSync(
+    join(out, from, 'index.html'),
+    `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Moved to ${escape(to)}</title>
+<meta http-equiv="refresh" content="0; url=../${escape(to)}/">
+<link rel="canonical" href="../${escape(to)}/">
+</head>
+<body>
+<p>This deck is now part of <a href="../${escape(to)}/">${escape(to)}</a>.</p>
+</body>
+</html>
+`,
+  );
+}
+
+console.log(`built ${out} with ${decks.length} deck(s) and ${Object.keys(redirects).length} redirect(s)`);

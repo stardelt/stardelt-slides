@@ -51,6 +51,26 @@ for (const name of folders) {
   if (!SHARED.has(name) && !slugs.has(name)) fail(`site/${name}`, 'not listed in decks.json');
 }
 
+// (i) redirects.json: an old deck address points at a deck that exists, and is not a deck itself
+const redirectsPath = join(root, 'redirects.json');
+if (existsSync(redirectsPath)) {
+  let redirects = null;
+  try {
+    redirects = JSON.parse(readFileSync(redirectsPath, 'utf8'));
+  } catch (err) {
+    fail('redirects.json', `cannot parse (${err.message})`);
+  }
+  if (redirects !== null && (typeof redirects !== 'object' || Array.isArray(redirects))) {
+    fail('redirects.json', 'must be an object {"old-slug": "deck-slug"}');
+  } else if (redirects !== null) {
+    for (const [from, to] of Object.entries(redirects)) {
+      if (!/^[a-z0-9-]+$/.test(from)) fail('redirects.json', `${from}: slug must match ^[a-z0-9-]+$`);
+      if (slugs.has(from) || folders.includes(from)) fail('redirects.json', `${from}: still a deck or a folder in site/`);
+      if (!slugs.has(to)) fail('redirects.json', `${from} → ${to}: no such deck in decks.json`);
+    }
+  }
+}
+
 const deckFiles = decks.filter((d) => typeof d.slug === 'string').map((d) => `site/${d.slug}/index.html`);
 
 const imgSizeLimit = 2 * 1024 * 1024;
