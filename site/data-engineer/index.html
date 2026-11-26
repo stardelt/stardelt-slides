@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A data engineer&#x27;s day on stardelt</title>
+<meta name="description" content="A data engineer&#x27;s day on stardelt: load, model in layers, ship through Git, prove before publishing, run every day and trace every table. Content Apache 2.0.">
+<link rel="stylesheet" href="../vendor/reveal/reveal.css">
+<link rel="stylesheet" href="../shared/stardelt.css">
+</head>
+<body>
+<div class="reveal"><div class="slides">
+<section class="sd sd-cover">
+<img class="sd-wordmark" src="../shared/logo-wordmark-dark.svg" alt="stardelt">
+<p class="sd-kicker">for data engineers</p>
+<h1>A data engineer's day</h1>
+<p class="sd-lead">Load, model, prove, ship and watch: in your own editor, through Git, as yourself.</p>
+<aside class="notes">One day of a data engineer on stardelt, in five parts: get data in, model in layers, ship from dev to prod through Git, run it every day, and know where every table comes from. Every step is a guide on stardelt.io, and every step is also an API call, so the same day works from a script or an agent.</aside>
+</section>
+
+<section class="sd">
+<h2>The path</h2>
+<div class="sd-figure">
+<img src="img/workflow-overview.svg" width="1600" height="392" alt="From source to dashboard: sources, ingest, bronze, silver, gold, serve, with compute, orchestration and secrets underneath">
+</div>
+<aside class="notes">The picture is the whole path: sources, ingest, the bronze, silver and gold layers, and serving. Compute, orchestration and secrets sit underneath. The guide walks the five steps in order.</aside>
+</section>
+
+<section class="sd">
+<h2>Choose how you work</h2>
+<div class="sd-cards">
+<div class="sd-card">
+<h3>JupyterLab in the browser</h3>
+<p>Quick exploration, a chart, a first look at a table.</p>
+</div>
+<div class="sd-card">
+<h3>VS Code on your workspace</h3>
+<p>Your own editor, Spark and table writes, on the platform.</p>
+</div>
+<div class="sd-card">
+<h3>VS Code on your laptop</h3>
+<p>Light SQL, tests and editing offline, with queries on the platform.</p>
+</div>
+</div>
+<aside class="notes">Three ways to work, and all of them run as you: the kernel and every query use your platform identity. The browser is JupyterLab, started from Nova's Notebooks page. VS Code connects either to your workspace, which is the full platform with Spark and table writes, or to a local kernel after stardelt login, where only queries leave the laptop.</aside>
+</section>
+
+<section class="sd sd-section">
+<div class="sd-num">01</div>
+<h2>Get data in</h2>
+<p class="sd-lead">A file, another database or an API — everything lands in the bronze schema of your domain catalog.</p>
+<aside class="notes">A CSV or JSON file goes in through Load &amp; transfer, with the file, the schema and the table. Data already in the platform comes in with CREATE TABLE AS SELECT or INSERT INTO … SELECT. Raw data goes into the bronze schema of your domain catalog and is never changed in place.</aside>
+</section>
+
+<section class="sd">
+<h2>Connect a source system</h2>
+<div class="sd-split">
+<ul>
+<li>Keep credentials out of the notebook: ask for them at run time.</li>
+<li><code>stardelt.write_df</code> writes as you, so your table permissions apply.</li>
+<li>A connection keeps the secret in the platform's secret store, not in Git.</li>
+</ul>
+<img class="sd-shot" src="img/catalog.png" alt="Nova's catalog explorer with catalogs, schemas and tables">
+</div>
+<aside class="notes">Keep credentials out of the notebook file; the simplest way is to ask for them at run time. stardelt.write_df writes the table as you, so your table permissions apply, and above 200,000 rows it refuses. A connection keeps its settings visible while the password is written once and never shown again.</aside>
+</section>
+
+<section class="sd sd-section">
+<div class="sd-num">02</div>
+<h2>Model in layers</h2>
+<p class="sd-lead">Build each layer from the one before, in SQL.</p>
+<aside class="notes">The three layers are schemas inside your domain catalog, built one from the one before in SQL. Your group owns the catalog, so a colleague in another group cannot read or write it. The catalog page names the owning group and what each group may do there.</aside>
+</section>
+
+<section class="sd">
+<h2>Bronze, silver, gold</h2>
+<div class="sd-figure">
+<img src="img/medallion-layers.svg" width="1200" height="532" alt="Medallion layers as schemas: bronze, silver, gold">
+<p class="sd-caption">The three layers are schemas inside your domain catalog — there are no default bronze, silver or gold catalogs.</p>
+</div>
+<aside class="notes">Bronze, silver and gold are schemas inside your domain catalog, not three catalogs. Build silver from bronze with a CREATE TABLE AS SELECT, and gold from silver. Run both in the SQL editor or a notebook.</aside>
+</section>
+
+<section class="sd">
+<h2>Query where you work</h2>
+<div class="sd-split">
+<ul>
+<li><code>%sql</code> and <code>%%sql</code> run in a notebook cell; the connection is called <code>warehouse</code>.</li>
+<li>The token is read on every request, so an open kernel survives a rotation.</li>
+<li>The query runs as you, in SQL or with <code>spark</code>.</li>
+<li>The SQL editor runs the same statements.</li>
+</ul>
+<img class="sd-shot" src="img/sql.png" alt="Nova's SQL editor with a query and its results">
+</div>
+<aside class="notes">The notebook image already loads JupySQL, so there is no install cell, and the connection is called warehouse. The token is read again on every request, so a kernel that stays open keeps working after your access token rotates. The query runs as you, in SQL or with spark.</aside>
+</section>
+
+<section class="sd sd-section">
+<div class="sd-num">03</div>
+<h2>From dev to prod</h2>
+<aside class="notes">How a team's work moves from a development stage to production: a bundle in Git, your own dev stage, a plan in the pull request, a checked publish.</aside>
+</section>
+
+<section class="sd">
+<h2>Ship through Git</h2>
+<div class="sd-steps">
+<div>
+<h3>Describe</h3>
+<p>A bundle in Git says what the team publishes, with one target per stage.</p>
+</div>
+<div>
+<h3>Try in dev</h3>
+<p>Deploy to your own development stage, where pipelines are named dev-&lt;you&gt;-&lt;name&gt; and nothing is scheduled.</p>
+</div>
+<div>
+<h3>Review in a pull request</h3>
+<p>Validate needs nothing from the cluster; plan asks Nova and writes nothing.</p>
+</div>
+<div>
+<h3>Publish to production</h3>
+<p>Deploy writes only when Nova accepts every pipeline, and stamps each with its commit.</p>
+</div>
+</div>
+<aside class="notes">A bundle is a directory in Git: the pipeline files, the SQL and notebooks they read, and one target per stage. validate checks what needs no cluster, plan asks Nova what a deploy would do and writes nothing, and deploy writes only when Nova accepts every pipeline. A production pipeline is stamped with the bundle, the target and the commit, so a deploy can be traced back to a change.</aside>
+</section>
+
+<section class="sd">
+<h2>Build once, deploy many</h2>
+<div class="sd-figure">
+<img src="img/stages.svg" width="1150" height="447" alt="Stages: Git carries the team's work from dev to prod; data, runs and secrets stay in each stage">
+</div>
+<aside class="notes">A stage never copies objects to another stage: Git carries them. Each pipeline is stamped with where it came from, the target and the Git commit. To go back to an earlier state, check out the earlier commit and deploy again.</aside>
+</section>
+
+<section class="sd">
+<h2>Prove it before anyone reads it</h2>
+<div class="sd-steps">
+<div>
+<h3>Write to a branch</h3>
+<p>With <code>publish: wap</code>, a run writes to an audit branch of each table, not to what readers see.</p>
+</div>
+<div>
+<h3>Check the branch</h3>
+<p>A quality task runs its checks on that branch. A check passes when its query returns no rows.</p>
+</div>
+<div>
+<h3>Publish or stop</h3>
+<p>The table moves only when every check passes. A failing check stops the run, and readers never see the bad data.</p>
+</div>
+</div>
+<aside class="notes">Write, audit, publish, declared in the pipeline. publish: wap needs a quality task with at least one check, and Kubernetes refuses the pipeline otherwise. The writes land on an Iceberg branch named audit_ plus the run, the checks read that branch, and main moves only when they pass. Dashboards never show a half-built or wrong table.</aside>
+</section>
+
+<section class="sd">
+<h2>Keep notebooks thin</h2>
+<p class="sd-lead">Logic belongs in <code>.py</code> modules with <code>pytest</code> tests, where it is reviewable and testable without a kernel.</p>
+<aside class="notes">A module is reviewable and testable without a kernel, so the notebook only calls it and shows the result. A rerun is then cheap, and a failure names a line of code instead of a cell. The tests run in CI like any other test.</aside>
+</section>
+
+<section class="sd sd-section">
+<div class="sd-num">04</div>
+<h2>Run it every day</h2>
+<p class="sd-lead">Publish the notebook or SQL as a pipeline, and Airflow runs the schedule.</p>
+<aside class="notes">Start with Trino, and use Spark when SQL no longer fits or one machine is not enough. Publish the notebook or SQL as a pipeline and the schedule runs in Airflow, with run, pause, resume and stop on the pipeline page. Maintenance runs on its own as a per-catalog CronJob staggered after 02:00.</aside>
+</section>
+
+<section class="sd">
+<h2>Schedule and watch</h2>
+<div class="sd-split">
+<ul>
+<li>Publish the notebook or SQL as a pipeline; the schedule runs in Airflow.</li>
+<li>Run now, Pause, Resume and Stop are on the pipeline page, checked against your group.</li>
+<li>Maintenance runs on its own: every catalog gets a CronJob that compacts, expires and removes.</li>
+</ul>
+<img class="sd-shot" src="img/pipeline.png" alt="Nova's pipeline page with schedules, runs and status">
+</div>
+<aside class="notes">Graph in Airflow opens the graph, the Gantt view and the task logs of the run. Run now, Pause, Resume and Stop on the pipeline page are checked against your group. Every catalog whose owner group has a pipeline principal gets one maint-&lt;catalog&gt; CronJob that compacts files, expires old snapshots and removes orphans.</aside>
+</section>
+
+<section class="sd">
+<h2>Watch it run</h2>
+<p class="sd-lead">Open a run to see the executed notebook, opened at the cell that failed.</p>
+<aside class="notes">Build → Runs lists every run of the notebooks and pipelines your groups own, filterable by kind, state and group. Open a run to see its tasks, the task log and the executed notebook. A failed run opens at the cell that failed and names the exception above the notebook.</aside>
+</section>
+
+<section class="sd sd-section">
+<div class="sd-num">05</div>
+<h2>Where does this table come from?</h2>
+<aside class="notes">Nova answers it on every table: who makes it, what it is made from, and who uses it. The edges come from the queries the engines ran and from OpenLineage events, not from a form someone filled in.</aside>
+</section>
+
+<section class="sd">
+<h2>Three questions, one tab</h2>
+<div class="sd-cards">
+<div class="sd-card">
+<h3>Made by</h3>
+<p>The pipeline that writes it, its runs, and when it last ran.</p>
+</div>
+<div class="sd-card">
+<h3>Made from</h3>
+<p>The tables it is built from, grouped by distance.</p>
+</div>
+<div class="sd-card">
+<h3>Used by</h3>
+<p>The people, the tools and the number of queries.</p>
+</div>
+</div>
+<aside class="notes">Open the table and choose Lineage. Made by names the pipeline and counts its runs; Made from lists the tables it is built from, grouped by distance; Used by counts the people, names the tools and counts the queries.</aside>
+</section>
+
+<section class="sd">
+<h2>The graph</h2>
+<div class="sd-figure">
+<img src="img/lineage.png" alt="Nova's lineage graph: the tables that feed this one on the left, this table in the middle, and everything built from it on the right">
+<p class="sd-caption">Open graph draws the same data left to right: the tables that feed this one on the left, this table in the middle column and everything built from it on the right, one line per pair of tables.</p>
+</div>
+<aside class="notes">Open graph draws the same data left to right. The job that moved the data appears on the lines of a hovered or selected table and nowhere else.</aside>
+</section>
+
+<section class="sd">
+<h2>Show it</h2>
+<div class="sd-split">
+<ul>
+<li>Open Superset from Nova → Dashboards and sign in with your platform account.</li>
+<li>Each catalog gets its own Superset database; point dashboards at the gold schema.</li>
+<li>A published dashboard is visible only to the groups whose catalogs its charts use.</li>
+</ul>
+<img class="sd-shot" src="img/dashboards.png" alt="A published Superset dashboard on the platform">
+</div>
+<aside class="notes">Superset opens from Nova → Dashboards and signs in with your platform account. Each catalog gets its own Superset database, and dashboards point at the gold schema only. A dashboard that spans two catalogs is administrators-only until it is split.</aside>
+</section>
+
+<section class="sd">
+<h2>Not there yet</h2>
+<p class="sd-lead">A python task, dbt runs, a preview per pull request and a backfill for past dates are not available yet.</p>
+<aside class="notes">Name the gaps before someone finds them in the demo: a python task, dbt runs (the format is accepted, the runtime is not built), a preview per pull request, and a backfill for past dates. Each has a public ticket.</aside>
+</section>
+
+<section class="sd sd-cover">
+<p class="sd-kicker">try it</p>
+<h1>stardelt.io/docs/build</h1>
+<p class="sd-lead">Every step of this deck is a guide you can follow.</p>
+<img class="sd-wordmark" src="../shared/logo-wordmark-dark.svg" alt="stardelt">
+<aside class="notes">Start with the command line and a bundle: stardelt login, stardelt doctor, stardelt samples load trips, stardelt bundle init. The Build tab on stardelt.io has a page for each step of this deck.</aside>
+</section>
+</div></div>
+<script src="../vendor/reveal/reveal.js"></script>
+<script src="../vendor/reveal/plugin/notes/notes.js"></script>
+<script src="../shared/init.js"></script>
+</body>
+</html>
