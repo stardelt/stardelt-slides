@@ -3,5 +3,6 @@
   "how-it-works": "platform",
   "lakehouse": "data-engineer",
   "develop": "data-engineer",
-  "lineage": "data-engineer"
+  "lineage": "data-engineer",
+  "contribute": "agentic-dev"
 }

@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The dark factory</title>
-<meta name="description" content="How agents build stardelt: one map of the whole factory (shape, build, ship, learn), how it learns from every hand-back, and how one person stays in charge. Content Apache 2.0.">
+<title>The dark factory, and how to join it</title>
+<meta name="description" content="How agents build stardelt around the clock, how one person stays in charge, and how you can build it with us. Content Apache 2.0.">
 <link rel="stylesheet" href="../vendor/reveal/reveal.css">
 <link rel="stylesheet" href="../shared/stardelt.css">
 </head>
@@ -17,11 +17,13 @@
 <p class="sd-lead">How agents build stardelt around the clock, and how one person stays in charge.</p>
 <aside class="notes">A field report about the build plane: the agents that develop stardelt. They run on my workstation and never ship with the product. stardelt does ship agents for its customers, but that is a different talk. “Dark” means the factory runs at night with the lights off. It does not mean nobody is watching, and the second half of this talk shows how.</aside>
 </section>
+
 <section class="sd sd-stat">
 <div class="sd-big">2,129</div>
 <p class="sd-lead">pull requests merged in 14 days, in public repositories.</p>
 <aside class="notes">Counted on GitHub for 6 to 20 November 2026. Another 370 went into the private design repository, and 1,812 issues were closed in the same two weeks. Most are small: one ticket, one pull request.</aside>
 </section>
+
 <section class="sd">
 <h2>The whole factory on one slide.</h2>
 <div class="sd-figure">
@@ -29,6 +31,7 @@
 </div>
 <aside class="notes">Four stages, left to right. Shape turns an idea into a ticket. Build turns a ticket into a pull request. Ship takes it to the lab and checks it there. Learn turns every failure into a rule that checks the next ticket. I sit across the top. Every section starts with this picture, with its stage lit.</aside>
 </section>
+
 <section class="sd sd-section">
 <div class="sd-row">
 <div><p class="sd-num">01</p><h2>Shape</h2><p class="sd-lead">An idea becomes a ticket a small model can build.</p></div>
@@ -36,6 +39,7 @@
 </div>
 <aside class="notes">The expensive thinking happens here, once, so that the building can be cheap.</aside>
 </section>
+
 <section class="sd">
 <h2>Five roles, one person who decides.</h2>
 <table>
@@ -48,6 +52,7 @@
 </table>
 <aside class="notes">Each role has one job and one thing it must never do. That rule did more for quality than any model upgrade. The reviewer is new: it reads only the pull requests that can hurt, on a different model family from the one that wrote them.</aside>
 </section>
+
 <section class="sd">
 <h2>They meet on GitHub, never directly.</h2>
 <div class="sd-cards">
@@ -70,10 +75,12 @@
 </div>
 <aside class="notes">No agent calls another one. The hand-off is a label on a ticket, so everything is visible and can be replayed later.</aside>
 </section>
+
 <section class="sd sd-quote">
 <blockquote>A ticket is ready when a small model can build it without asking a question.</blockquote>
 <aside class="notes">Every step names a real file and symbol, with the file’s hash on main, so a stale ticket is caught before work starts. Verify gives exact commands. Open questions is empty. Write it like that, and a cheap model at low effort does the work.</aside>
 </section>
+
 <section class="sd sd-section">
 <div class="sd-row">
 <div><p class="sd-num">02</p><h2>Build</h2><p class="sd-lead">The runner never sleeps, and never starts a bad ticket.</p></div>
@@ -81,6 +88,7 @@
 </div>
 <aside class="notes">From ready ticket to green pull request, with nobody watching.</aside>
 </section>
+
 <section class="sd">
 <h2>One ticket, one session, one pull request.</h2>
 <div class="sd-cards">
@@ -99,6 +107,7 @@
 </div>
 <aside class="notes">Each session gets its own worktree, opens a pull request, waits for CI and merges. The runner ends a session as soon as its issue is closed, so a finished session cannot hold a slot.</aside>
 </section>
+
 <section class="sd">
 <h2>A preflight before the first token.</h2>
 <div class="sd-split">
@@ -121,6 +130,7 @@
 </div>
 <aside class="notes">The linter turns the most common ticket mistakes into a script. The architect runs it before it marks a ticket ready, and the runner runs it again before dispatch. An error parks the ticket and does not count as an attempt.</aside>
 </section>
+
 <section class="sd sd-section">
 <div class="sd-row">
 <div><p class="sd-num">03</p><h2>Ship</h2><p class="sd-lead">Green CI is where checking starts, not where it ends.</p></div>
@@ -128,6 +138,7 @@
 </div>
 <aside class="notes">Two questions after the code is written: who should read it, and is it really live?</aside>
 </section>
+
 <section class="sd">
 <h2>Risk decides who reads a pull request.</h2>
 <div class="sd-split">
@@ -145,6 +156,7 @@
 <p class="sd-punch">A gate on everything gets rubber-stamped. A gate on what can hurt gets read.</p>
 <aside class="notes">The reviewer runs on a different model family, so it does not share the writer’s blind spots. I can’t read a hundred pull requests a day, and I don’t have to.</aside>
 </section>
+
 <section class="sd sd-alert">
 <p class="sd-kicker">Ship</p>
 <h2>Merged is not live.</h2>
@@ -167,6 +179,7 @@
 </div>
 <aside class="notes">The most common failure is not broken code. It is correct code that never reached the cluster. So every hour the architect checks recent deliveries against the live lab, and a ticket’s Verify section runs there.</aside>
 </section>
+
 <section class="sd sd-section">
 <div class="sd-row">
 <div><p class="sd-num">04</p><h2>Learn</h2><p class="sd-lead">Every hand-back teaches the next ticket.</p></div>
@@ -174,6 +187,7 @@
 </div>
 <aside class="notes">The factory gets better without anyone retraining a model. It learns through a short list of rules.</aside>
 </section>
+
 <section class="sd">
 <h2>Six ways a ticket goes wrong.</h2>
 <table>
@@ -188,6 +202,7 @@
 <p class="sd-foot">Every hand-back now carries its class.</p>
 <aside class="notes">Measured on the hand-backs of one week. The classes are the vocabulary: a session that gives a ticket back says which one, and the scoreboard counts them.</aside>
 </section>
+
 <section class="sd">
 <h2>A playbook of at most 40 rules.</h2>
 <div class="sd-cards">
@@ -207,6 +222,7 @@
 <p class="sd-punch">The architect’s instructions were 10,960 lines this morning, mostly its own diary. Now they are 161.</p>
 <aside class="notes">A short, curated list beats a growing log. The agents read lessons.md before they write a ticket. They may count, and they may propose. They may not change their own rules.</aside>
 </section>
+
 <section class="sd">
 <h2>The scoreboard, last 14 days.</h2>
 <div class="sd-cards">
@@ -229,6 +245,7 @@
 </div>
 <aside class="notes">The last number is the lesson. Building is no longer the bottleneck. Writing good tickets is, which is why the preflight and the playbook sit in front of the queue.</aside>
 </section>
+
 <section class="sd sd-section">
 <div class="sd-row">
 <div><p class="sd-num">05</p><h2>You stay in the loop</h2><p class="sd-lead">Dark means unattended, not unwatched.</p></div>
@@ -236,6 +253,7 @@
 </div>
 <aside class="notes">Everything above runs without me. This section is about how it stops for me, and only when it should.</aside>
 </section>
+
 <section class="sd">
 <h2>One plain question.</h2>
 <div class="sd-split">
@@ -256,6 +274,7 @@
 </div>
 <aside class="notes">A question I can’t understand costs a day. This is a real one from this week; I answered it in one word.</aside>
 </section>
+
 <section class="sd">
 <h2>Silence has a default.</h2>
 <div class="sd-cards">
@@ -270,6 +289,7 @@
 </div>
 <aside class="notes">Without a default, a busy week stops the factory. With one, I only have to read what I would actually decide differently.</aside>
 </section>
+
 <section class="sd">
 <h2>The morning digest.</h2>
 <div class="sd-split">
@@ -290,6 +310,7 @@
 </div>
 <aside class="notes">I get a notification only when Needs you or Red flags has something in it. On a quiet day, nothing arrives.</aside>
 </section>
+
 <section class="sd">
 <h2>One workstation, five units.</h2>
 <table>
@@ -303,6 +324,7 @@
 <p class="sd-foot">I watch from anywhere: a terminal workspace, a private network, and a phone notification when an agent waits for me.</p>
 <aside class="notes">systemd user units, nothing fancy. The caps are there because the platform’s own Kubernetes runs on the same machine. The model is pinned in the unit, there are two attempts per ticket, one compile cache serves every session, and a runner restart leaves running sessions alone. I watch from anywhere: herdr on tmux keeps every agent’s pane alive, Tailscale and mosh reach it from the laptop or the phone, and a small hook pushes a notification when a session waits for me.</aside>
 </section>
+
 <section class="sd">
 <h2>The day and the week.</h2>
 <div class="sd-figure">
@@ -311,6 +333,7 @@
 </div>
 <aside class="notes">Busy around the clock on one workstation. The most expensive model works once a week, in the five hours before its quota resets. Not on the picture yet: the morning digest at 06:30 Berlin time.</aside>
 </section>
+
 <section class="sd sd-alert">
 <p class="sd-kicker">What broke</p>
 <h2>Every rule was paid for.</h2>
@@ -338,6 +361,7 @@
 </div>
 <aside class="notes">Every rule in this setup was paid for by something that broke. The last one is from this week: a ticket waiting for my merge looked ready, so the runner kept starting sessions that could only give it back.</aside>
 </section>
+
 <section class="sd">
 <h2>Next: checks the agents never see.</h2>
 <div class="sd-split">
@@ -358,6 +382,57 @@
 </div>
 <aside class="notes">The score is never a merge gate. A journey at zero two nights running becomes a bug ticket, written from the screenshot.</aside>
 </section>
+
+<section class="sd sd-section">
+<div class="sd-num">06</div>
+<h2>Build it with us</h2>
+<aside class="notes">The factory builds most of stardelt, and people decide what it builds. This last part is for you: where to start, how AI assistants fit, and how to write an issue that anyone, or any agent, can build.</aside>
+</section>
+
+<section class="sd">
+<h2>Good ways to start</h2>
+<div class="sd-steps">
+<div>
+<h3>Try the quickstart</h3>
+<p>A fresh pair of eyes finds things the maintainers cannot.</p>
+</div>
+<div>
+<h3>Fix a page</h3>
+<p>Every page has an Edit this page link.</p>
+</div>
+<div>
+<h3>Pick up an issue</h3>
+<p>Issues labelled ready-to-implement list the exact files, steps and checks.</p>
+</div>
+</div>
+<aside class="notes">Three ways in, in the order of least effort: use it and report what went wrong, fix a page, or take a whole issue. Installing and reporting is the most useful thing a newcomer can do, because the maintainers can no longer see their own documentation. On an issue, comment "claiming" so nobody builds it twice.</aside>
+</section>
+
+<section class="sd sd-quote">
+<h2>AI assistants are welcome.</h2>
+<p class="sd-lead">Name the model in the description, so a reviewer knows what to check more closely — and you are the author.</p>
+<aside class="notes">Assistants are welcome on two conditions. Name the model in the description, or as a Model trailer naming the provider and the model. And you are the author: run the checks yourself and answer the review yourself, because a green transcript is not evidence.</aside>
+</section>
+
+<section class="sd">
+<h2>An issue anyone can build</h2>
+<div class="sd-cards">
+<div class="sd-card">
+<h3>Name the file and symbol</h3>
+<p>Name the file, symbol and line, never "the controller".</p>
+</div>
+<div class="sd-card">
+<h3>Give the exact command and its output</h3>
+<p>"It works" cannot be checked.</p>
+</div>
+<div class="sd-card">
+<h3>One issue, one pull request</h3>
+<p>Up to about 150 lines, because small changes get merged.</p>
+</div>
+</div>
+<aside class="notes">An issue is ready when someone who has never seen the repository can do the work without asking a question. That means naming the file, symbol and line, giving the exact command and its expected output, and keeping one issue to one pull request. Run every command yourself before you paste it, so the issue cannot teach people to improvise.</aside>
+</section>
+
 <section class="sd sd-cover">
 <p class="sd-kicker">everything in the open</p>
 <h1>github.com/stardelt</h1>
